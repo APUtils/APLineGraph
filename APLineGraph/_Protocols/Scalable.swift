@@ -11,5 +11,6 @@ import UIKit
 
 
 public protocol Scalable: class {
-    var scale: CGPoint { get set }
+    var scale: CGPoint { get }
+    func setScale(_ scale: CGPoint, animated: Bool)
 }

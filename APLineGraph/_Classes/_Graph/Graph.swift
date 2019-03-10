@@ -13,7 +13,7 @@ public final class Graph {
     
     // ******************************* MARK: - Public Properties
     
-    public var scale: CGPoint { didSet { configureScale() } }
+    public private(set) var scale: CGPoint
     public private(set) var plots: [Plot] = []
     
     public private(set) lazy var scrollView: UIScrollView = {
@@ -55,10 +55,6 @@ public final class Graph {
     
     // ******************************* MARK: - Private Methods
     
-    private func configureScale() {
-        scallables.forEach { $0.scale = scale }
-    }
-    
     private func configureContentSize() {
         // TODO:
     }
@@ -66,4 +62,8 @@ public final class Graph {
 
 // ******************************* MARK: - Scalable
 
-extension Graph: Scalable {}
+extension Graph: Scalable {
+    public func setScale(_ scale: CGPoint, animated: Bool) {
+        scallables.forEach { $0.setScale(scale, animated: animated) }
+    }
+}

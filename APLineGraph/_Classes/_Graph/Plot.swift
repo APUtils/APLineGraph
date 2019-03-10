@@ -19,7 +19,7 @@ public final class Plot {
     public let points: [PlotPoint]
     public let lineWidth: CGFloat
     public let lineColor: UIColor
-    public var scale: CGPoint { didSet { configure() } }
+    public private(set) var scale: CGPoint
     
     // ******************************* MARK: - Private Properties
     
@@ -67,7 +67,7 @@ public final class Plot {
     
     private func setup() {
         setupShapeLayer()
-        configure()
+        configure(animated: false)
     }
     
     private func setupShapeLayer() {
@@ -78,9 +78,20 @@ public final class Plot {
     
     // ******************************* MARK: - Configuration
     
-    private func configure() {
-        shapeLayer.path = scaledPath
-        shapeLayer.setNeedsDisplay()
+    private func configure(animated: Bool) {
+        if animated {
+            let animation = CABasicAnimation(keyPath: "path")
+            animation.fromValue = shapeLayer.path
+            animation.duration = 0.3
+            animation.timingFunction = .init(name: CAMediaTimingFunctionName.easeOut)
+            animation.fillMode = .forwards
+            
+            shapeLayer.path = scaledPath
+            shapeLayer.add(animation, forKey: animation.keyPath)
+            
+        } else {
+            shapeLayer.path = scaledPath
+        }
     }
 }
 
@@ -94,4 +105,9 @@ extension Plot: Equatable {
 
 // ******************************* MARK: - Scalable
 
-extension Plot: Scalable {}
+extension Plot: Scalable {
+    public func setScale(_ scale: CGPoint, animated: Bool) {
+        self.scale = scale
+        configure(animated: animated)
+    }
+}
