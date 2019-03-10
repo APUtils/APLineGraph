@@ -1,5 +1,5 @@
 //
-//  GraphData.swift
+//  GraphModel.swift
 //  APLineGraph
 //
 //  Created by Anton Plebanovich on 3/10/19.
@@ -9,8 +9,8 @@
 import UIKit
 
 
-struct GraphData {
-    let values: [GraphEntry: [Double]]
+struct GraphModel {
+    let values: [GraphEntry: [ColumnEntry]]
     let types: [GraphEntry: GraphEntryType]
     let names: [GraphEntry: String]
     let colors: [GraphEntry: UIColor]
@@ -18,7 +18,7 @@ struct GraphData {
 
 // ******************************* MARK: - Decodable
 
-extension GraphData: Decodable {
+extension GraphModel: Decodable {
     
     enum Error: Swift.Error {
         case jsonConventionViolation
@@ -35,19 +35,25 @@ extension GraphData: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         let columns = try container.decode([[ColumnEntry]].self, forKey: .columns)
-        values = try columns.dictionaryMap { column in
+        self.values = try columns.dictionaryMap { column in
             // First value should be GraphEntry
             guard let columnType = column.first?.graphEntry else { throw Error.jsonConventionViolation }
-            
-            // All other values should be values
-            let values = try column.dropFirst().map { entry -> Double in
-                guard let double = entry.double else { throw Error.jsonConventionViolation }
-                return double
-            }
-            
-            return (columnType, values)
+            let datesOrValues = Array(column.dropFirst())
+            return (columnType, datesOrValues)
         }
         
+        // Check that date counts are synchronized
+        let datesCounts = values.map({ $1.count })
+        guard let firstDatesCount = datesCounts.first else { throw Error.jsonConventionViolation }
+        let areDatesCountsEqual = datesCounts
+            .dropFirst()
+            .map { $0 == firstDatesCount }
+            .reduce(true) { $0 && $1 }
+        
+        guard areDatesCountsEqual else { throw Error.jsonConventionViolation }
+        
+        // Impossible to directly use something except String or Int as dictionary key
+        // https://forums.swift.org/t/rfc-can-this-codable-bug-still-be-fixed/18501/3
         let types = try container.decode([String: GraphEntryType].self, forKey: .types)
         self.types = try types.mapKeys { try GraphEntry(name: $0) }
         

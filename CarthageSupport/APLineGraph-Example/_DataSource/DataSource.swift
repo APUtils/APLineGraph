@@ -19,29 +19,29 @@ final class DataSource {
     
     // ******************************* MARK: - Public Properties
     
-    let graphData: [GraphData]?
+    let graphModels: [GraphModel]?
     
     // ******************************* MARK: - Initialization and Setup
     
     init() {
         guard let jsonURL = Bundle(for: DataSource.self).url(forResource: c.jsonName, withExtension: c.jsonExtension) else {
             print("Unable to get URL to plot data")
-            self.graphData = nil
+            self.graphModels = nil
             return
         }
         
         guard let data = Data(safeContentsOf: jsonURL) else {
             print("Unable to get plot data from file")
-            self.graphData = nil
+            self.graphModels = nil
             return
         }
         
-        guard let graphData = JSONDecoder().safeDecode([GraphData].self, from: data) else {
+        guard let graphData = JSONDecoder().safeDecode([GraphModel].self, from: data) else {
             print("Unable to decode plot data")
-            self.graphData = nil
+            self.graphModels = nil
             return
         }
         
-        self.graphData = graphData
+        self.graphModels = graphData
     }
 }

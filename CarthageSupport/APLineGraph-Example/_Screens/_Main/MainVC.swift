@@ -23,7 +23,8 @@ class MainVC: UIViewController {
     }
     
     private func setup() {
-        vm.graph.scrollView
+        let scrollView = vm.graph.scrollView
+        view.addSubview(scrollView)
+        scrollView.constraintSides(to: view)
     }
 }
-

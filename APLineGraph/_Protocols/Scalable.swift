@@ -11,5 +11,5 @@ import UIKit
 
 
 public protocol Scalable: class {
-    var scale: CGFloat { get set }
+    var scale: CGPoint { get set }
 }

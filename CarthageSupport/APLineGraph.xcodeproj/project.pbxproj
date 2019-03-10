@@ -25,7 +25,7 @@
 		0DE2D75A22354DD1007BD043 /* Collection+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D75922354DD1007BD043 /* Collection+Utils.swift */; };
 		0DE2D76C223556A0007BD043 /* MainVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D76B223556A0007BD043 /* MainVM.swift */; };
 		0DE2D77022355B07007BD043 /* ColumnEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D76F22355B07007BD043 /* ColumnEntry.swift */; };
-		0DE2D77122355CE7007BD043 /* GraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D76622355515007BD043 /* GraphData.swift */; };
+		0DE2D77122355CE7007BD043 /* GraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D76622355515007BD043 /* GraphModel.swift */; };
 		0DE2D77222355CED007BD043 /* chart_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DE2D75B22355256007BD043 /* chart_data.json */; };
 		0DE2D77322355CF1007BD043 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D75F223552C0007BD043 /* DataSource.swift */; };
 		0DE2D77522355D40007BD043 /* GraphEntryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D77422355D40007BD043 /* GraphEntryType.swift */; };
@@ -36,6 +36,8 @@
 		0DE2D7822235665A007BD043 /* Dictionary+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D77822355F1A007BD043 /* Dictionary+Utils.swift */; };
 		0DE2D78422356685007BD043 /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D78322356685007BD043 /* Array+Utils.swift */; };
 		0DE2D7882235696C007BD043 /* GraphEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D7872235696C007BD043 /* GraphEntry.swift */; };
+		0DE2D78A22357D31007BD043 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D78922357D31007BD043 /* Date+Utils.swift */; };
+		0DE2D78C2235920E007BD043 /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D78B2235920E007BD043 /* UIView+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,7 +105,7 @@
 		0DE2D75F223552C0007BD043 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		0DE2D76222355312007BD043 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0DE2D7642235546E007BD043 /* Data+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Utils.swift"; sourceTree = "<group>"; };
-		0DE2D76622355515007BD043 /* GraphData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphData.swift; sourceTree = "<group>"; };
+		0DE2D76622355515007BD043 /* GraphModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphModel.swift; sourceTree = "<group>"; };
 		0DE2D768223555A2007BD043 /* JSONDecoder+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Utils.swift"; sourceTree = "<group>"; };
 		0DE2D76B223556A0007BD043 /* MainVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVM.swift; sourceTree = "<group>"; };
 		0DE2D76F22355B07007BD043 /* ColumnEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnEntry.swift; sourceTree = "<group>"; };
@@ -112,6 +114,8 @@
 		0DE2D77B22355FCD007BD043 /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
 		0DE2D78322356685007BD043 /* Array+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Utils.swift"; sourceTree = "<group>"; };
 		0DE2D7872235696C007BD043 /* GraphEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphEntry.swift; sourceTree = "<group>"; };
+		0DE2D78922357D31007BD043 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
+		0DE2D78B2235920E007BD043 /* UIView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
 		27A65933230C2FF4F758F562 /* carthageUpdate.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageUpdate.command; path = Scripts/Carthage/carthageUpdate.command; sourceTree = "<group>"; };
 		722BFDE9DE58393B9D916719 /* carthageRemove.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageRemove.command; path = Scripts/Carthage/carthageRemove.command; sourceTree = "<group>"; };
 		75997ED1E9FAC56B9BEC3F0E /* carthageAdd.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageAdd.command; path = Scripts/Carthage/carthageAdd.command; sourceTree = "<group>"; };
@@ -263,7 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				0DE2D76F22355B07007BD043 /* ColumnEntry.swift */,
-				0DE2D76622355515007BD043 /* GraphData.swift */,
+				0DE2D76622355515007BD043 /* GraphModel.swift */,
 				0DE2D7872235696C007BD043 /* GraphEntry.swift */,
 				0DE2D77422355D40007BD043 /* GraphEntryType.swift */,
 			);
@@ -281,11 +285,13 @@
 		0DE2D77A22355F25007BD043 /* _Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0DE2D78322356685007BD043 /* Array+Utils.swift */,
 				0DE2D7642235546E007BD043 /* Data+Utils.swift */,
+				0DE2D78922357D31007BD043 /* Date+Utils.swift */,
 				0DE2D77822355F1A007BD043 /* Dictionary+Utils.swift */,
 				0DE2D768223555A2007BD043 /* JSONDecoder+Utils.swift */,
 				0DE2D77B22355FCD007BD043 /* UIColor+Utils.swift */,
-				0DE2D78322356685007BD043 /* Array+Utils.swift */,
+				0DE2D78B2235920E007BD043 /* UIView+Utils.swift */,
 			);
 			path = _Extensions;
 			sourceTree = "<group>";
@@ -519,6 +525,7 @@
 			files = (
 				0DE2D77322355CF1007BD043 /* DataSource.swift in Sources */,
 				0DE2D77022355B07007BD043 /* ColumnEntry.swift in Sources */,
+				0DE2D78C2235920E007BD043 /* UIView+Utils.swift in Sources */,
 				0DE2D77F2235629C007BD043 /* Data+Utils.swift in Sources */,
 				0D141ABD2235476F00CB6FF0 /* MainVC.swift in Sources */,
 				0DE2D78422356685007BD043 /* Array+Utils.swift in Sources */,
@@ -527,8 +534,9 @@
 				0DE2D781223562CE007BD043 /* JSONDecoder+Utils.swift in Sources */,
 				0DE2D77D22356270007BD043 /* Constants.swift in Sources */,
 				0DE2D77C22355FCD007BD043 /* UIColor+Utils.swift in Sources */,
+				0DE2D78A22357D31007BD043 /* Date+Utils.swift in Sources */,
 				0DE2D76C223556A0007BD043 /* MainVM.swift in Sources */,
-				0DE2D77122355CE7007BD043 /* GraphData.swift in Sources */,
+				0DE2D77122355CE7007BD043 /* GraphModel.swift in Sources */,
 				0D141ABB2235476F00CB6FF0 /* AppDelegate.swift in Sources */,
 				0DE2D7822235665A007BD043 /* Dictionary+Utils.swift in Sources */,
 			);

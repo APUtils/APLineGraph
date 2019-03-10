@@ -6,10 +6,15 @@
 //  Copyright © 2019 Anton Plebanovich. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 
 public struct PlotPoint {
     public let x: String
-    public let y: CGFloat
+    public let y: Double
+    
+    public init(x: String, y: Double) {
+        self.x = x
+        self.y = y
+    }
 }

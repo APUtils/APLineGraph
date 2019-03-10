@@ -12,7 +12,7 @@ import Foundation
 /// Handles String and Double in the same array
 enum ColumnEntry {
     case graphEntry(GraphEntry)
-    case double(Double)
+    case value(Double)
     
     var graphEntry: GraphEntry? {
         switch self {
@@ -21,9 +21,16 @@ enum ColumnEntry {
         }
     }
     
-    var double: Double? {
+    var date: Date? {
         switch self {
-        case .double(let double): return double
+        case .value(let value): return Date(jsonDate: value)
+        default: return nil
+        }
+    }
+    
+    var value: Double? {
+        switch self {
+        case .value(let value): return value
         default: return nil
         }
     }
@@ -34,9 +41,12 @@ enum ColumnEntry {
 extension ColumnEntry: Decodable {
     init(from decoder: Decoder) throws {
         do {
-            self = .double(try decoder.singleValueContainer().decode(Double.self))
+            // Try value
+            let value = try decoder.singleValueContainer().decode(Double.self)
+            self = .value(value)
+            
         } catch {
-            // Try entry type now
+            // Try entry type
             self = .graphEntry(try decoder.singleValueContainer().decode(GraphEntry.self))
         }
     }

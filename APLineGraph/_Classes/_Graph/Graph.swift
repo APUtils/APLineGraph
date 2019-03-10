@@ -13,12 +13,16 @@ public final class Graph {
     
     // ******************************* MARK: - Public Properties
     
-    public var scale: CGFloat = 1 { didSet { configureScale() } }
+    public var scale: CGPoint { didSet { configureScale() } }
     public private(set) var plots: [Plot] = []
     
     public private(set) lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .white
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.alwaysBounceVertical = true
+        scrollView.alwaysBounceHorizontal = true
         
         return scrollView
     }()
@@ -31,7 +35,9 @@ public final class Graph {
     
     // ******************************* MARK: - Initialization and Setup
     
-    public init() {}
+    public init() {
+        self.scale = CGPoint(x: 1, y: 1)
+    }
     
     // ******************************* MARK: - Public Methods
     
