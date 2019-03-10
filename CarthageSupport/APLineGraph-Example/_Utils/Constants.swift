@@ -1,5 +1,5 @@
 //
-//  Axis.swift
+//  Constants.swift
 //  APLineGraph
 //
 //  Created by Anton Plebanovich on 3/10/19.
@@ -9,6 +9,8 @@
 import Foundation
 
 
-final class Axis {
+enum Constants {
     
 }
+
+let c = Constants.self

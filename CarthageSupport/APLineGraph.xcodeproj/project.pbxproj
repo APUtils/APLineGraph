@@ -12,7 +12,7 @@
 		0D141AAB223540FF00CB6FF0 /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141AAA223540FF00CB6FF0 /* Axis.swift */; };
 		0D141AB32235453E00CB6FF0 /* Scalable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141AB22235453E00CB6FF0 /* Scalable.swift */; };
 		0D141ABB2235476F00CB6FF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141ABA2235476F00CB6FF0 /* AppDelegate.swift */; };
-		0D141ABD2235476F00CB6FF0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141ABC2235476F00CB6FF0 /* ViewController.swift */; };
+		0D141ABD2235476F00CB6FF0 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141ABC2235476F00CB6FF0 /* MainVC.swift */; };
 		0D141AC02235476F00CB6FF0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D141ABE2235476F00CB6FF0 /* Main.storyboard */; };
 		0D141AC22235477100CB6FF0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D141AC12235477100CB6FF0 /* Assets.xcassets */; };
 		0D141AC52235477100CB6FF0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D141AC32235477100CB6FF0 /* LaunchScreen.storyboard */; };
@@ -20,6 +20,22 @@
 		0D141ADB2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141ADA2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift */; };
 		0D141AE62235478B00CB6FF0 /* APLineGraph.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E202681322117D03004CC28A /* APLineGraph.framework */; };
 		0D141AE72235478B00CB6FF0 /* APLineGraph.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E202681322117D03004CC28A /* APLineGraph.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0DE2D75622354B86007BD043 /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D75522354B86007BD043 /* Array+Utils.swift */; };
+		0DE2D75822354C2A007BD043 /* PlotPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D75722354C2A007BD043 /* PlotPoint.swift */; };
+		0DE2D75A22354DD1007BD043 /* Collection+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D75922354DD1007BD043 /* Collection+Utils.swift */; };
+		0DE2D76C223556A0007BD043 /* MainVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D76B223556A0007BD043 /* MainVM.swift */; };
+		0DE2D77022355B07007BD043 /* ColumnEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D76F22355B07007BD043 /* ColumnEntry.swift */; };
+		0DE2D77122355CE7007BD043 /* GraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D76622355515007BD043 /* GraphData.swift */; };
+		0DE2D77222355CED007BD043 /* chart_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DE2D75B22355256007BD043 /* chart_data.json */; };
+		0DE2D77322355CF1007BD043 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D75F223552C0007BD043 /* DataSource.swift */; };
+		0DE2D77522355D40007BD043 /* GraphEntryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D77422355D40007BD043 /* GraphEntryType.swift */; };
+		0DE2D77C22355FCD007BD043 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D77B22355FCD007BD043 /* UIColor+Utils.swift */; };
+		0DE2D77D22356270007BD043 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D76222355312007BD043 /* Constants.swift */; };
+		0DE2D77F2235629C007BD043 /* Data+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D7642235546E007BD043 /* Data+Utils.swift */; };
+		0DE2D781223562CE007BD043 /* JSONDecoder+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D768223555A2007BD043 /* JSONDecoder+Utils.swift */; };
+		0DE2D7822235665A007BD043 /* Dictionary+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D77822355F1A007BD043 /* Dictionary+Utils.swift */; };
+		0DE2D78422356685007BD043 /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D78322356685007BD043 /* Array+Utils.swift */; };
+		0DE2D7882235696C007BD043 /* GraphEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D7872235696C007BD043 /* GraphEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +83,7 @@
 		0D141AB22235453E00CB6FF0 /* Scalable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scalable.swift; sourceTree = "<group>"; };
 		0D141AB82235476F00CB6FF0 /* APLineGraph-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "APLineGraph-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D141ABA2235476F00CB6FF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0D141ABC2235476F00CB6FF0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0D141ABC2235476F00CB6FF0 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		0D141ABF2235476F00CB6FF0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0D141AC12235477100CB6FF0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D141AC42235477100CB6FF0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -80,6 +96,22 @@
 		0D141ADC2235477100CB6FF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0DE2D75222354825007BD043 /* APLineGraph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APLineGraph.h; sourceTree = "<group>"; };
 		0DE2D75322354825007BD043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DE2D75522354B86007BD043 /* Array+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Utils.swift"; sourceTree = "<group>"; };
+		0DE2D75722354C2A007BD043 /* PlotPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotPoint.swift; sourceTree = "<group>"; };
+		0DE2D75922354DD1007BD043 /* Collection+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Utils.swift"; sourceTree = "<group>"; };
+		0DE2D75B22355256007BD043 /* chart_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chart_data.json; sourceTree = "<group>"; };
+		0DE2D75F223552C0007BD043 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		0DE2D76222355312007BD043 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0DE2D7642235546E007BD043 /* Data+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Utils.swift"; sourceTree = "<group>"; };
+		0DE2D76622355515007BD043 /* GraphData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphData.swift; sourceTree = "<group>"; };
+		0DE2D768223555A2007BD043 /* JSONDecoder+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Utils.swift"; sourceTree = "<group>"; };
+		0DE2D76B223556A0007BD043 /* MainVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVM.swift; sourceTree = "<group>"; };
+		0DE2D76F22355B07007BD043 /* ColumnEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnEntry.swift; sourceTree = "<group>"; };
+		0DE2D77422355D40007BD043 /* GraphEntryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphEntryType.swift; sourceTree = "<group>"; };
+		0DE2D77822355F1A007BD043 /* Dictionary+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utils.swift"; sourceTree = "<group>"; };
+		0DE2D77B22355FCD007BD043 /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
+		0DE2D78322356685007BD043 /* Array+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Utils.swift"; sourceTree = "<group>"; };
+		0DE2D7872235696C007BD043 /* GraphEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphEntry.swift; sourceTree = "<group>"; };
 		27A65933230C2FF4F758F562 /* carthageUpdate.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageUpdate.command; path = Scripts/Carthage/carthageUpdate.command; sourceTree = "<group>"; };
 		722BFDE9DE58393B9D916719 /* carthageRemove.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageRemove.command; path = Scripts/Carthage/carthageRemove.command; sourceTree = "<group>"; };
 		75997ED1E9FAC56B9BEC3F0E /* carthageAdd.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageAdd.command; path = Scripts/Carthage/carthageAdd.command; sourceTree = "<group>"; };
@@ -122,9 +154,7 @@
 		0D141AA52235400F00CB6FF0 /* _Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0D141AA62235408000CB6FF0 /* Graph.swift */,
-				0D141AA82235409500CB6FF0 /* Plot.swift */,
-				0D141AAA223540FF00CB6FF0 /* Axis.swift */,
+				0DE2D75D2235529C007BD043 /* _Graph */,
 			);
 			name = _Classes;
 			path = ../APLineGraph/_Classes;
@@ -141,12 +171,14 @@
 		0D141AB92235476F00CB6FF0 /* APLineGraph-Example */ = {
 			isa = PBXGroup;
 			children = (
+				0DE2D75E223552A7007BD043 /* _DataSource */,
+				0DE2D77A22355F25007BD043 /* _Extensions */,
+				0DE2D76E223559DA007BD043 /* _Screens */,
+				0DE2D761223552FC007BD043 /* _Utils */,
 				0D141ABA2235476F00CB6FF0 /* AppDelegate.swift */,
-				0D141ABC2235476F00CB6FF0 /* ViewController.swift */,
-				0D141ABE2235476F00CB6FF0 /* Main.storyboard */,
 				0D141AC12235477100CB6FF0 /* Assets.xcassets */,
-				0D141AC32235477100CB6FF0 /* LaunchScreen.storyboard */,
 				0D141AC62235477100CB6FF0 /* Info.plist */,
+				0D141AC32235477100CB6FF0 /* LaunchScreen.storyboard */,
 			);
 			path = "APLineGraph-Example";
 			sourceTree = "<group>";
@@ -178,6 +210,85 @@
 			name = "_Support Files";
 			path = "APLineGraph/_Support Files";
 			sourceTree = SOURCE_ROOT;
+		};
+		0DE2D75422354B73007BD043 /* _Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0DE2D75522354B86007BD043 /* Array+Utils.swift */,
+				0DE2D75922354DD1007BD043 /* Collection+Utils.swift */,
+			);
+			path = _Extensions;
+			sourceTree = "<group>";
+		};
+		0DE2D75D2235529C007BD043 /* _Graph */ = {
+			isa = PBXGroup;
+			children = (
+				0D141AAA223540FF00CB6FF0 /* Axis.swift */,
+				0D141AA62235408000CB6FF0 /* Graph.swift */,
+				0D141AA82235409500CB6FF0 /* Plot.swift */,
+				0DE2D75722354C2A007BD043 /* PlotPoint.swift */,
+			);
+			path = _Graph;
+			sourceTree = "<group>";
+		};
+		0DE2D75E223552A7007BD043 /* _DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				0DE2D76D2235593E007BD043 /* _Models */,
+				0DE2D75B22355256007BD043 /* chart_data.json */,
+				0DE2D75F223552C0007BD043 /* DataSource.swift */,
+			);
+			path = _DataSource;
+			sourceTree = "<group>";
+		};
+		0DE2D761223552FC007BD043 /* _Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0DE2D76222355312007BD043 /* Constants.swift */,
+			);
+			path = _Utils;
+			sourceTree = "<group>";
+		};
+		0DE2D76A22355671007BD043 /* _Main */ = {
+			isa = PBXGroup;
+			children = (
+				0D141ABE2235476F00CB6FF0 /* Main.storyboard */,
+				0D141ABC2235476F00CB6FF0 /* MainVC.swift */,
+				0DE2D76B223556A0007BD043 /* MainVM.swift */,
+			);
+			path = _Main;
+			sourceTree = "<group>";
+		};
+		0DE2D76D2235593E007BD043 /* _Models */ = {
+			isa = PBXGroup;
+			children = (
+				0DE2D76F22355B07007BD043 /* ColumnEntry.swift */,
+				0DE2D76622355515007BD043 /* GraphData.swift */,
+				0DE2D7872235696C007BD043 /* GraphEntry.swift */,
+				0DE2D77422355D40007BD043 /* GraphEntryType.swift */,
+			);
+			path = _Models;
+			sourceTree = "<group>";
+		};
+		0DE2D76E223559DA007BD043 /* _Screens */ = {
+			isa = PBXGroup;
+			children = (
+				0DE2D76A22355671007BD043 /* _Main */,
+			);
+			path = _Screens;
+			sourceTree = "<group>";
+		};
+		0DE2D77A22355F25007BD043 /* _Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0DE2D7642235546E007BD043 /* Data+Utils.swift */,
+				0DE2D77822355F1A007BD043 /* Dictionary+Utils.swift */,
+				0DE2D768223555A2007BD043 /* JSONDecoder+Utils.swift */,
+				0DE2D77B22355FCD007BD043 /* UIColor+Utils.swift */,
+				0DE2D78322356685007BD043 /* Array+Utils.swift */,
+			);
+			path = _Extensions;
+			sourceTree = "<group>";
 		};
 		1834AC72A69DC91E1F3B8EDA /* _Carthage */ = {
 			isa = PBXGroup;
@@ -216,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				0D141AA52235400F00CB6FF0 /* _Classes */,
+				0DE2D75422354B73007BD043 /* _Extensions */,
 				0D141AB1223544D400CB6FF0 /* _Protocols */,
 				0DE2D75122354825007BD043 /* _Support Files */,
 			);
@@ -372,6 +484,7 @@
 			files = (
 				0D141AC52235477100CB6FF0 /* LaunchScreen.storyboard in Resources */,
 				0D141AC22235477100CB6FF0 /* Assets.xcassets in Resources */,
+				0DE2D77222355CED007BD043 /* chart_data.json in Resources */,
 				0D141AC02235476F00CB6FF0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,8 +517,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D141ABD2235476F00CB6FF0 /* ViewController.swift in Sources */,
+				0DE2D77322355CF1007BD043 /* DataSource.swift in Sources */,
+				0DE2D77022355B07007BD043 /* ColumnEntry.swift in Sources */,
+				0DE2D77F2235629C007BD043 /* Data+Utils.swift in Sources */,
+				0D141ABD2235476F00CB6FF0 /* MainVC.swift in Sources */,
+				0DE2D78422356685007BD043 /* Array+Utils.swift in Sources */,
+				0DE2D7882235696C007BD043 /* GraphEntry.swift in Sources */,
+				0DE2D77522355D40007BD043 /* GraphEntryType.swift in Sources */,
+				0DE2D781223562CE007BD043 /* JSONDecoder+Utils.swift in Sources */,
+				0DE2D77D22356270007BD043 /* Constants.swift in Sources */,
+				0DE2D77C22355FCD007BD043 /* UIColor+Utils.swift in Sources */,
+				0DE2D76C223556A0007BD043 /* MainVM.swift in Sources */,
+				0DE2D77122355CE7007BD043 /* GraphData.swift in Sources */,
 				0D141ABB2235476F00CB6FF0 /* AppDelegate.swift in Sources */,
+				0DE2D7822235665A007BD043 /* Dictionary+Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +558,9 @@
 				0D141AAB223540FF00CB6FF0 /* Axis.swift in Sources */,
 				0D141AA72235408000CB6FF0 /* Graph.swift in Sources */,
 				0D141AB32235453E00CB6FF0 /* Scalable.swift in Sources */,
+				0DE2D75622354B86007BD043 /* Array+Utils.swift in Sources */,
+				0DE2D75822354C2A007BD043 /* PlotPoint.swift in Sources */,
+				0DE2D75A22354DD1007BD043 /* Collection+Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

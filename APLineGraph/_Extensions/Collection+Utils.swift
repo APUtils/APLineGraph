@@ -1,5 +1,5 @@
 //
-//  Scalable.swift
+//  Collection+Utils.swift
 //  APLineGraph
 //
 //  Created by Anton Plebanovich on 3/10/19.
@@ -7,9 +7,12 @@
 //
 
 import Foundation
-import UIKit
 
 
-public protocol Scalable: class {
-    var scale: CGFloat { get set }
+extension Collection {
+    /// Checks if collection has elements
+    var hasElements: Bool {
+        return !isEmpty
+    }
 }
+
