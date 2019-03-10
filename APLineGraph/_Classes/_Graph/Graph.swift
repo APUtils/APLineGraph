@@ -104,9 +104,14 @@ public final class Graph: NSObject {
         let scaleY: CGFloat = -(availableHeight / range)
         
         let transform = CGAffineTransform.identity
+            // Move axis origin to bottom of a screen plus gap
+            .translatedBy(x: 0, y: scrollView.bounds.height - gap)
+            // Scale graph do it's in available range and mirrored
             .scaledBy(x: scaleX, y: scaleY)
-            .translatedBy(x: 0, y: -minValue + (scrollView.bounds.height - gap) / scaleY)
+            // Move graph min value onto axis
+            .translatedBy(x: 0, y: -minValue)
         
+        // Animate graph if changes are in animation closure
         let animated = UIView.isInAnimationClosure
 
         transformables.forEach { $0.setTransform(transform, animated: animated) }

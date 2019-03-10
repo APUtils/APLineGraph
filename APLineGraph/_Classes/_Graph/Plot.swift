@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 
 
+private extension Constants {
+    static let defaultAnimationDuration: TimeInterval = 0.3
+}
+
+
 public final class Plot {
     
     // ******************************* MARK: - Public Properties
@@ -100,7 +105,7 @@ public final class Plot {
         if animated {
             let pathAnimation = CABasicAnimation(keyPath: "path")
             pathAnimation.fromValue = shapeLayer.path
-            pathAnimation.duration = 0.3
+            pathAnimation.duration = UIView.inheritedAnimationDuration > 0 ? UIView.inheritedAnimationDuration : c.defaultAnimationDuration
             pathAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeOut)
             pathAnimation.fillMode = .forwards
             shapeLayer.path = scaledPath
