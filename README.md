@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/APLineGraph.svg?style=flat)](http://cocoapods.org/pods/APLineGraph)
 [![CI Status](http://img.shields.io/travis/APUtils/APLineGraph.svg?style=flat)](https://travis-ci.org/APUtils/APLineGraph)
 
-TODO
+Line graph framework.
 
 ## Example
 
@@ -41,9 +41,7 @@ pod 'APLineGraph'
 
 ## Usage
 
-TODO
-
-See example and test projects for more details.
+See `CarthageSupport/APLineGraph.xcodeproj`  for more details.
 
 ## Contributions
 
