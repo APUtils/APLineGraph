@@ -34,6 +34,7 @@ public final class Graph: NSObject {
     // ******************************* MARK: - Private Properties
     
     private var observer: NSKeyValueObservation!
+    private var configuredSize: CGSize = .zero
     
     private var transformables: [Transformable] {
         return plots
@@ -47,13 +48,16 @@ public final class Graph: NSObject {
     }
     
     private func setup() {
-        // TODO: Need to reduce amount of updates
-        observer = scrollView.observe(\UIScrollView.bounds, options: [.old, .new]) { [weak self] scrollView, change in
-            self?.configure()
+        observer = scrollView.observe(\UIScrollView.bounds, options: [.new]) { [weak self] scrollView, change in
+            guard let self = self else { return }
+            guard change.newValue?.size != self.configuredSize else { return }
+            self.configure()
         }
         
-        observer = scrollView.observe(\UIScrollView.frame, options: [.old, .new]) { [weak self] scrollView, change in
-            self?.configure()
+        observer = scrollView.observe(\UIScrollView.frame, options: [.new]) { [weak self] scrollView, change in
+            guard let self = self else { return }
+            guard change.newValue?.size != self.configuredSize else { return }
+            self.configure()
         }
     }
     
@@ -93,7 +97,8 @@ public final class Graph: NSObject {
     
     private func configure() {
         // Update content size
-        scrollView.contentSize = scrollView.bounds.size
+        configuredSize = scrollView.bounds.size
+        scrollView.contentSize = configuredSize
         
         // Scale X
         let maxCount = plots
