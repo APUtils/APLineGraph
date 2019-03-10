@@ -40,6 +40,8 @@
 		0DE2D78C2235920E007BD043 /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D78B2235920E007BD043 /* UIView+Utils.swift */; };
 		0DE2D78E2235A2C4007BD043 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D78D2235A2C4007BD043 /* Globals.swift */; };
 		0DE2D7912235B44A007BD043 /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D78F2235B446007BD043 /* UIView+Utils.swift */; };
+		0DE2D7942235BFEB007BD043 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D7932235BFCF007BD043 /* Constants.swift */; };
+		0DE2D79A2235C59B007BD043 /* Double+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D7952235C0A4007BD043 /* Double+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +122,8 @@
 		0DE2D78B2235920E007BD043 /* UIView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
 		0DE2D78D2235A2C4007BD043 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		0DE2D78F2235B446007BD043 /* UIView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
+		0DE2D7932235BFCF007BD043 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0DE2D7952235C0A4007BD043 /* Double+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Utils.swift"; sourceTree = "<group>"; };
 		27A65933230C2FF4F758F562 /* carthageUpdate.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageUpdate.command; path = Scripts/Carthage/carthageUpdate.command; sourceTree = "<group>"; };
 		722BFDE9DE58393B9D916719 /* carthageRemove.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageRemove.command; path = Scripts/Carthage/carthageRemove.command; sourceTree = "<group>"; };
 		75997ED1E9FAC56B9BEC3F0E /* carthageAdd.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageAdd.command; path = Scripts/Carthage/carthageAdd.command; sourceTree = "<group>"; };
@@ -224,6 +228,7 @@
 			children = (
 				0DE2D75522354B86007BD043 /* Array+Utils.swift */,
 				0DE2D75922354DD1007BD043 /* Collection+Utils.swift */,
+				0DE2D7952235C0A4007BD043 /* Double+Utils.swift */,
 				0DE2D78F2235B446007BD043 /* UIView+Utils.swift */,
 			);
 			path = _Extensions;
@@ -302,6 +307,14 @@
 			path = _Extensions;
 			sourceTree = "<group>";
 		};
+		0DE2D7922235BFBB007BD043 /* _Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0DE2D7932235BFCF007BD043 /* Constants.swift */,
+			);
+			path = _Utils;
+			sourceTree = "<group>";
+		};
 		1834AC72A69DC91E1F3B8EDA /* _Carthage */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,6 +355,7 @@
 				0DE2D75422354B73007BD043 /* _Extensions */,
 				0D141AB1223544D400CB6FF0 /* _Protocols */,
 				0DE2D75122354825007BD043 /* _Support Files */,
+				0DE2D7922235BFBB007BD043 /* _Utils */,
 			);
 			name = APLineGraph;
 			path = ../APLineGraph;
@@ -573,10 +587,12 @@
 				0D141AAB223540FF00CB6FF0 /* Axis.swift in Sources */,
 				0DE2D7912235B44A007BD043 /* UIView+Utils.swift in Sources */,
 				0D141AA72235408000CB6FF0 /* Graph.swift in Sources */,
+				0DE2D79A2235C59B007BD043 /* Double+Utils.swift in Sources */,
 				0D141AB32235453E00CB6FF0 /* Scalable.swift in Sources */,
 				0DE2D75622354B86007BD043 /* Array+Utils.swift in Sources */,
 				0DE2D75822354C2A007BD043 /* PlotPoint.swift in Sources */,
 				0DE2D75A22354DD1007BD043 /* Collection+Utils.swift in Sources */,
+				0DE2D7942235BFEB007BD043 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

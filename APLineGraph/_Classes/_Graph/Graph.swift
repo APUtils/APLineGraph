@@ -9,6 +9,11 @@
 import UIKit
 
 
+private extension Constants {
+    static let verticalPercentGap: CGFloat = 0.1
+}
+
+
 public final class Graph: NSObject {
     
     // ******************************* MARK: - Public Properties
@@ -16,13 +21,12 @@ public final class Graph: NSObject {
     public private(set) var plots: [Plot] = []
     
     public private(set) lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
+        let scrollView = UIScrollView(frame: UIScreen.main.bounds)
         scrollView.backgroundColor = .white
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.alwaysBounceVertical = true
-        scrollView.alwaysBounceHorizontal = true
         scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.isScrollEnabled = false
         
         return scrollView
     }()
@@ -70,19 +74,38 @@ public final class Graph: NSObject {
     // ******************************* MARK: - Private Methods
     
     private func configure() {
-        
+        // Update content size
         scrollView.contentSize = scrollView.bounds.size
         
-        // TODO: Calculate transform depending on height, width and values
+        // Scale X
+        let maxCount = plots
+            .map { $0.valuesCount }
+            .max() ?? 1
         
-        guard let values = plots.first?.points else { return }
+        let scaleX: CGFloat = scrollView.bounds.width / CGFloat(maxCount)
         
-        let scaleX: CGFloat = scrollView.bounds.width / CGFloat(values.count)
-//        let scaleY = bounds.height / CGFloat(values.compactMap { $0.value }.max()!)
-        let scaleY: CGFloat = -1
+        // Scale Y
+        let minValue = plots
+            .compactMap { $0.minValue }
+            .min()?
+            .asCGFloat ?? 0
+        
+        let maxValue = plots
+            .compactMap { $0.maxValue }
+            .max()?
+            .asCGFloat ?? 1
+        
+        let range = maxValue - minValue
+        let gap = scrollView.bounds.height * c.verticalPercentGap
+        let availableHeight = scrollView.bounds.height - 2 * gap
+        
+        // Scale to show range with top and bottom paddings
+        // and mirror graph so Y axis goes from bottom
+        let scaleY: CGFloat = -(availableHeight / range)
+        
         let transform = CGAffineTransform.identity
-            .translatedBy(x: 0, y: scrollView.bounds.height)
             .scaledBy(x: scaleX, y: scaleY)
+            .translatedBy(x: 0, y: -minValue + (scrollView.bounds.height - gap) / scaleY)
         
         let animated = UIView.isInAnimationClosure
 

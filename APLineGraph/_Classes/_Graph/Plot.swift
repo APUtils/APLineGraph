@@ -21,6 +21,24 @@ public final class Plot {
     public let lineColor: UIColor
     public private(set) var transform: CGAffineTransform
     
+    // ******************************* MARK: - Internal Properties
+    
+    var valuesCount: Int {
+        return points.count
+    }
+    
+    var minValue: Double? {
+        return points
+            .map { $0.y }
+            .min()
+    }
+    
+    var maxValue: Double? {
+        return points
+            .map { $0.y }
+            .max()
+    }
+    
     // ******************************* MARK: - Private Properties
     
     private lazy var path: CGPath = {
@@ -46,7 +64,7 @@ public final class Plot {
     
     private var scaledPath: CGPath? {
         var transform = self.transform
-        return path.copy(using: &transform)!
+        return path.copy(using: &transform)
     }
     
     // ******************************* MARK: - Initialization and Setup
