@@ -47,8 +47,12 @@ public final class Graph: NSObject {
     }
     
     private func setup() {
+        // TODO: Need to reduce amount of updates
         observer = scrollView.observe(\UIScrollView.bounds, options: [.old, .new]) { [weak self] scrollView, change in
-            guard change.newValue != change.oldValue else { return }
+            self?.configure()
+        }
+        
+        observer = scrollView.observe(\UIScrollView.frame, options: [.old, .new]) { [weak self] scrollView, change in
             self?.configure()
         }
     }
@@ -67,8 +71,22 @@ public final class Graph: NSObject {
         configure()
     }
     
+    public func addPlots(_ plots: [Plot]) {
+        plots.forEach {
+            self.plots.append($0)
+            scrollView.layer.addSublayer($0.shapeLayer)
+        }
+        
+        configure()
+    }
+    
     public func removeAllPlots() {
-        plots.forEach(removePlot)
+        plots.forEach {
+            $0.shapeLayer.removeFromSuperlayer()
+            plots.remove($0)
+        }
+        
+        configure()
     }
     
     // ******************************* MARK: - Private Methods

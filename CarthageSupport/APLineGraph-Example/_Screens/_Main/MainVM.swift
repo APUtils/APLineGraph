@@ -39,10 +39,11 @@ struct MainVM {
         // TODO: Add all other graphs
         guard let firstGraphModel = graphModels.first else { return }
         
-        firstGraphModel
+        let plots = firstGraphModel
             .lines
             .compactMap { firstGraphModel.getPlot(entry: $0) }
-            .forEach { graph.addPlot($0) }
+        
+        graph.addPlots(plots)
     }
 }
 
