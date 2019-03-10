@@ -7,19 +7,108 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E202681822117D03004CC28A /* APLineGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = E202681622117D03004CC28A /* APLineGraph.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0D141AA72235408000CB6FF0 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141AA62235408000CB6FF0 /* Graph.swift */; };
+		0D141AA92235409500CB6FF0 /* Plot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141AA82235409500CB6FF0 /* Plot.swift */; };
+		0D141AAB223540FF00CB6FF0 /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141AAA223540FF00CB6FF0 /* Axis.swift */; };
+		0D141AB32235453E00CB6FF0 /* Scalable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141AB22235453E00CB6FF0 /* Scalable.swift */; };
+		0D141ABB2235476F00CB6FF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141ABA2235476F00CB6FF0 /* AppDelegate.swift */; };
+		0D141ABD2235476F00CB6FF0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141ABC2235476F00CB6FF0 /* ViewController.swift */; };
+		0D141AC02235476F00CB6FF0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D141ABE2235476F00CB6FF0 /* Main.storyboard */; };
+		0D141AC22235477100CB6FF0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D141AC12235477100CB6FF0 /* Assets.xcassets */; };
+		0D141AC52235477100CB6FF0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D141AC32235477100CB6FF0 /* LaunchScreen.storyboard */; };
+		0D141AD02235477100CB6FF0 /* APLineGraph_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141ACF2235477100CB6FF0 /* APLineGraph_ExampleTests.swift */; };
+		0D141ADB2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141ADA2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift */; };
+		0D141AE62235478B00CB6FF0 /* APLineGraph.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E202681322117D03004CC28A /* APLineGraph.framework */; };
+		0D141AE72235478B00CB6FF0 /* APLineGraph.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E202681322117D03004CC28A /* APLineGraph.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0D141ACC2235477100CB6FF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E202680A22117D03004CC28A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D141AB72235476F00CB6FF0;
+			remoteInfo = "APLineGraph-Example";
+		};
+		0D141AD72235477100CB6FF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E202680A22117D03004CC28A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D141AB72235476F00CB6FF0;
+			remoteInfo = "APLineGraph-Example";
+		};
+		0D141AE82235478B00CB6FF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E202680A22117D03004CC28A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E202681222117D03004CC28A;
+			remoteInfo = APLineGraph;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0D141AEA2235478B00CB6FF0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0D141AE72235478B00CB6FF0 /* APLineGraph.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0D141AA62235408000CB6FF0 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		0D141AA82235409500CB6FF0 /* Plot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plot.swift; sourceTree = "<group>"; };
+		0D141AAA223540FF00CB6FF0 /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
+		0D141AB22235453E00CB6FF0 /* Scalable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scalable.swift; sourceTree = "<group>"; };
+		0D141AB82235476F00CB6FF0 /* APLineGraph-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "APLineGraph-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D141ABA2235476F00CB6FF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0D141ABC2235476F00CB6FF0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0D141ABF2235476F00CB6FF0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0D141AC12235477100CB6FF0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0D141AC42235477100CB6FF0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0D141AC62235477100CB6FF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D141ACB2235477100CB6FF0 /* APLineGraph-ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "APLineGraph-ExampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D141ACF2235477100CB6FF0 /* APLineGraph_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APLineGraph_ExampleTests.swift; sourceTree = "<group>"; };
+		0D141AD12235477100CB6FF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D141AD62235477100CB6FF0 /* APLineGraph-ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "APLineGraph-ExampleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D141ADA2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APLineGraph_ExampleUITests.swift; sourceTree = "<group>"; };
+		0D141ADC2235477100CB6FF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DE2D75222354825007BD043 /* APLineGraph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APLineGraph.h; sourceTree = "<group>"; };
+		0DE2D75322354825007BD043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27A65933230C2FF4F758F562 /* carthageUpdate.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageUpdate.command; path = Scripts/Carthage/carthageUpdate.command; sourceTree = "<group>"; };
 		722BFDE9DE58393B9D916719 /* carthageRemove.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageRemove.command; path = Scripts/Carthage/carthageRemove.command; sourceTree = "<group>"; };
 		75997ED1E9FAC56B9BEC3F0E /* carthageAdd.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = carthageAdd.command; path = Scripts/Carthage/carthageAdd.command; sourceTree = "<group>"; };
 		E202681322117D03004CC28A /* APLineGraph.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = APLineGraph.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E202681622117D03004CC28A /* APLineGraph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APLineGraph.h; sourceTree = "<group>"; };
-		E202681722117D03004CC28A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0D141AB52235476F00CB6FF0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D141AE62235478B00CB6FF0 /* APLineGraph.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D141AC82235477100CB6FF0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D141AD32235477100CB6FF0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E202681022117D03004CC28A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -30,6 +119,66 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D141AA52235400F00CB6FF0 /* _Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0D141AA62235408000CB6FF0 /* Graph.swift */,
+				0D141AA82235409500CB6FF0 /* Plot.swift */,
+				0D141AAA223540FF00CB6FF0 /* Axis.swift */,
+			);
+			name = _Classes;
+			path = ../APLineGraph/_Classes;
+			sourceTree = SOURCE_ROOT;
+		};
+		0D141AB1223544D400CB6FF0 /* _Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				0D141AB22235453E00CB6FF0 /* Scalable.swift */,
+			);
+			path = _Protocols;
+			sourceTree = "<group>";
+		};
+		0D141AB92235476F00CB6FF0 /* APLineGraph-Example */ = {
+			isa = PBXGroup;
+			children = (
+				0D141ABA2235476F00CB6FF0 /* AppDelegate.swift */,
+				0D141ABC2235476F00CB6FF0 /* ViewController.swift */,
+				0D141ABE2235476F00CB6FF0 /* Main.storyboard */,
+				0D141AC12235477100CB6FF0 /* Assets.xcassets */,
+				0D141AC32235477100CB6FF0 /* LaunchScreen.storyboard */,
+				0D141AC62235477100CB6FF0 /* Info.plist */,
+			);
+			path = "APLineGraph-Example";
+			sourceTree = "<group>";
+		};
+		0D141ACE2235477100CB6FF0 /* APLineGraph-ExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				0D141ACF2235477100CB6FF0 /* APLineGraph_ExampleTests.swift */,
+				0D141AD12235477100CB6FF0 /* Info.plist */,
+			);
+			path = "APLineGraph-ExampleTests";
+			sourceTree = "<group>";
+		};
+		0D141AD92235477100CB6FF0 /* APLineGraph-ExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0D141ADA2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift */,
+				0D141ADC2235477100CB6FF0 /* Info.plist */,
+			);
+			path = "APLineGraph-ExampleUITests";
+			sourceTree = "<group>";
+		};
+		0DE2D75122354825007BD043 /* _Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				0DE2D75222354825007BD043 /* APLineGraph.h */,
+				0DE2D75322354825007BD043 /* Info.plist */,
+			);
+			name = "_Support Files";
+			path = "APLineGraph/_Support Files";
+			sourceTree = SOURCE_ROOT;
+		};
 		1834AC72A69DC91E1F3B8EDA /* _Carthage */ = {
 			isa = PBXGroup;
 			children = (
@@ -44,6 +193,9 @@
 			isa = PBXGroup;
 			children = (
 				E202681522117D03004CC28A /* APLineGraph */,
+				0D141AB92235476F00CB6FF0 /* APLineGraph-Example */,
+				0D141ACE2235477100CB6FF0 /* APLineGraph-ExampleTests */,
+				0D141AD92235477100CB6FF0 /* APLineGraph-ExampleUITests */,
 				E202681422117D03004CC28A /* Products */,
 				F1BD9B4AF93178888C20C526 /* Frameworks */,
 			);
@@ -53,6 +205,9 @@
 			isa = PBXGroup;
 			children = (
 				E202681322117D03004CC28A /* APLineGraph.framework */,
+				0D141AB82235476F00CB6FF0 /* APLineGraph-Example.app */,
+				0D141ACB2235477100CB6FF0 /* APLineGraph-ExampleTests.xctest */,
+				0D141AD62235477100CB6FF0 /* APLineGraph-ExampleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,11 +215,13 @@
 		E202681522117D03004CC28A /* APLineGraph */ = {
 			isa = PBXGroup;
 			children = (
-				E202681622117D03004CC28A /* APLineGraph.h */,
-				E202681722117D03004CC28A /* Info.plist */,
+				0D141AA52235400F00CB6FF0 /* _Classes */,
+				0D141AB1223544D400CB6FF0 /* _Protocols */,
+				0DE2D75122354825007BD043 /* _Support Files */,
 			);
-			path = APLineGraph;
-			sourceTree = "<group>";
+			name = APLineGraph;
+			path = ../APLineGraph;
+			sourceTree = SOURCE_ROOT;
 		};
 		F1BD9B4AF93178888C20C526 /* Frameworks */ = {
 			isa = PBXGroup;
@@ -81,13 +238,67 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E202681822117D03004CC28A /* APLineGraph.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		0D141AB72235476F00CB6FF0 /* APLineGraph-Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D141ADD2235477100CB6FF0 /* Build configuration list for PBXNativeTarget "APLineGraph-Example" */;
+			buildPhases = (
+				0D141AB42235476F00CB6FF0 /* Sources */,
+				0D141AB52235476F00CB6FF0 /* Frameworks */,
+				0D141AB62235476F00CB6FF0 /* Resources */,
+				0D141AEA2235478B00CB6FF0 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D141AE92235478B00CB6FF0 /* PBXTargetDependency */,
+			);
+			name = "APLineGraph-Example";
+			productName = "APLineGraph-Example";
+			productReference = 0D141AB82235476F00CB6FF0 /* APLineGraph-Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0D141ACA2235477100CB6FF0 /* APLineGraph-ExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D141AE02235477100CB6FF0 /* Build configuration list for PBXNativeTarget "APLineGraph-ExampleTests" */;
+			buildPhases = (
+				0D141AC72235477100CB6FF0 /* Sources */,
+				0D141AC82235477100CB6FF0 /* Frameworks */,
+				0D141AC92235477100CB6FF0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D141ACD2235477100CB6FF0 /* PBXTargetDependency */,
+			);
+			name = "APLineGraph-ExampleTests";
+			productName = "APLineGraph-ExampleTests";
+			productReference = 0D141ACB2235477100CB6FF0 /* APLineGraph-ExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0D141AD52235477100CB6FF0 /* APLineGraph-ExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D141AE32235477100CB6FF0 /* Build configuration list for PBXNativeTarget "APLineGraph-ExampleUITests" */;
+			buildPhases = (
+				0D141AD22235477100CB6FF0 /* Sources */,
+				0D141AD32235477100CB6FF0 /* Frameworks */,
+				0D141AD42235477100CB6FF0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D141AD82235477100CB6FF0 /* PBXTargetDependency */,
+			);
+			name = "APLineGraph-ExampleUITests";
+			productName = "APLineGraph-ExampleUITests";
+			productReference = 0D141AD62235477100CB6FF0 /* APLineGraph-ExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		E202681222117D03004CC28A /* APLineGraph */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E202681B22117D03004CC28A /* Build configuration list for PBXNativeTarget "APLineGraph" */;
@@ -112,11 +323,24 @@
 		E202680A22117D03004CC28A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Anton Plebanovich";
 				TargetAttributes = {
+					0D141AB72235476F00CB6FF0 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					0D141ACA2235477100CB6FF0 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 0D141AB72235476F00CB6FF0;
+					};
+					0D141AD52235477100CB6FF0 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 0D141AB72235476F00CB6FF0;
+					};
 					E202681222117D03004CC28A = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -126,6 +350,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = E202680922117D03004CC28A;
 			productRefGroup = E202681422117D03004CC28A /* Products */;
@@ -133,11 +358,38 @@
 			projectRoot = "";
 			targets = (
 				E202681222117D03004CC28A /* APLineGraph */,
+				0D141AB72235476F00CB6FF0 /* APLineGraph-Example */,
+				0D141ACA2235477100CB6FF0 /* APLineGraph-ExampleTests */,
+				0D141AD52235477100CB6FF0 /* APLineGraph-ExampleUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0D141AB62235476F00CB6FF0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D141AC52235477100CB6FF0 /* LaunchScreen.storyboard in Resources */,
+				0D141AC22235477100CB6FF0 /* Assets.xcassets in Resources */,
+				0D141AC02235476F00CB6FF0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D141AC92235477100CB6FF0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D141AD42235477100CB6FF0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E202681122117D03004CC28A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -148,16 +400,202 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0D141AB42235476F00CB6FF0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D141ABD2235476F00CB6FF0 /* ViewController.swift in Sources */,
+				0D141ABB2235476F00CB6FF0 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D141AC72235477100CB6FF0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D141AD02235477100CB6FF0 /* APLineGraph_ExampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D141AD22235477100CB6FF0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D141ADB2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E202680F22117D03004CC28A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D141AA92235409500CB6FF0 /* Plot.swift in Sources */,
+				0D141AAB223540FF00CB6FF0 /* Axis.swift in Sources */,
+				0D141AA72235408000CB6FF0 /* Graph.swift in Sources */,
+				0D141AB32235453E00CB6FF0 /* Scalable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		0D141ACD2235477100CB6FF0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D141AB72235476F00CB6FF0 /* APLineGraph-Example */;
+			targetProxy = 0D141ACC2235477100CB6FF0 /* PBXContainerItemProxy */;
+		};
+		0D141AD82235477100CB6FF0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D141AB72235476F00CB6FF0 /* APLineGraph-Example */;
+			targetProxy = 0D141AD72235477100CB6FF0 /* PBXContainerItemProxy */;
+		};
+		0D141AE92235478B00CB6FF0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E202681222117D03004CC28A /* APLineGraph */;
+			targetProxy = 0D141AE82235478B00CB6FF0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0D141ABE2235476F00CB6FF0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D141ABF2235476F00CB6FF0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0D141AC32235477100CB6FF0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D141AC42235477100CB6FF0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		0D141ADE2235477100CB6FF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UW54N2U6G5;
+				INFOPLIST_FILE = "APLineGraph-Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0D141ADF2235477100CB6FF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UW54N2U6G5;
+				INFOPLIST_FILE = "APLineGraph-Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0D141AE12235477100CB6FF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UW54N2U6G5;
+				INFOPLIST_FILE = "APLineGraph-ExampleTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph-ExampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/APLineGraph-Example.app/APLineGraph-Example";
+			};
+			name = Debug;
+		};
+		0D141AE22235477100CB6FF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UW54N2U6G5;
+				INFOPLIST_FILE = "APLineGraph-ExampleTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph-ExampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/APLineGraph-Example.app/APLineGraph-Example";
+			};
+			name = Release;
+		};
+		0D141AE42235477100CB6FF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UW54N2U6G5;
+				INFOPLIST_FILE = "APLineGraph-ExampleUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph-ExampleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "APLineGraph-Example";
+			};
+			name = Debug;
+		};
+		0D141AE52235477100CB6FF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UW54N2U6G5;
+				INFOPLIST_FILE = "APLineGraph-ExampleUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph-ExampleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "APLineGraph-Example";
+			};
+			name = Release;
+		};
 		E202681922117D03004CC28A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -283,17 +721,16 @@
 		E202681C22117D03004CC28A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = UW54N2U6G5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = APLineGraph/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "APLineGraph/_Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -303,6 +740,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.convene.Elevate.APLineGraph;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -311,17 +749,16 @@
 		E202681D22117D03004CC28A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = UW54N2U6G5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = APLineGraph/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "APLineGraph/_Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -339,6 +776,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0D141ADD2235477100CB6FF0 /* Build configuration list for PBXNativeTarget "APLineGraph-Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D141ADE2235477100CB6FF0 /* Debug */,
+				0D141ADF2235477100CB6FF0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0D141AE02235477100CB6FF0 /* Build configuration list for PBXNativeTarget "APLineGraph-ExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D141AE12235477100CB6FF0 /* Debug */,
+				0D141AE22235477100CB6FF0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0D141AE32235477100CB6FF0 /* Build configuration list for PBXNativeTarget "APLineGraph-ExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D141AE42235477100CB6FF0 /* Debug */,
+				0D141AE52235477100CB6FF0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E202680D22117D03004CC28A /* Build configuration list for PBXProject "APLineGraph" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
