@@ -19,7 +19,7 @@ public final class Plot {
     public let points: [PlotPoint]
     public let lineWidth: CGFloat
     public let lineColor: UIColor
-    public private(set) var scale: CGPoint
+    public private(set) var transform: CGAffineTransform
     
     // ******************************* MARK: - Private Properties
     
@@ -45,7 +45,7 @@ public final class Plot {
     }()
     
     private var scaledPath: CGPath? {
-        var transform = CGAffineTransform(scaleX: scale.x, y: scale.y)
+        var transform = self.transform
         return path.copy(using: &transform)!
     }
     
@@ -60,7 +60,7 @@ public final class Plot {
         self.points = points
         self.lineWidth = lineWidth
         self.lineColor = lineColor
-        self.scale = CGPoint(x: 1, y: 1)
+        self.transform = .identity
         
         setup()
     }
@@ -80,14 +80,13 @@ public final class Plot {
     
     private func configure(animated: Bool) {
         if animated {
-            let animation = CABasicAnimation(keyPath: "path")
-            animation.fromValue = shapeLayer.path
-            animation.duration = 0.3
-            animation.timingFunction = .init(name: CAMediaTimingFunctionName.easeOut)
-            animation.fillMode = .forwards
-            
+            let pathAnimation = CABasicAnimation(keyPath: "path")
+            pathAnimation.fromValue = shapeLayer.path
+            pathAnimation.duration = 0.3
+            pathAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeOut)
+            pathAnimation.fillMode = .forwards
             shapeLayer.path = scaledPath
-            shapeLayer.add(animation, forKey: animation.keyPath)
+            shapeLayer.add(pathAnimation, forKey: pathAnimation.keyPath)
             
         } else {
             shapeLayer.path = scaledPath
@@ -103,11 +102,11 @@ extension Plot: Equatable {
     }
 }
 
-// ******************************* MARK: - Scalable
+// ******************************* MARK: - Transformable
 
-extension Plot: Scalable {
-    public func setScale(_ scale: CGPoint, animated: Bool) {
-        self.scale = scale
+extension Plot: Transformable {
+    public func setTransform(_ transform: CGAffineTransform, animated: Bool) {
+        self.transform = transform
         configure(animated: animated)
     }
 }

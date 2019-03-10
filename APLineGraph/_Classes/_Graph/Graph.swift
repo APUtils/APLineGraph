@@ -9,11 +9,10 @@
 import UIKit
 
 
-public final class Graph {
+public final class Graph: NSObject {
     
     // ******************************* MARK: - Public Properties
     
-    public private(set) var scale: CGPoint
     public private(set) var plots: [Plot] = []
     
     public private(set) lazy var scrollView: UIScrollView = {
@@ -23,20 +22,31 @@ public final class Graph {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
         scrollView.alwaysBounceHorizontal = true
+        scrollView.contentInsetAdjustmentBehavior = .never
         
         return scrollView
     }()
     
     // ******************************* MARK: - Private Properties
     
-    private var scallables: [Scalable] {
+    private var observer: NSKeyValueObservation!
+    
+    private var transformables: [Transformable] {
         return plots
     }
     
     // ******************************* MARK: - Initialization and Setup
     
-    public init() {
-        self.scale = CGPoint(x: 1, y: 1)
+    public override init() {
+        super.init()
+        setup()
+    }
+    
+    private func setup() {
+        observer = scrollView.observe(\UIScrollView.bounds, options: [.old, .new]) { [weak self] scrollView, change in
+            guard change.newValue != change.oldValue else { return }
+            self?.configure()
+        }
     }
     
     // ******************************* MARK: - Public Methods
@@ -44,26 +54,38 @@ public final class Graph {
     public func addPlot(_ plot: Plot) {
         plots.append(plot)
         scrollView.layer.addSublayer(plot.shapeLayer)
-        configureContentSize()
+        configure()
     }
     
     public func removePlot(_ plot: Plot) {
         plot.shapeLayer.removeFromSuperlayer()
         plots.remove(plot)
-        configureContentSize()
+        configure()
+    }
+    
+    public func removeAllPlots() {
+        plots.forEach(removePlot)
     }
     
     // ******************************* MARK: - Private Methods
     
-    private func configureContentSize() {
-        // TODO:
-    }
-}
+    private func configure() {
+        
+        scrollView.contentSize = scrollView.bounds.size
+        
+        // TODO: Calculate transform depending on height, width and values
+        
+        guard let values = plots.first?.points else { return }
+        
+        let scaleX: CGFloat = scrollView.bounds.width / CGFloat(values.count)
+//        let scaleY = bounds.height / CGFloat(values.compactMap { $0.value }.max()!)
+        let scaleY: CGFloat = -1
+        let transform = CGAffineTransform.identity
+            .translatedBy(x: 0, y: scrollView.bounds.height)
+            .scaledBy(x: scaleX, y: scaleY)
+        
+        let animated = UIView.isInAnimationClosure
 
-// ******************************* MARK: - Scalable
-
-extension Graph: Scalable {
-    public func setScale(_ scale: CGPoint, animated: Bool) {
-        scallables.forEach { $0.setScale(scale, animated: animated) }
+        transformables.forEach { $0.setTransform(transform, animated: animated) }
     }
 }

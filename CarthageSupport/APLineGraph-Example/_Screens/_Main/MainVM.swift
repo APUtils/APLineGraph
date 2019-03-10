@@ -43,15 +43,6 @@ struct MainVM {
             .lines
             .compactMap { firstGraphModel.getPlot(entry: $0) }
             .forEach { graph.addPlot($0) }
-        
-        // TODO: Remove
-        g.asyncMain(1) {
-            self.graph.setScale(CGPoint(x: 3, y: 2), animated: true)
-            
-            g.asyncMain(1) {
-                self.graph.setScale(CGPoint(x: 1, y: 1), animated: true)
-            }
-        }
     }
 }
 

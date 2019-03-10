@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-public protocol Scalable: class {
-    var scale: CGPoint { get }
-    func setScale(_ scale: CGPoint, animated: Bool)
+public protocol Transformable: class {
+    var transform: CGAffineTransform { get }
+    func setTransform(_ transform: CGAffineTransform, animated: Bool)
 }
