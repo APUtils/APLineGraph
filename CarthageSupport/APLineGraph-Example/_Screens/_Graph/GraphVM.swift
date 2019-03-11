@@ -21,7 +21,8 @@ struct GraphVM {
     
     // ******************************* MARK: - Public Properties
     
-    let graph = Graph()
+    let mainGraph = Graph()
+    let helperGraph = Graph()
     
     // ******************************* MARK: - Private Properties
     
@@ -39,16 +40,23 @@ struct GraphVM {
         // TODO: Add all other graphs
         guard let firstGraphModel = graphModels.first else { return }
         
-        let plots = firstGraphModel
+        // TODO: Graphs reuse
+        let mainPlots = firstGraphModel
             .lines
             .compactMap { firstGraphModel.getPlot(entry: $0) }
         
-        graph.addPlots(plots)
+        mainGraph.addPlots(mainPlots)
+        
+        let helperPlots = firstGraphModel
+            .lines
+            .compactMap { firstGraphModel.getPlot(entry: $0) }
+        
+        helperGraph.addPlots(helperPlots)
         
         // TODO: Remove
         g.asyncMain(1) {
             g.animate(3) {
-                self.graph.showRange(range: .init(from: 0, to: 0.5))
+                self.mainGraph.showRange(range: .init(from: 0, to: 0.5))
             }
         }
     }

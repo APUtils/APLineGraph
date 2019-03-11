@@ -11,6 +11,11 @@ import UIKit
 
 class GraphVC: UIViewController {
     
+    // ******************************* MARK: - @IBOutlets
+    
+    @IBOutlet private weak var graphContainer: UIView!
+    @IBOutlet private weak var graphRangeContainer: UIView!
+    
     // ******************************* MARK: - Private Properties
     
     private let vm = GraphVM()
@@ -23,8 +28,12 @@ class GraphVC: UIViewController {
     }
     
     private func setup() {
-        let scrollView = vm.graph.scrollView
-        view.addSubview(scrollView)
-        scrollView.constraintSides(to: view)
+        let mainScrollView = vm.mainGraph.scrollView
+        graphContainer.addSubview(mainScrollView)
+        mainScrollView.constraintSides(to: graphContainer)
+        
+        let helperScrollView = vm.helperGraph.scrollView
+        graphRangeContainer.addSubview(helperScrollView)
+        helperScrollView.constraintSides(to: graphRangeContainer)
     }
 }

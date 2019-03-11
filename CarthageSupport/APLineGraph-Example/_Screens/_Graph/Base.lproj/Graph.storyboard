@@ -17,12 +17,43 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CDN-dg-Ss7">
+                                <rect key="frame" x="0.0" y="64" width="375" height="315"/>
+                                <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="CDN-dg-Ss7" secondAttribute="height" multiplier="1125:945" id="vDX-9v-plw"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksy-jl-eiG">
+                                <rect key="frame" x="0.0" y="395" width="375" height="64"/>
+                                <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="2bT-iZ-6u7"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="K7n-SI-Hyt"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ksy-jl-eiG" secondAttribute="trailing" id="UvT-ZG-5UJ"/>
+                            <constraint firstItem="ksy-jl-eiG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bqR-ts-oMr"/>
+                            <constraint firstItem="CDN-dg-Ss7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ldf-aF-wVM"/>
+                            <constraint firstItem="CDN-dg-Ss7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="nCJ-ra-iki"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CDN-dg-Ss7" secondAttribute="trailing" id="oJG-5x-ezb"/>
+                            <constraint firstItem="ksy-jl-eiG" firstAttribute="top" secondItem="CDN-dg-Ss7" secondAttribute="bottom" constant="16" id="ziu-cl-2SA"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="graphContainer" destination="CDN-dg-Ss7" id="HzB-sn-TN5"/>
+                        <outlet property="graphRangeContainer" destination="ksy-jl-eiG" id="QKY-ol-5gr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-50" y="27"/>
         </scene>
     </scenes>
 </document>
