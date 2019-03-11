@@ -13,4 +13,8 @@ extension Double {
     var asCGFloat: CGFloat {
         return CGFloat(self)
     }
+    
+    var asInt: Int {
+        return Int(self)
+    }
 }

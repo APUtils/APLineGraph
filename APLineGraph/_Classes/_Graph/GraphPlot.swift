@@ -39,16 +39,16 @@ public final class Plot {
         return points.count
     }
     
-    var minValue: Double? {
+    var minValue: Double {
         return points
             .map { $0.y }
-            .min()
+            .min() ?? 0
     }
     
-    var maxValue: Double? {
+    var maxValue: Double {
         return points
             .map { $0.y }
-            .max()
+            .max() ?? 1
     }
     
     // ******************************* MARK: - Private Properties
@@ -85,7 +85,9 @@ public final class Plot {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(name: String, lineWidth: CGFloat, lineColor: UIColor, points: [Point]) {
+    public init?(name: String, lineWidth: CGFloat, lineColor: UIColor, points: [Point]) {
+        guard points.hasElements else { return nil }
+        
         self.name = name
         self.points = points
         self.lineWidth = lineWidth
@@ -105,6 +107,18 @@ public final class Plot {
         shapeLayer.strokeColor = lineColor.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.lineJoin = .round
+    }
+    
+    // ******************************* MARK: - Internal Methods
+    
+    func getMinMaxValue(range: Graph.Range) -> (Double, Double) {
+        let startIndex = (valuesCount.asDouble * range.from.asDouble).rounded().asInt
+        let endIndex = (valuesCount.asDouble * range.to.asDouble).rounded().asInt
+        let subpoints = points[startIndex..<endIndex]
+        let subvalues = subpoints.map { $0.y }
+        let minValue = subvalues.min() ?? 0
+        let maxValue = subvalues.max() ?? 1
+        return (minValue, maxValue)
     }
     
     // ******************************* MARK: - Configuration

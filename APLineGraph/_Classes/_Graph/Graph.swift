@@ -112,19 +112,13 @@ public final class Graph: NSObject {
         let translateX: CGFloat = plotSize * range.from
         
         // Scale Y
-        let minValue = plots
-            .compactMap { $0.minValue }
-            .min()?
-            .asCGFloat ?? 0
+        let minMaxes = plots.map { $0.getMinMaxValue(range: range) }
+        let minValue: CGFloat = minMaxes.map { $0.0.asCGFloat }.min() ?? 0
+        let maxValue: CGFloat = minMaxes.map { $0.1.asCGFloat }.max() ?? 1
         
-        let maxValue = plots
-            .compactMap { $0.maxValue }
-            .max()?
-            .asCGFloat ?? 1
-        
-        let rangeY = maxValue - minValue
-        let gap = scrollView.bounds.height * c.verticalPercentGap
-        let availableHeight = scrollView.bounds.height - 2 * gap
+        let rangeY: CGFloat = maxValue - minValue
+        let gap: CGFloat = scrollView.bounds.height * c.verticalPercentGap
+        let availableHeight: CGFloat = scrollView.bounds.height - 2 * gap
         
         // Scale to show range with top and bottom paddings
         let scaleY: CGFloat = availableHeight / rangeY
