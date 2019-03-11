@@ -1,5 +1,5 @@
 //
-//  MainVC.swift
+//  GraphVC.swift
 //  APLineGraph-Example
 //
 //  Created by Anton Plebanovich on 3/10/19.
@@ -9,11 +9,11 @@
 import UIKit
 
 
-class MainVC: UIViewController {
+class GraphVC: UIViewController {
     
     // ******************************* MARK: - Private Properties
     
-    private let vm = MainVM()
+    private let vm = GraphVM()
     
     // ******************************* MARK: - Setup
 

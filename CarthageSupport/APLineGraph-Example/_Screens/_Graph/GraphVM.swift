@@ -1,5 +1,5 @@
 //
-//  MainVM.swift
+//  GraphVM.swift
 //  APLineGraph
 //
 //  Created by Anton Plebanovich on 3/10/19.
@@ -17,7 +17,7 @@ private extension Constants {
 }
 
 
-struct MainVM {
+struct GraphVM {
     
     // ******************************* MARK: - Public Properties
     
