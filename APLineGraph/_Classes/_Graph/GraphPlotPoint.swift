@@ -1,5 +1,5 @@
 //
-//  PlotPoint.swift
+//  GraphPlotPoint.swift
 //  APLineGraph
 //
 //  Created by Anton Plebanovich on 3/10/19.
@@ -9,7 +9,8 @@
 import Foundation
 
 
-public struct PlotPoint {
+public extension Graph.Plot {
+public struct Point {
     public let x: String
     public let y: Double
     
@@ -17,4 +18,5 @@ public struct PlotPoint {
         self.x = x
         self.y = y
     }
+}
 }

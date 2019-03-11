@@ -1,5 +1,5 @@
 //
-//  Axis.swift
+//  GraphAxis.swift
 //  APLineGraph
 //
 //  Created by Anton Plebanovich on 3/10/19.
@@ -9,6 +9,8 @@
 import Foundation
 
 
-public final class Axis {
+public extension Graph {
+public struct Axis {
     
+}
 }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+
+// TODO: Document all public interfaces
+// TODO: Add Jazzy
+// TODO: Update README
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

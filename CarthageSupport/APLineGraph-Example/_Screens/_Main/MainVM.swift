@@ -44,6 +44,13 @@ struct MainVM {
             .compactMap { firstGraphModel.getPlot(entry: $0) }
         
         graph.addPlots(plots)
+        
+        // TODO: Remove
+        g.asyncMain(1) {
+            g.animate(3) {
+                self.graph.showRange(range: .init(from: 0, to: 0.5))
+            }
+        }
     }
 }
 
@@ -68,7 +75,7 @@ extension GraphModel {
             .map { $0 }
     }
     
-    func getPlot(entry: GraphEntry) -> Plot? {
+    func getPlot(entry: GraphEntry) -> Graph.Plot? {
         guard let entryType = types[entry] else { print("Entry doesn't exist"); return nil }
         guard entryType == .line else { print("Plot works with `.line` type data only"); return nil }
         guard let values = self.values[entry] else { print("Values are missing"); return nil }
@@ -80,9 +87,9 @@ extension GraphModel {
         guard xValues.count == mapedValued.count else { print("X values and \(entry.rawValue) values are in desync"); return nil }
         
         let points = zip(xValues, mapedValued).map { tuple in
-            return PlotPoint(x: "\(tuple.0)", y: tuple.1)
+            return Graph.Plot.Point(x: "\(tuple.0)", y: tuple.1)
         }
         
-        return Plot(name: name, lineWidth: c.mainGraphLineWidth, lineColor: color, points: points)
+        return Graph.Plot(name: name, lineWidth: c.mainGraphLineWidth, lineColor: color, points: points)
     }
 }

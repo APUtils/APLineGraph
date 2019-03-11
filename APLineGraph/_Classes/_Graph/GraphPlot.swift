@@ -1,5 +1,5 @@
 //
-//  Plot.swift
+//  GraphPlot.swift
 //  APLineGraph
 //
 //  Created by Anton Plebanovich on 3/10/19.
@@ -15,13 +15,20 @@ private extension Constants {
 }
 
 
+// TODO:
+// Plot should be a struct with just actual plot description.
+// Need to move out `shapeLayer`, leave `path` and rename `scalablePath`
+// into `computePath(transform:)` or something like that.
+// Idea here is to reuse path calculation so one plot can be used on two graphs but with different transforms.
+// Maybe also make creation async so it can happen on BG thread.
+public extension Graph {
 public final class Plot {
     
     // ******************************* MARK: - Public Properties
     
     public private(set) lazy var shapeLayer: CAShapeLayer = CAShapeLayer()
     public let name: String
-    public let points: [PlotPoint]
+    public let points: [Point]
     public let lineWidth: CGFloat
     public let lineColor: UIColor
     public private(set) var transform: CGAffineTransform
@@ -78,7 +85,7 @@ public final class Plot {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(name: String, lineWidth: CGFloat, lineColor: UIColor, points: [PlotPoint]) {
+    public init(name: String, lineWidth: CGFloat, lineColor: UIColor, points: [Point]) {
         self.name = name
         self.points = points
         self.lineWidth = lineWidth
@@ -97,6 +104,7 @@ public final class Plot {
         shapeLayer.lineWidth = lineWidth
         shapeLayer.strokeColor = lineColor.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineJoin = .round
     }
     
     // ******************************* MARK: - Configuration
@@ -116,20 +124,28 @@ public final class Plot {
         }
     }
 }
+}
 
 // ******************************* MARK: - Equatable
 
-extension Plot: Equatable {
-    public static func == (lhs: Plot, rhs: Plot) -> Bool {
+extension Graph.Plot: Equatable {
+    public static func == (lhs: Graph.Plot, rhs: Graph.Plot) -> Bool {
         return lhs === rhs
     }
 }
 
 // ******************************* MARK: - Transformable
 
-extension Plot: Transformable {
+extension Graph.Plot: Transformable {
     public func setTransform(_ transform: CGAffineTransform, animated: Bool) {
         self.transform = transform
+        
+        // TODO: Remove later
+        // Should be:
+        // MinX: 56.799999999999955
+        // MinY: 511.19999999999993
+        print("MinX: \(scaledPath!.boundingBox.minY), MinY: \(scaledPath!.boundingBox.maxY)")
+        
         configure(animated: animated)
     }
 }
