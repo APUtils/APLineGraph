@@ -64,36 +64,24 @@ public final class Graph: NSObject {
     // ******************************* MARK: - Public Methods
     
     public func addPlot(_ plot: Plot) {
-        plots.append(plot)
-        scrollView.layer.addSublayer(plot.shapeLayer)
-        configure()
+        addPlot(plot, configure: true)
     }
     
     public func removePlot(_ plot: Plot) {
-        plot.shapeLayer.removeFromSuperlayer()
-        plots.remove(plot)
-        configure()
+        removePlot(plot, configure: true)
     }
     
     public func addPlots(_ plots: [Plot]) {
-        plots.forEach {
-            self.plots.append($0)
-            scrollView.layer.addSublayer($0.shapeLayer)
-        }
-        
+        plots.forEach { addPlot($0, configure: false) }
         configure()
     }
     
     public func removeAllPlots() {
-        plots.forEach {
-            $0.shapeLayer.removeFromSuperlayer()
-            plots.remove($0)
-        }
-        
+        plots.forEach { removePlot($0, configure: false) }
         configure()
     }
     
-    // ******************************* MARK: - Private Methods
+    // ******************************* MARK: - Configuration
     
     private func configure() {
         // Update content size
@@ -138,5 +126,19 @@ public final class Graph: NSObject {
         let animated = UIView.isInAnimationClosure
 
         transformables.forEach { $0.setTransform(transform, animated: animated) }
+    }
+    
+    // ******************************* MARK: - Private Methods
+    
+    private func addPlot(_ plot: Plot, configure: Bool) {
+        plots.append(plot)
+        scrollView.layer.addSublayer(plot.shapeLayer)
+        if configure { self.configure() }
+    }
+    
+    private func removePlot(_ plot: Plot, configure: Bool) {
+        plot.shapeLayer.removeFromSuperlayer()
+        plots.remove(plot)
+        if configure { self.configure() }
     }
 }
