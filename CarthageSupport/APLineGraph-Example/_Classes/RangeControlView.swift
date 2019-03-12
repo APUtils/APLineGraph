@@ -64,7 +64,7 @@ final class RangeControlView: UIView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         touches.forEach { touch in
-            let pointX = touch.location(in: touch.view).x
+            let pointX = touch.location(in: self).x
             let leftControlLeftSide = leftConstraint.constant
             let leftControlMinX = max(leftControlLeftSide - c.sideControlEnlargedHalfWidth, 0)
             let leftControlMaxX = leftControlLeftSide + c.sideControlWidth + min(c.sideControlEnlargedHalfWidth, widthConstraint.constant / 2)
@@ -91,7 +91,7 @@ final class RangeControlView: UIView {
         touches.forEach { touch in
             guard let action = actions[touch] else { return }
             
-            let translationX = touch.location(in: touch.view).x - action.touchStart
+            let translationX = touch.location(in: self).x - action.touchStart
             let boundsWidth = bounds.width
             
             switch action {
@@ -112,7 +112,6 @@ final class RangeControlView: UIView {
             let from = leftConstraint.constant / boundsWidth
             let to = (leftConstraint.constant + widthConstraint.constant) / boundsWidth
             let range = Graph.Range(from: from, to: to)
-            print(range)
             onRangeDidChange?(range)
         }
     }
