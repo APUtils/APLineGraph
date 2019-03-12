@@ -14,6 +14,7 @@ import APLineGraph
 
 private extension Constants {
     static let mainGraphLineWidth: CGFloat = 2
+    static let helperGraphLineWidth: CGFloat = 1
 }
 
 
@@ -43,22 +44,15 @@ struct GraphVM {
         // TODO: Graphs reuse
         let mainPlots = firstGraphModel
             .lines
-            .compactMap { firstGraphModel.getPlot(entry: $0) }
+            .compactMap { firstGraphModel.getPlot(entry: $0, lineWidth: c.mainGraphLineWidth) }
         
         mainGraph.addPlots(mainPlots)
         
         let helperPlots = firstGraphModel
             .lines
-            .compactMap { firstGraphModel.getPlot(entry: $0) }
+            .compactMap { firstGraphModel.getPlot(entry: $0, lineWidth: c.helperGraphLineWidth) }
         
         helperGraph.addPlots(helperPlots)
-        
-        // TODO: Remove
-        g.asyncMain(1) {
-            g.animate(3) {
-                self.mainGraph.showRange(range: .init(from: 0, to: 0.5))
-            }
-        }
     }
 }
 
@@ -83,7 +77,7 @@ extension GraphModel {
             .map { $0 }
     }
     
-    func getPlot(entry: GraphEntry) -> Graph.Plot? {
+    func getPlot(entry: GraphEntry, lineWidth: CGFloat) -> Graph.Plot? {
         guard let entryType = types[entry] else { print("Entry doesn't exist"); return nil }
         guard entryType == .line else { print("Plot works with `.line` type data only"); return nil }
         guard let values = self.values[entry] else { print("Values are missing"); return nil }
@@ -98,6 +92,6 @@ extension GraphModel {
             return Graph.Plot.Point(x: "\(tuple.0)", y: tuple.1)
         }
         
-        return Graph.Plot(name: name, lineWidth: c.mainGraphLineWidth, lineColor: color, points: points)
+        return Graph.Plot(name: name, lineWidth: lineWidth, lineColor: color, points: points)
     }
 }

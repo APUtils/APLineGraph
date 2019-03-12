@@ -153,13 +153,6 @@ extension Graph.Plot: Equatable {
 extension Graph.Plot: Transformable {
     public func setTransform(_ transform: CGAffineTransform, animated: Bool) {
         self.transform = transform
-        
-        // TODO: Remove later
-        // Should be:
-        // MinX: 56.799999999999955
-        // MinY: 511.19999999999993
-        print("MinX: \(scaledPath!.boundingBox.minY), MinY: \(scaledPath!.boundingBox.maxY)")
-        
         configure(animated: animated)
     }
 }

@@ -26,19 +26,24 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksy-jl-eiG">
-                                <rect key="frame" x="0.0" y="395" width="375" height="64"/>
+                                <rect key="frame" x="0.0" y="395" width="375" height="43"/>
                                 <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="2bT-iZ-6u7"/>
-                                </constraints>
                                 <viewLayoutGuide key="safeArea" id="K7n-SI-Hyt"/>
+                            </view>
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="43" translatesAutoresizingMaskIntoConstraints="NO" id="Gdt-Ci-LYn" customClass="RangeControlView" customModule="APLineGraph_Example" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="395" width="375" height="43"/>
+                                <color key="backgroundColor" red="1" green="0.51512984149999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Gdt-Ci-LYn" firstAttribute="trailing" secondItem="ksy-jl-eiG" secondAttribute="trailing" id="2Qv-c9-nI4"/>
+                            <constraint firstItem="Gdt-Ci-LYn" firstAttribute="leading" secondItem="ksy-jl-eiG" secondAttribute="leading" id="5B0-VK-hwQ"/>
+                            <constraint firstItem="Gdt-Ci-LYn" firstAttribute="bottom" secondItem="ksy-jl-eiG" secondAttribute="bottom" id="LPG-DN-Rka"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ksy-jl-eiG" secondAttribute="trailing" id="UvT-ZG-5UJ"/>
                             <constraint firstItem="ksy-jl-eiG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bqR-ts-oMr"/>
                             <constraint firstItem="CDN-dg-Ss7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ldf-aF-wVM"/>
+                            <constraint firstItem="Gdt-Ci-LYn" firstAttribute="top" secondItem="ksy-jl-eiG" secondAttribute="top" id="lfM-qw-CeY"/>
                             <constraint firstItem="CDN-dg-Ss7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="nCJ-ra-iki"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CDN-dg-Ss7" secondAttribute="trailing" id="oJG-5x-ezb"/>
                             <constraint firstItem="ksy-jl-eiG" firstAttribute="top" secondItem="CDN-dg-Ss7" secondAttribute="bottom" constant="16" id="ziu-cl-2SA"/>
@@ -49,6 +54,7 @@
                     <connections>
                         <outlet property="graphContainer" destination="CDN-dg-Ss7" id="HzB-sn-TN5"/>
                         <outlet property="graphRangeContainer" destination="ksy-jl-eiG" id="QKY-ol-5gr"/>
+                        <outlet property="rangeControlView" destination="Gdt-Ci-LYn" id="TMf-88-dWa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

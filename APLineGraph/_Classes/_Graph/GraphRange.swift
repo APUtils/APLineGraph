@@ -35,3 +35,11 @@ public extension Graph.Range {
         return to - from
     }
 }
+
+// ******************************* MARK: - CustomStringConvertible
+
+extension Graph.Range: CustomStringConvertible {
+    public var description: String {
+        return "(\(from), \(to))"
+    }
+}

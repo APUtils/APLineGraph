@@ -15,6 +15,7 @@ class GraphVC: UIViewController {
     
     @IBOutlet private weak var graphContainer: UIView!
     @IBOutlet private weak var graphRangeContainer: UIView!
+    @IBOutlet private weak var rangeControlView: RangeControlView!
     
     // ******************************* MARK: - Private Properties
     
@@ -33,7 +34,14 @@ class GraphVC: UIViewController {
         mainScrollView.constraintSides(to: graphContainer)
         
         let helperScrollView = vm.helperGraph.scrollView
+        helperScrollView.isUserInteractionEnabled = false
         graphRangeContainer.addSubview(helperScrollView)
         helperScrollView.constraintSides(to: graphRangeContainer)
+        
+        rangeControlView.onRangeDidChange = { [weak self] range in
+            g.animate(2) {
+                self?.vm.mainGraph.showRange(range: range)
+            }
+        }
     }
 }

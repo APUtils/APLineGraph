@@ -102,7 +102,7 @@ public final class Graph: NSObject {
         let visibleRange = range.size
         let plotSize = CGFloat(maxCount)
         let scaleX: CGFloat = scrollView.bounds.width / (plotSize * visibleRange)
-        let translateX: CGFloat = plotSize * range.from
+        let translateX: CGFloat = -plotSize * range.from
         
         // Scale Y
         let minMaxes = plots.map { $0.getMinMaxValue(range: range) }
