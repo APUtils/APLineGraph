@@ -11,8 +11,20 @@ import UIKit
 
 extension RangeControlView {
     enum Action {
-        case adjustLeft(left: CGFloat, width: CGFloat)
-        case adjustRight(left: CGFloat, width: CGFloat)
-        case move(left: CGFloat, width: CGFloat)
+        case adjustLeft(left: CGFloat, width: CGFloat, touchStart: CGFloat)
+        case adjustRight(left: CGFloat, width: CGFloat, touchStart: CGFloat)
+        case move(left: CGFloat, width: CGFloat, touchStart: CGFloat)
+    }
+}
+
+// ******************************* MARK: - Computed Properties
+
+extension RangeControlView.Action {
+    var touchStart: CGFloat {
+        switch self {
+        case .adjustLeft(_, _, let touchStart): return touchStart
+        case .adjustRight(_, _, let touchStart): return touchStart
+        case .move(_, _, let touchStart): return touchStart
+        }
     }
 }

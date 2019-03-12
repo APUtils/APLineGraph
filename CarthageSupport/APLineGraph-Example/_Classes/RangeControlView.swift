@@ -35,11 +35,7 @@ final class RangeControlView: UIView {
     
     // ******************************* MARK: - Private Properties
     
-    private var action: Action?
-    
-    
-    // TODO: Rework to touches or custom recognizer
-    private lazy var panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(onPanChange(_:)))
+    private var actions: [UITouch: Action] = [:]
     
     // ******************************* MARK: - Initialization and Setup
     
@@ -50,7 +46,6 @@ final class RangeControlView: UIView {
     
     private func setup() {
         createAndAttachContentView()
-        addGestureRecognizer(panGestureRecognizer)
     }
     
     // ******************************* MARK: - Configuration
@@ -67,10 +62,9 @@ final class RangeControlView: UIView {
     
     // ******************************* MARK: - Actions
     
-    @objc private func onPanChange(_ panGestureRecognizer: UIPanGestureRecognizer) {
-        switch panGestureRecognizer.state {
-        case .began:
-            let pointX = panGestureRecognizer.location(in: panGestureRecognizer.view).x
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touches.forEach { touch in
+            let pointX = touch.location(in: touch.view).x
             let leftControlLeftSide = leftConstraint.constant
             let leftControlMinX = max(leftControlLeftSide - c.sideControlEnlargedHalfWidth, 0)
             let leftControlMaxX = leftControlLeftSide + c.sideControlWidth + min(c.sideControlEnlargedHalfWidth, widthConstraint.constant / 2)
@@ -82,32 +76,35 @@ final class RangeControlView: UIView {
             if pointX < leftControlMinX {
                 // Ignore
             } else if pointX >= leftControlMinX && pointX <= leftControlMaxX {
-                action = .adjustLeft(left: leftConstraint.constant, width: widthConstraint.constant)
+                actions[touch] = .adjustLeft(left: leftConstraint.constant, width: widthConstraint.constant, touchStart: pointX)
             } else if pointX > leftControlMaxX && pointX < rightControlMinX {
-                action = .move(left: leftConstraint.constant, width: widthConstraint.constant)
+                actions[touch] = .move(left: leftConstraint.constant, width: widthConstraint.constant, touchStart: pointX)
             } else if pointX >= rightControlMinX && pointX <= rightControlMaxX {
-                action = .adjustRight(left: leftConstraint.constant, width: widthConstraint.constant)
+                actions[touch] = .adjustRight(left: leftConstraint.constant, width: widthConstraint.constant, touchStart: pointX)
             } else {
                 // Ignore
             }
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touches.forEach { touch in
+            guard let action = actions[touch] else { return }
             
-        case .changed:
-            guard let action = action else { return }
-            
-            let translationX = panGestureRecognizer.translation(in: panGestureRecognizer.view).x
+            let translationX = touch.location(in: touch.view).x - action.touchStart
             let boundsWidth = bounds.width
             
             switch action {
-            case .adjustLeft(let left, let width):
+            case .adjustLeft(let left, let width, _):
                 let clampedTranslation = translationX.clamped(min: -left, max: width)
                 leftConstraint.constant = left + clampedTranslation
                 widthConstraint.constant = max(width - clampedTranslation, c.minWidth)
                 
-            case .adjustRight(let left, let width):
+            case .adjustRight(let left, let width, _):
                 let clampedTranslation = translationX.clamped(min: -width, max: boundsWidth - width - left)
                 widthConstraint.constant = max(width + clampedTranslation, c.minWidth)
                 
-            case .move(let left, let width):
+            case .move(let left, let width, _):
                 let clampedTranslation = translationX.clamped(min: -left, max: boundsWidth - width - left)
                 leftConstraint.constant = left + clampedTranslation
             }
@@ -117,13 +114,15 @@ final class RangeControlView: UIView {
             let range = Graph.Range(from: from, to: to)
             print(range)
             onRangeDidChange?(range)
-            
-        case .cancelled, .ended, .failed:
-            action = nil
-            
-        case .possible:
-            break
         }
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touches.forEach { actions[$0] = nil }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touches.forEach { actions[$0] = nil }
     }
     
     // ******************************* MARK: - Private Methods
