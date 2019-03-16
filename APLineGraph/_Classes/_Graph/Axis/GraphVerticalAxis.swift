@@ -91,6 +91,7 @@ final class VerticalAxis: Axis {
         // size = 266
         // step = 13.082
         
+        // TODO: This is wrong already
         // by2:
         // initialValue = 16
         // roundedStep = 16

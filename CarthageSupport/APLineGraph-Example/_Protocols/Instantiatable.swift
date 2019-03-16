@@ -8,6 +8,58 @@
 
 import UIKit
 
+// ******************************* MARK: - InstantiatableFromStoryboard
+
+/// Helps to instantiate object from storyboard file.
+public protocol InstantiatableFromStoryboard: class {
+    static var storyboardName: String { get }
+    static var storyboardID: String { get }
+    static func create() -> Self
+    static func createWithNavigationController() -> (UINavigationController, Self)
+}
+
+public extension InstantiatableFromStoryboard where Self: UIViewController {
+    private static func controllerFromStoryboard<T>() -> T {
+        let storyboardName = self.storyboardName
+        if let initialVc = UIStoryboard(name: storyboardName, bundle: nil).instantiateInitialViewController() as? T {
+            return initialVc
+        } else {
+            return UIStoryboard(name: storyboardName, bundle: nil).instantiateViewController(withIdentifier: className) as! T
+        }
+    }
+    
+    /// Name of storyboard that contains this view controller.
+    /// If not specified uses view controller's class name without "ViewController" postfix.
+    public static var storyboardName: String {
+        return className.replacingOccurrences(of: "VC", with: "")
+    }
+    
+    /// View controller storyboard ID.
+    /// By default uses view controller's class name.
+    public static var storyboardID: String {
+        return className
+    }
+    
+    /// Instantiates view controller from storyboard file.
+    /// By default uses view controller's class name without "ViewController" postfix for `storyboardName` and view controller's class name for `storyboardID`.
+    /// Implement `storyboardName` if you want to secify custom storyboard name.
+    /// Implement `storyboardID` if you want to specify custom storyboard ID.
+    public static func create() -> Self {
+        return controllerFromStoryboard()
+    }
+    
+    /// Instantiates view controller from storyboard file wrapped into navigation controller.
+    /// By default uses view controller's class name without "ViewController" postfix for `storyboardName` and view controller's class name for `storyboardID`.
+    /// Implement `storyboardName` if you want to secify custom storyboard name.
+    /// Implement `storyboardID` if you want to specify custom storyboard ID.
+    public static func createWithNavigationController() -> (UINavigationController, Self) {
+        let vc = create()
+        let navigationVc = UINavigationController(rootViewController: vc)
+        
+        return (navigationVc, vc)
+    }
+}
+
 // ******************************* MARK: - InstantiatableContentView
 
 /// Helps to instantiate content view from storyboard file.

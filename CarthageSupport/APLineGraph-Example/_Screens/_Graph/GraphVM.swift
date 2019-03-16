@@ -27,30 +27,26 @@ struct GraphVM {
     
     // ******************************* MARK: - Private Properties
     
-    private let graphModels: [GraphModel]? = DataSource().graphModels
+    let graphModel: GraphModel
     
     // ******************************* MARK: - Initialization and Setup
     
-    init() {
+    init(graphModel: GraphModel) {
+        self.graphModel = graphModel
         setup()
     }
     
     private func setup() {
-        guard let graphModels = graphModels else { return }
-        
-        // TODO: Add all other graphs
-        guard let firstGraphModel = graphModels.first else { return }
-        
         // TODO: Graphs reuse
-        let mainPlots = firstGraphModel
+        let mainPlots = graphModel
             .lines
-            .compactMap { firstGraphModel.getPlot(entry: $0, lineWidth: c.mainGraphLineWidth) }
+            .compactMap { graphModel.getPlot(entry: $0, lineWidth: c.mainGraphLineWidth) }
         
         mainGraph.addPlots(mainPlots)
         
-        let helperPlots = firstGraphModel
+        let helperPlots = graphModel
             .lines
-            .compactMap { firstGraphModel.getPlot(entry: $0, lineWidth: c.helperGraphLineWidth) }
+            .compactMap { graphModel.getPlot(entry: $0, lineWidth: c.helperGraphLineWidth) }
         
         helperGraph.addPlots(helperPlots)
     }

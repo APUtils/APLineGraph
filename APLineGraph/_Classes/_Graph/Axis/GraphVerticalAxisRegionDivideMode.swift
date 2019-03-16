@@ -51,5 +51,5 @@ enum RegionDivideMode: Int {
 // ******************************* MARK: - [RegionDivideMode]
 
 extension Array where Element == Graph.VerticalAxis.RegionDivideMode {
-    static let `default`: [Graph.VerticalAxis.RegionDivideMode] = [.by2, .by4, .by10]
+    static let `default`: [Graph.VerticalAxis.RegionDivideMode] = [.by5, .by10]
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 
-class GraphVC: UIViewController {
+final class GraphVC: UIViewController {
     
     // ******************************* MARK: - @IBOutlets
     
@@ -19,7 +19,7 @@ class GraphVC: UIViewController {
     
     // ******************************* MARK: - Private Properties
     
-    private let vm = GraphVM()
+    private var vm: GraphVM!
     
     // ******************************* MARK: - Setup
 
@@ -44,5 +44,15 @@ class GraphVC: UIViewController {
         rangeControlView.onRangeDidChange = { [weak self] range in
             self?.vm.mainGraph.showRange(range: range)
         }
+    }
+}
+
+// ******************************* MARK: - InstantiatableFromStoryboard
+
+extension GraphVC: InstantiatableFromStoryboard {
+    static func create(vm: GraphVM) -> Self {
+        let vc = create()
+        vc.vm = vm
+        return vc
     }
 }
