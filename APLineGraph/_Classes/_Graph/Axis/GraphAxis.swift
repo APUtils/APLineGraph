@@ -10,7 +10,7 @@ import UIKit
 
 
 private extension Constants {
-    static let fontSize: CGFloat = 10
+    static let fontSize: CGFloat = 11
     static let font: UIFont = UIFont.systemFont(ofSize: fontSize)
     static let textColor: UIColor = #colorLiteral(red: 0.5960784314, green: 0.6196078431, blue: 0.6392156863, alpha: 1)
 }

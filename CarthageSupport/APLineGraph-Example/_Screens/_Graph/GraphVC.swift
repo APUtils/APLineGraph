@@ -45,6 +45,12 @@ final class GraphVC: UIViewController {
             self?.vm.mainGraph.showRange(range: range)
         }
     }
+    
+    // ******************************* MARK: - Actions
+    
+    @IBAction private func onSwitchToNightModeTap(_ sender: Any) {
+        // TODO:
+    }
 }
 
 // ******************************* MARK: - InstantiatableFromStoryboard
