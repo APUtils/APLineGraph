@@ -91,12 +91,6 @@ final class VerticalAxis: Axis {
         // size = 266
         // step = 13.082
         
-        // TODO: This is wrong already
-        // by2:
-        // initialValue = 16
-        // roundedStep = 16
-        // values: [16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256]
-        
         // by10:
         // initialValue = 100
         // roundedStep = 100

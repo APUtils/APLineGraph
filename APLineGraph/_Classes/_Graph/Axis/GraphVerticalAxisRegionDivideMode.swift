@@ -18,32 +18,21 @@ enum RegionDivideMode: Int {
     case by10 = 10
     
     func getRoundedStep(step: CGFloat) -> CGFloat {
+        let roundedBy10Step = pow(10, log10(step).rounded(.up))
         let rawValueCGFloat = rawValue.asCGFloat
-        let power: CGFloat
-        switch self {
-        case .by2:
-            let _power = log2(step).rounded(.up)
-            if _power.remainder(dividingBy: 2) == 0 {
-                // Prevent powers of 4 and 8
-                power = _power + 1
-            } else {
-                power = _power
-            }
-            
-        case .by4:
-            let _power = (log(step) / log(rawValueCGFloat)).rounded(.up)
-            if _power.remainder(dividingBy: 3) == 0 {
-                // Prevent powers of 8
-                power = _power + 1
-            } else {
-                power = _power
-            }
-            
-        case .by10: power = log10(step).rounded(.up)
-        default: power = (log(step) / log(rawValueCGFloat)).rounded(.up)
-        }
         
-        return pow(rawValueCGFloat, power)
+        switch self {
+        case .by10:
+            return roundedBy10Step
+            
+        default:
+            let divided = roundedBy10Step / rawValueCGFloat
+            if divided > step {
+                return divided
+            } else {
+                return divided * 10
+            }
+        }
     }
 }
 }
@@ -51,5 +40,5 @@ enum RegionDivideMode: Int {
 // ******************************* MARK: - [RegionDivideMode]
 
 extension Array where Element == Graph.VerticalAxis.RegionDivideMode {
-    static let `default`: [Graph.VerticalAxis.RegionDivideMode] = [.by5, .by10]
+    static let `default`: [Graph.VerticalAxis.RegionDivideMode] = [.by2, .by4, .by10]
 }
