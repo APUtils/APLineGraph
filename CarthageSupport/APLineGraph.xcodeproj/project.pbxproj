@@ -33,6 +33,9 @@
 		0DB88A2A223DBA9B002B9F7D /* SelfResizableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A29223DBA9B002B9F7D /* SelfResizableTableView.swift */; };
 		0DB88A2D223DBCD1002B9F7D /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A2B223DBCD1002B9F7D /* TableView.swift */; };
 		0DB88A2E223DBCD1002B9F7D /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A2C223DBCD1002B9F7D /* ScrollView.swift */; };
+		0DB88A36223DBFD4002B9F7D /* GraphPlotSelectionCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A30223DBFD4002B9F7D /* GraphPlotSelectionCellVM.swift */; };
+		0DB88A38223DBFD4002B9F7D /* GraphPlotSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A32223DBFD4002B9F7D /* GraphPlotSelectionCell.swift */; };
+		0DB88A3B223DBFD4002B9F7D /* GraphPlotSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DB88A35223DBFD4002B9F7D /* GraphPlotSelectionCell.xib */; };
 		0DCE43CA2237282600CB4929 /* RangeControlVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C72237282600CB4929 /* RangeControlVM.swift */; };
 		0DCE43CB2237282600CB4929 /* RangeControlViewContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */; };
 		0DCE43CC2237282600CB4929 /* RangeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C92237282600CB4929 /* RangeControlView.swift */; };
@@ -139,6 +142,9 @@
 		0DB88A29223DBA9B002B9F7D /* SelfResizableTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfResizableTableView.swift; sourceTree = "<group>"; };
 		0DB88A2B223DBCD1002B9F7D /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		0DB88A2C223DBCD1002B9F7D /* ScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
+		0DB88A30223DBFD4002B9F7D /* GraphPlotSelectionCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphPlotSelectionCellVM.swift; sourceTree = "<group>"; };
+		0DB88A32223DBFD4002B9F7D /* GraphPlotSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphPlotSelectionCell.swift; sourceTree = "<group>"; };
+		0DB88A35223DBFD4002B9F7D /* GraphPlotSelectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GraphPlotSelectionCell.xib; sourceTree = "<group>"; };
 		0DCE43C72237282600CB4929 /* RangeControlVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlVM.swift; sourceTree = "<group>"; };
 		0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RangeControlViewContentView.xib; sourceTree = "<group>"; };
 		0DCE43C92237282600CB4929 /* RangeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlView.swift; sourceTree = "<group>"; };
@@ -319,6 +325,16 @@
 			path = _Classes;
 			sourceTree = "<group>";
 		};
+		0DB88A2F223DBFA0002B9F7D /* _Plot Selection */ = {
+			isa = PBXGroup;
+			children = (
+				0DB88A32223DBFD4002B9F7D /* GraphPlotSelectionCell.swift */,
+				0DB88A35223DBFD4002B9F7D /* GraphPlotSelectionCell.xib */,
+				0DB88A30223DBFD4002B9F7D /* GraphPlotSelectionCellVM.swift */,
+			);
+			path = "_Plot Selection";
+			sourceTree = "<group>";
+		};
 		0DE2D75122354825007BD043 /* _Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -377,7 +393,8 @@
 		0DE2D76A22355671007BD043 /* _Graph */ = {
 			isa = PBXGroup;
 			children = (
-				0DE2D7A5223726A5007BD043 /* _RangeControl */,
+				0DB88A2F223DBFA0002B9F7D /* _Plot Selection */,
+				0DE2D7A5223726A5007BD043 /* _Range Control */,
 				0D141ABE2235476F00CB6FF0 /* Graph.storyboard */,
 				0D141ABC2235476F00CB6FF0 /* GraphVC.swift */,
 				0DE2D76B223556A0007BD043 /* GraphVM.swift */,
@@ -430,7 +447,7 @@
 			path = _Utils;
 			sourceTree = "<group>";
 		};
-		0DE2D7A5223726A5007BD043 /* _RangeControl */ = {
+		0DE2D7A5223726A5007BD043 /* _Range Control */ = {
 			isa = PBXGroup;
 			children = (
 				0DCE43C92237282600CB4929 /* RangeControlView.swift */,
@@ -438,7 +455,7 @@
 				0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */,
 				0DCE43C72237282600CB4929 /* RangeControlVM.swift */,
 			);
-			path = _RangeControl;
+			path = "_Range Control";
 			sourceTree = "<group>";
 		};
 		0DE2D7A82237273E007BD043 /* _Protocols */ = {
@@ -646,6 +663,7 @@
 				0D141AC52235477100CB6FF0 /* LaunchScreen.storyboard in Resources */,
 				0D141AC22235477100CB6FF0 /* Assets.xcassets in Resources */,
 				0DE2D77222355CED007BD043 /* chart_data.json in Resources */,
+				0DB88A3B223DBFD4002B9F7D /* GraphPlotSelectionCell.xib in Resources */,
 				0D141AC02235476F00CB6FF0 /* Graph.storyboard in Resources */,
 				0DB88A1E223DAB46002B9F7D /* GraphSelection.storyboard in Resources */,
 				0DB88A23223DAB46002B9F7D /* GraphSelectionCell.xib in Resources */,
@@ -700,6 +718,7 @@
 				0DE2D78422356685007BD043 /* Array+Utils.swift in Sources */,
 				0DE2D7882235696C007BD043 /* GraphEntry.swift in Sources */,
 				0DE2D77522355D40007BD043 /* GraphEntryType.swift in Sources */,
+				0DB88A36223DBFD4002B9F7D /* GraphPlotSelectionCellVM.swift in Sources */,
 				0DB88A27223DB8F5002B9F7D /* NSLayoutConstraint+Utils.swift in Sources */,
 				0DE2D781223562CE007BD043 /* JSONDecoder+Utils.swift in Sources */,
 				0DB88A2E223DBCD1002B9F7D /* ScrollView.swift in Sources */,
@@ -708,6 +727,7 @@
 				0DE2D78A22357D31007BD043 /* Date+Utils.swift in Sources */,
 				0DE2D76C223556A0007BD043 /* GraphVM.swift in Sources */,
 				0DE2D77122355CE7007BD043 /* GraphModel.swift in Sources */,
+				0DB88A38223DBFD4002B9F7D /* GraphPlotSelectionCell.swift in Sources */,
 				0DB88A20223DAB46002B9F7D /* GraphSelectionVM.swift in Sources */,
 				0DB88A2D223DBCD1002B9F7D /* TableView.swift in Sources */,
 				0D141ABB2235476F00CB6FF0 /* AppDelegate.swift in Sources */,

@@ -32,7 +32,7 @@ final class GraphSelectionVC: UIViewController {
     
     private func setupTableView() {
         tableView.registerNib(class: GraphSelectionCell.self)
-        tableView.estimatedRowHeight = 100
+        tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
     }
     

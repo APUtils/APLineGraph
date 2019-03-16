@@ -24,6 +24,7 @@ struct GraphVM {
     
     let mainGraph = Graph(showAxises: true)
     let helperGraph = Graph(showAxises: false)
+    let plotSelectionVMs: [GraphPlotSelectionCellVM] = []
     
     // ******************************* MARK: - Private Properties
     
@@ -37,18 +38,20 @@ struct GraphVM {
     }
     
     private func setup() {
-        // TODO: Graphs reuse
+        // TODO: Plots reuse
         let mainPlots = graphModel
             .lines
             .compactMap { graphModel.getPlot(entry: $0, lineWidth: c.mainGraphLineWidth) }
         
         mainGraph.addPlots(mainPlots)
+        mainGraph.isScrollEnabled = false
         
         let helperPlots = graphModel
             .lines
             .compactMap { graphModel.getPlot(entry: $0, lineWidth: c.helperGraphLineWidth) }
         
         helperGraph.addPlots(helperPlots)
+        helperGraph.isUserInteractionEnabled = false
     }
 }
 
