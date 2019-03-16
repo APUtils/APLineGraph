@@ -18,6 +18,10 @@
 		0D141ADB2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141ADA2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift */; };
 		0D141AE62235478B00CB6FF0 /* APLineGraph.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E202681322117D03004CC28A /* APLineGraph.framework */; };
 		0D141AE72235478B00CB6FF0 /* APLineGraph.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E202681322117D03004CC28A /* APLineGraph.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0DB88A0D223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A0C223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift */; };
+		0DB88A10223D8D4D002B9F7D /* GraphVerticalAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A0F223D8D4D002B9F7D /* GraphVerticalAxis.swift */; };
+		0DB88A12223D8D5A002B9F7D /* GraphHorizontalAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A11223D8D5A002B9F7D /* GraphHorizontalAxis.swift */; };
+		0DB88A14223D90F4002B9F7D /* GraphMinMaxRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A13223D90F4002B9F7D /* GraphMinMaxRange.swift */; };
 		0DCE43CA2237282600CB4929 /* RangeControlVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C72237282600CB4929 /* RangeControlVM.swift */; };
 		0DCE43CB2237282600CB4929 /* RangeControlViewContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */; };
 		0DCE43CC2237282600CB4929 /* RangeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C92237282600CB4929 /* RangeControlView.swift */; };
@@ -49,7 +53,7 @@
 		0DE2D7942235BFEB007BD043 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D7932235BFCF007BD043 /* Constants.swift */; };
 		0DE2D79A2235C59B007BD043 /* Double+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D7952235C0A4007BD043 /* Double+Utils.swift */; };
 		0DE2D79C22370D50007BD043 /* CGFloat+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D79B22370D50007BD043 /* CGFloat+Utils.swift */; };
-		0DE2D79E22370EC7007BD043 /* GraphRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D79D22370EC7007BD043 /* GraphRange.swift */; };
+		0DE2D79E22370EC7007BD043 /* GraphRelativeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D79D22370EC7007BD043 /* GraphRelativeRange.swift */; };
 		0DE2D7A022371A40007BD043 /* Int+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D79F22371A40007BD043 /* Int+Utils.swift */; };
 		0DE2D7AA22372764007BD043 /* Instantiatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D7A922372764007BD043 /* Instantiatable.swift */; };
 		0DE2D7AC2237278C007BD043 /* ClassName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D7AB2237278C007BD043 /* ClassName.swift */; };
@@ -109,6 +113,10 @@
 		0D141AD62235477100CB6FF0 /* APLineGraph-ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "APLineGraph-ExampleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D141ADA2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APLineGraph_ExampleUITests.swift; sourceTree = "<group>"; };
 		0D141ADC2235477100CB6FF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DB88A0C223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphVerticalAxisRegionDivideMode.swift; sourceTree = "<group>"; };
+		0DB88A0F223D8D4D002B9F7D /* GraphVerticalAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphVerticalAxis.swift; sourceTree = "<group>"; };
+		0DB88A11223D8D5A002B9F7D /* GraphHorizontalAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphHorizontalAxis.swift; sourceTree = "<group>"; };
+		0DB88A13223D90F4002B9F7D /* GraphMinMaxRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphMinMaxRange.swift; sourceTree = "<group>"; };
 		0DCE43C72237282600CB4929 /* RangeControlVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlVM.swift; sourceTree = "<group>"; };
 		0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RangeControlViewContentView.xib; sourceTree = "<group>"; };
 		0DCE43C92237282600CB4929 /* RangeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlView.swift; sourceTree = "<group>"; };
@@ -142,7 +150,7 @@
 		0DE2D7932235BFCF007BD043 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0DE2D7952235C0A4007BD043 /* Double+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Utils.swift"; sourceTree = "<group>"; };
 		0DE2D79B22370D50007BD043 /* CGFloat+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Utils.swift"; sourceTree = "<group>"; };
-		0DE2D79D22370EC7007BD043 /* GraphRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphRange.swift; sourceTree = "<group>"; };
+		0DE2D79D22370EC7007BD043 /* GraphRelativeRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphRelativeRange.swift; sourceTree = "<group>"; };
 		0DE2D79F22371A40007BD043 /* Int+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Utils.swift"; sourceTree = "<group>"; };
 		0DE2D7A922372764007BD043 /* Instantiatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instantiatable.swift; sourceTree = "<group>"; };
 		0DE2D7AB2237278C007BD043 /* ClassName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassName.swift; sourceTree = "<group>"; };
@@ -235,6 +243,36 @@
 			path = "APLineGraph-ExampleUITests";
 			sourceTree = "<group>";
 		};
+		0DB88A0E223D8D36002B9F7D /* _Axis */ = {
+			isa = PBXGroup;
+			children = (
+				0DCE43D6223D2DCE00CB4929 /* GraphAxis.swift */,
+				0DB88A0C223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift */,
+				0DB88A0F223D8D4D002B9F7D /* GraphVerticalAxis.swift */,
+				0DB88A11223D8D5A002B9F7D /* GraphHorizontalAxis.swift */,
+			);
+			name = _Axis;
+			path = Axis;
+			sourceTree = "<group>";
+		};
+		0DB88A15223D9150002B9F7D /* _Range */ = {
+			isa = PBXGroup;
+			children = (
+				0DB88A13223D90F4002B9F7D /* GraphMinMaxRange.swift */,
+				0DE2D79D22370EC7007BD043 /* GraphRelativeRange.swift */,
+			);
+			path = _Range;
+			sourceTree = "<group>";
+		};
+		0DB88A16223D9161002B9F7D /* _Plot */ = {
+			isa = PBXGroup;
+			children = (
+				0D141AA82235409500CB6FF0 /* GraphPlot.swift */,
+				0DE2D75722354C2A007BD043 /* GraphPlotPoint.swift */,
+			);
+			path = _Plot;
+			sourceTree = "<group>";
+		};
 		0DE2D75122354825007BD043 /* _Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,9 +291,9 @@
 				0DE2D75922354DD1007BD043 /* Collection+Utils.swift */,
 				0DE2D7952235C0A4007BD043 /* Double+Utils.swift */,
 				0DE2D79F22371A40007BD043 /* Int+Utils.swift */,
+				0DCE43DD223D48CA00CB4929 /* String+Utils.swift */,
 				0DCE43DB223D3E0700CB4929 /* TimeZone+Utils.swift */,
 				0DE2D78F2235B446007BD043 /* UIView+Utils.swift */,
-				0DCE43DD223D48CA00CB4929 /* String+Utils.swift */,
 			);
 			path = _Extensions;
 			sourceTree = "<group>";
@@ -263,11 +301,10 @@
 		0DE2D75D2235529C007BD043 /* _Graph */ = {
 			isa = PBXGroup;
 			children = (
+				0DB88A0E223D8D36002B9F7D /* _Axis */,
+				0DB88A16223D9161002B9F7D /* _Plot */,
+				0DB88A15223D9150002B9F7D /* _Range */,
 				0D141AA62235408000CB6FF0 /* Graph.swift */,
-				0DCE43D6223D2DCE00CB4929 /* GraphAxis.swift */,
-				0D141AA82235409500CB6FF0 /* GraphPlot.swift */,
-				0DE2D75722354C2A007BD043 /* GraphPlotPoint.swift */,
-				0DE2D79D22370EC7007BD043 /* GraphRange.swift */,
 			);
 			path = _Graph;
 			sourceTree = "<group>";
@@ -325,13 +362,13 @@
 			isa = PBXGroup;
 			children = (
 				0DE2D78322356685007BD043 /* Array+Utils.swift */,
+				0DCE43CF223734A200CB4929 /* CGFloat+Utils.swift */,
 				0DE2D7642235546E007BD043 /* Data+Utils.swift */,
 				0DE2D78922357D31007BD043 /* Date+Utils.swift */,
 				0DE2D77822355F1A007BD043 /* Dictionary+Utils.swift */,
 				0DE2D768223555A2007BD043 /* JSONDecoder+Utils.swift */,
 				0DE2D77B22355FCD007BD043 /* UIColor+Utils.swift */,
 				0DE2D78B2235920E007BD043 /* UIView+Utils.swift */,
-				0DCE43CF223734A200CB4929 /* CGFloat+Utils.swift */,
 			);
 			path = _Extensions;
 			sourceTree = "<group>";
@@ -639,6 +676,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DB88A10223D8D4D002B9F7D /* GraphVerticalAxis.swift in Sources */,
 				0DCE43DC223D3E0700CB4929 /* TimeZone+Utils.swift in Sources */,
 				0DCE43D7223D2DCE00CB4929 /* GraphAxis.swift in Sources */,
 				0DE2D7A022371A40007BD043 /* Int+Utils.swift in Sources */,
@@ -647,12 +685,15 @@
 				0DE2D7912235B44A007BD043 /* UIView+Utils.swift in Sources */,
 				0D141AA72235408000CB6FF0 /* Graph.swift in Sources */,
 				0DE2D79A2235C59B007BD043 /* Double+Utils.swift in Sources */,
-				0DE2D79E22370EC7007BD043 /* GraphRange.swift in Sources */,
+				0DB88A14223D90F4002B9F7D /* GraphMinMaxRange.swift in Sources */,
+				0DE2D79E22370EC7007BD043 /* GraphRelativeRange.swift in Sources */,
 				0DE2D75622354B86007BD043 /* Array+Utils.swift in Sources */,
 				0DE2D75822354C2A007BD043 /* GraphPlotPoint.swift in Sources */,
 				0DE2D75A22354DD1007BD043 /* Collection+Utils.swift in Sources */,
 				0DCE43DE223D48CA00CB4929 /* String+Utils.swift in Sources */,
 				0DE2D7942235BFEB007BD043 /* Constants.swift in Sources */,
+				0DB88A12223D8D5A002B9F7D /* GraphHorizontalAxis.swift in Sources */,
+				0DB88A0D223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

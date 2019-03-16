@@ -19,6 +19,14 @@ extension CGFloat {
         return Int(self)
     }
     
+    var asString: String {
+        if truncatingRemainder(dividingBy: 1) != 0 {
+            return "\(self)"
+        } else {
+            return "\(Int(rounded()))"
+        }
+    }
+    
     /// Computes and return clamped value within min and max bounds
     /// - parameter min: Minimum possible value.
     /// - parameter min: Maximum possible value.

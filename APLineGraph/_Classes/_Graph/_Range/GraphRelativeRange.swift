@@ -1,5 +1,5 @@
 //
-//  GraphRange.swift
+//  GraphRelativeRange.swift
 //  APLineGraph
 //
 //  Created by Anton Plebanovich on 3/12/19.
@@ -10,7 +10,7 @@ import UIKit
 
 
 public extension Graph {
-public struct Range {
+public struct RelativeRange {
     public let from: CGFloat
     public let to: CGFloat
     
@@ -26,9 +26,9 @@ public struct Range {
 
 // ******************************* MARK: - Computed Properties
 
-public extension Graph.Range {
-    public static var full: Graph.Range {
-        return Graph.Range(from: 0, to: 1)
+public extension Graph.RelativeRange {
+    public static var full: Graph.RelativeRange {
+        return Graph.RelativeRange(from: 0, to: 1)
     }
     
     public var size: CGFloat {
@@ -38,7 +38,7 @@ public extension Graph.Range {
 
 // ******************************* MARK: - CustomStringConvertible
 
-extension Graph.Range: CustomStringConvertible {
+extension Graph.RelativeRange: CustomStringConvertible {
     public var description: String {
         return "(\(from), \(to))"
     }

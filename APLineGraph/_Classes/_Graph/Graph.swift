@@ -25,9 +25,9 @@ public final class Graph: UIScrollView {
     
     private var observer: NSKeyValueObservation!
     private var configuredSize: CGSize = .zero
-    private var range: Range = .full
-    private var horizontalAxis: Axis?
-    private var verticalAxis: Axis?
+    private var range: RelativeRange = .full
+    private var horizontalAxis: HorizontalAxis?
+    private var verticalAxis: VerticalAxis?
     
     // ******************************* MARK: - Initialization and Setup
     
@@ -77,10 +77,11 @@ public final class Graph: UIScrollView {
     }
     
     // TODO: Rethink this method so it convenient for anyone to use
-    public func showRange(range: Range) {
+    public func showRange(range: RelativeRange) {
         // TODO: if range size didn't change just scroll
         self.range = range
         horizontalAxis?.range = range
+        verticalAxis?.range = range
         updatePlots()
     }
     
@@ -95,11 +96,13 @@ public final class Graph: UIScrollView {
     
     private func layoutAxises() {
         if let horizontalAxis = horizontalAxis {
-            horizontalAxis.frame = CGRect(x: 0, y: bounds.height - horizontalAxis.size, width: contentSize.width, height: horizontalAxis.size)
+            let height = horizontalAxis.maxLabelSize.height
+            horizontalAxis.frame = CGRect(x: 0, y: bounds.height - height, width: contentSize.width, height: height)
         }
         
         if let verticalAxis = verticalAxis {
-            verticalAxis.frame = CGRect(x: 0, y: 0, width: verticalAxis.size, height: contentSize.height)
+            let width = verticalAxis.maxLabelSize.width
+            verticalAxis.frame = CGRect(x: 0, y: 0, width: width, height: contentSize.height)
         }
     }
     
@@ -119,9 +122,15 @@ public final class Graph: UIScrollView {
             .filterDuplicates()
             .sorted()
         
-        let horizontalAxis = Axis(type: .horizontal(dates: dates))
+        let horizontalAxis = HorizontalAxis(dates: dates)
         self.horizontalAxis = horizontalAxis
         addSubview(horizontalAxis)
+        
+        let minMaxRanges = getMinMaxRanges()
+        let verticalAxis = VerticalAxis(modes: .default, minMaxRanges: minMaxRanges, verticalPercentGap: c.verticalPercentGap)
+        self.verticalAxis = verticalAxis
+        addSubview(verticalAxis)
+        
         layoutAxises()
     }
     
@@ -146,9 +155,9 @@ public final class Graph: UIScrollView {
         let translateX: CGFloat = -plotSize * range.from
         
         // Scale Y
-        let minMaxes = plots.map { $0.getMinMaxValue(range: range) }
-        let minValue: CGFloat = minMaxes.map { $0.0.asCGFloat }.min() ?? 0
-        let maxValue: CGFloat = minMaxes.map { $0.1.asCGFloat }.max() ?? 1
+        let minMaxRange = getMinMaxRange(range: range)
+        let minValue: CGFloat = minMaxRange.min
+        let maxValue: CGFloat = minMaxRange.max
         
         let rangeY: CGFloat = maxValue - minValue
         let gap: CGFloat = height * c.verticalPercentGap
@@ -189,5 +198,29 @@ public final class Graph: UIScrollView {
         plot.shapeLayer.removeFromSuperlayer()
         plots.remove(plot)
         if updatePlots { self.updatePlots() }
+    }
+    
+    private func getMinMaxRange(range: RelativeRange) -> MinMaxRange {
+        let minMaxes = plots.map { $0.getMinMaxRange(range: range) }
+        let minValue = minMaxes.map { $0.min }.min() ?? 0
+        let maxValue = minMaxes.map { $0.max }.max() ?? 1
+        return MinMaxRange(min: minValue, max: maxValue)
+    }
+    
+    private func getMinMaxRanges() -> [MinMaxRange] {
+        let count = plots
+            .map { $0.points.count }
+            .min() ?? 0
+        
+        var minMaxRanges: [MinMaxRange] = []
+        for i in 0..<count {
+            let values = plots.map { $0.points[i].value }
+            let min = values.min() ?? 0
+            let max = values.max() ?? 0
+            let minMaxRange = MinMaxRange(min: min, max: max)
+            minMaxRanges.append(minMaxRange)
+        }
+        
+        return minMaxRanges
     }
 }

@@ -6,23 +6,17 @@
 //  Copyright © 2019 Anton Plebanovich. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 
 public extension Graph.Plot {
 public struct Point {
     public let date: Date
-    public let value: Double
+    public let value: CGFloat
     
-    public init(date: Date, value: Double) {
+    public init(date: Date, value: CGFloat) {
         self.date = date
         self.value = value
     }
 }
-}
-
-// ******************************* MARK: - Computed Properties
-
-extension Graph.Plot.Point {
-    
 }

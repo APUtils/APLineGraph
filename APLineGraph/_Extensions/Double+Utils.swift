@@ -19,6 +19,10 @@ extension Double {
     }
     
     var asString: String {
-        return String(self)
+        if truncatingRemainder(dividingBy: 1) != 0 {
+            return "\(self)"
+        } else {
+            return "\(Int(rounded()))"
+        }
     }
 }

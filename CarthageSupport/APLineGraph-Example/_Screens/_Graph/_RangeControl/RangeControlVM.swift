@@ -14,7 +14,7 @@ struct RangeControlVM {
     
     // ******************************* MARK: - Public Properties
     
-    let initialRange: Graph.Range
+    let initialRange: Graph.RelativeRange
     
     // ******************************* MARK: - Initialization and Setup
     

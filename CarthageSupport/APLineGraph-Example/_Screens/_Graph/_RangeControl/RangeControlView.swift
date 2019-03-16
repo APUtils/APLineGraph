@@ -23,11 +23,11 @@ final class RangeControlView: UIView {
     
     // ******************************* MARK: - Types
     
-    typealias OnRangeChange = (Graph.Range) -> Void
+    typealias OnRangeChange = (Graph.RelativeRange) -> Void
     
     // ******************************* MARK: - Public Properties
     
-    private(set) var range: Graph.Range = .full
+    private(set) var range: Graph.RelativeRange = .full
     var onRangeDidChange: OnRangeChange?
     
     // ******************************* MARK: - @IBOutlets
@@ -126,7 +126,7 @@ final class RangeControlView: UIView {
             
             let from = leftConstraint.constant / boundsWidth
             let to = (leftConstraint.constant + widthConstraint.constant) / boundsWidth
-            range = Graph.Range(from: from, to: to)
+            range = Graph.RelativeRange(from: from, to: to)
             onRangeDidChange?(range)
         }
     }

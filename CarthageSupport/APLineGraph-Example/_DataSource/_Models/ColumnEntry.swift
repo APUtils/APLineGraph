@@ -6,13 +6,13 @@
 //  Copyright © 2019 Anton Plebanovich. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 
 /// Handles String and Double in the same array
 enum ColumnEntry {
     case graphEntry(GraphEntry)
-    case value(Double)
+    case value(CGFloat)
     
     var graphEntry: GraphEntry? {
         switch self {
@@ -23,12 +23,12 @@ enum ColumnEntry {
     
     var date: Date? {
         switch self {
-        case .value(let value): return Date(jsonDate: value)
+        case .value(let value): return Date(jsonDate: value.asTimeInterval)
         default: return nil
         }
     }
     
-    var value: Double? {
+    var value: CGFloat? {
         switch self {
         case .value(let value): return value
         default: return nil
@@ -42,7 +42,7 @@ extension ColumnEntry: Decodable {
     init(from decoder: Decoder) throws {
         do {
             // Try value
-            let value = try decoder.singleValueContainer().decode(Double.self)
+            let value = try decoder.singleValueContainer().decode(CGFloat.self)
             self = .value(value)
             
         } catch {

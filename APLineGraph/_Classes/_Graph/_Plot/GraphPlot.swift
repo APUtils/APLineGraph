@@ -39,13 +39,13 @@ public final class Plot {
         return points.count
     }()
     
-    private(set) lazy var minValue: Double = {
+    private(set) lazy var minValue: CGFloat = {
         return points
             .map { $0.value }
             .min() ?? 0
     }()
     
-    private(set) lazy var maxValue: Double = {
+    private(set) lazy var maxValue: CGFloat = {
         return points
             .map { $0.value }
             .max() ?? 1
@@ -65,7 +65,7 @@ public final class Plot {
         // Add lines to other points
         for index in points.indices.dropFirst() {
             let point = points[index]
-            let nextPointX = Double(index)
+            let nextPointX = index.asCGFloat
             let nextPointY = point.value
             let nextPoint = CGPoint(x: nextPointX, y: nextPointY)
             path.addLine(to: nextPoint)
@@ -111,15 +111,15 @@ public final class Plot {
     
     // ******************************* MARK: - Internal Methods
     
-    func getMinMaxValue(range: Graph.Range) -> (Double, Double) {
+    func getMinMaxRange(range: Graph.RelativeRange) -> MinMaxRange {
         // TODO: Too many casts. Can it be reduced?
-        let startIndex = (valuesCount.asDouble * range.from.asDouble).rounded().asInt
-        let endIndex = (valuesCount.asDouble * range.to.asDouble).rounded().asInt
+        let startIndex = (valuesCount.asCGFloat * range.from).rounded().asInt
+        let endIndex = (valuesCount.asCGFloat * range.to).rounded().asInt
         let subpoints = points[startIndex..<endIndex]
         let subvalues = subpoints.map { $0.value }
         let minValue = subvalues.min() ?? 0
         let maxValue = subvalues.max() ?? 1
-        return (minValue, maxValue)
+        return MinMaxRange(min: minValue, max: maxValue)
     }
     
     func setTransform(_ transform: CGAffineTransform, animated: Bool) {
