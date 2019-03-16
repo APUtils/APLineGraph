@@ -17,4 +17,8 @@ extension Double {
     var asInt: Int {
         return Int(self)
     }
+    
+    var asString: String {
+        return String(self)
+    }
 }

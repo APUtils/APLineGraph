@@ -6,10 +6,15 @@
 //  Copyright © 2019 Anton Plebanovich. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 
 extension Int {
+    
+    var asCGFloat: CGFloat {
+        return CGFloat(self)
+    }
+    
     var asDouble: Double {
         return Double(self)
     }

@@ -11,12 +11,18 @@ import Foundation
 
 public extension Graph.Plot {
 public struct Point {
-    public let x: String
-    public let y: Double
+    public let date: Date
+    public let value: Double
     
-    public init(x: String, y: Double) {
-        self.x = x
-        self.y = y
+    public init(date: Date, value: Double) {
+        self.date = date
+        self.value = value
     }
 }
+}
+
+// ******************************* MARK: - Computed Properties
+
+extension Graph.Plot.Point {
+    
 }

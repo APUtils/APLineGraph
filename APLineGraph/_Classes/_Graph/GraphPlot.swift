@@ -35,21 +35,21 @@ public final class Plot {
     
     // ******************************* MARK: - Internal Properties
     
-    var valuesCount: Int {
+    private(set) lazy var valuesCount: Int = {
         return points.count
-    }
+    }()
     
-    var minValue: Double {
+    private(set) lazy var minValue: Double = {
         return points
-            .map { $0.y }
+            .map { $0.value }
             .min() ?? 0
-    }
+    }()
     
-    var maxValue: Double {
+    private(set) lazy var maxValue: Double = {
         return points
-            .map { $0.y }
+            .map { $0.value }
             .max() ?? 1
-    }
+    }()
     
     // ******************************* MARK: - Private Properties
     
@@ -59,14 +59,14 @@ public final class Plot {
         // Start from first
         guard let firstPoint = points.first else { return path }
         
-        let startPoint = CGPoint(x: 0, y: firstPoint.y)
+        let startPoint = CGPoint(x: 0, y: firstPoint.value)
         path.move(to: startPoint)
         
         // Add lines to other points
         for index in points.indices.dropFirst() {
             let point = points[index]
             let nextPointX = Double(index)
-            let nextPointY = point.y
+            let nextPointY = point.value
             let nextPoint = CGPoint(x: nextPointX, y: nextPointY)
             path.addLine(to: nextPoint)
         }
@@ -112,13 +112,19 @@ public final class Plot {
     // ******************************* MARK: - Internal Methods
     
     func getMinMaxValue(range: Graph.Range) -> (Double, Double) {
+        // TODO: Too many casts. Can it be reduced?
         let startIndex = (valuesCount.asDouble * range.from.asDouble).rounded().asInt
         let endIndex = (valuesCount.asDouble * range.to.asDouble).rounded().asInt
         let subpoints = points[startIndex..<endIndex]
-        let subvalues = subpoints.map { $0.y }
+        let subvalues = subpoints.map { $0.value }
         let minValue = subvalues.min() ?? 0
         let maxValue = subvalues.max() ?? 1
         return (minValue, maxValue)
+    }
+    
+    func setTransform(_ transform: CGAffineTransform, animated: Bool) {
+        self.transform = transform
+        configure(animated: animated)
     }
     
     // ******************************* MARK: - Configuration
@@ -145,14 +151,5 @@ public final class Plot {
 extension Graph.Plot: Equatable {
     public static func == (lhs: Graph.Plot, rhs: Graph.Plot) -> Bool {
         return lhs === rhs
-    }
-}
-
-// ******************************* MARK: - Transformable
-
-extension Graph.Plot: Transformable {
-    public func setTransform(_ transform: CGAffineTransform, animated: Bool) {
-        self.transform = transform
-        configure(animated: animated)
     }
 }

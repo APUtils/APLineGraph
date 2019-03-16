@@ -14,85 +14,125 @@ private extension Constants {
 }
 
 
-public final class Graph: NSObject {
+public final class Graph: UIScrollView {
     
     // ******************************* MARK: - Public Properties
     
+    public var showAxises: Bool = false { didSet { updateAxises() } }
     public private(set) var plots: [Plot] = []
-    
-    public private(set) lazy var scrollView: UIScrollView = {
-        let scrollView = GraphScrollView { [weak self] in
-            self?.configure()
-        }
-        
-        scrollView.backgroundColor = .white
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.contentInsetAdjustmentBehavior = .never
-        
-        // TODO: Uncomment
-//        scrollView.isScrollEnabled = false
-        
-        // TODO: Delete
-        scrollView.alwaysBounceVertical = true
-        scrollView.alwaysBounceHorizontal = true
-        
-        return scrollView
-    }()
     
     // ******************************* MARK: - Private Properties
     
     private var observer: NSKeyValueObservation!
     private var configuredSize: CGSize = .zero
     private var range: Range = .full
-    
-    private var transformables: [Transformable] {
-        return plots
-    }
+    private var horizontalAxis: Axis?
+    private var verticalAxis: Axis?
     
     // ******************************* MARK: - Initialization and Setup
     
-    public override init() {
-        super.init()
+    public init(showAxises: Bool) {
+        self.showAxises = showAxises
+        super.init(frame: UIScreen.main.bounds)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         setup()
     }
     
     private func setup() {
+        backgroundColor = .white
+        showsVerticalScrollIndicator = false
+        showsHorizontalScrollIndicator = true
+        contentInsetAdjustmentBehavior = .never
+        isScrollEnabled = true
         
+        updateAxises()
     }
     
     // ******************************* MARK: - Public Methods
     
     public func addPlot(_ plot: Plot) {
-        addPlot(plot, configure: true)
+        addPlot(plot, updatePlots: true)
+        updateAxises()
     }
     
     public func removePlot(_ plot: Plot) {
-        removePlot(plot, configure: true)
+        removePlot(plot, updatePlots: true)
+        updateAxises()
     }
     
     public func addPlots(_ plots: [Plot]) {
-        plots.forEach { addPlot($0, configure: false) }
-        configure()
+        plots.forEach { addPlot($0, updatePlots: false) }
+        updatePlots()
+        updateAxises()
     }
     
     public func removeAllPlots() {
-        plots.forEach { removePlot($0, configure: false) }
-        configure()
+        plots.forEach { removePlot($0, updatePlots: false) }
+        updatePlots()
+        updateAxises()
     }
     
     // TODO: Rethink this method so it convenient for anyone to use
     public func showRange(range: Range) {
+        // TODO: if range size didn't change just scroll
         self.range = range
-        configure()
+        horizontalAxis?.range = range
+        updatePlots()
     }
     
-    // ******************************* MARK: - Configuration
+    // ******************************* MARK: - Layout
     
-    private func configure() {
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        
+        layoutAxises()
+        updatePlots()
+    }
+    
+    private func layoutAxises() {
+        if let horizontalAxis = horizontalAxis {
+            horizontalAxis.frame = CGRect(x: 0, y: bounds.height - horizontalAxis.size, width: contentSize.width, height: horizontalAxis.size)
+        }
+        
+        if let verticalAxis = verticalAxis {
+            verticalAxis.frame = CGRect(x: 0, y: 0, width: verticalAxis.size, height: contentSize.height)
+        }
+    }
+    
+    // ******************************* MARK: - Update
+    
+    private func updateAxises() {
+        self.horizontalAxis?.removeFromSuperview()
+        self.horizontalAxis = nil
+        self.verticalAxis?.removeFromSuperview()
+        self.verticalAxis = nil
+        
+        guard showAxises else { return }
+        
+        let dates = plots
+            .flatMap { $0.points }
+            .map { $0.date }
+            .filterDuplicates()
+            .sorted()
+        
+        let horizontalAxis = Axis(type: .horizontal(dates: dates))
+        self.horizontalAxis = horizontalAxis
+        addSubview(horizontalAxis)
+        layoutAxises()
+    }
+    
+    private func updatePlots() {
+        let width = bounds.width
+        let height = bounds.height
+        
         // Update content size
-        configuredSize = scrollView.bounds.size
-        scrollView.contentSize = configuredSize
+        configuredSize = bounds.size
+        // TODO: Need to properly calcualte X size
+        contentSize = configuredSize
         
         // Scale X
         let maxCount = plots
@@ -101,7 +141,8 @@ public final class Graph: NSObject {
         
         let visibleRange = range.size
         let plotSize = CGFloat(maxCount)
-        let scaleX: CGFloat = scrollView.bounds.width / (plotSize * visibleRange)
+        let scaleX: CGFloat = width / (plotSize * visibleRange)
+        // TODO: This should be scroll not translation
         let translateX: CGFloat = -plotSize * range.from
         
         // Scale Y
@@ -110,8 +151,8 @@ public final class Graph: NSObject {
         let maxValue: CGFloat = minMaxes.map { $0.1.asCGFloat }.max() ?? 1
         
         let rangeY: CGFloat = maxValue - minValue
-        let gap: CGFloat = scrollView.bounds.height * c.verticalPercentGap
-        let availableHeight: CGFloat = scrollView.bounds.height - 2 * gap
+        let gap: CGFloat = height * c.verticalPercentGap
+        let availableHeight: CGFloat = height - 2 * gap
         
         // Scale to show range with top and bottom paddings
         let scaleY: CGFloat = availableHeight / rangeY
@@ -120,7 +161,7 @@ public final class Graph: NSObject {
         
         let transform = CGAffineTransform.identity
             // Move axis origin to bottom of a screen plus gap
-            .translatedBy(x: 0, y: scrollView.bounds.height - gap)
+            .translatedBy(x: 0, y: height - gap)
             // Mirror over Y axis
             .scaledBy(x: 1, y: -1)
             // Scale graph by Y so it's in available range
@@ -133,20 +174,20 @@ public final class Graph: NSObject {
         // Animate graph if changes are in animation closure
         let animated = UIView.isInAnimationClosure
 
-        transformables.forEach { $0.setTransform(transform, animated: animated) }
+        plots.forEach { $0.setTransform(transform, animated: animated) }
     }
     
     // ******************************* MARK: - Private Methods
     
-    private func addPlot(_ plot: Plot, configure: Bool) {
+    private func addPlot(_ plot: Plot, updatePlots: Bool) {
         plots.append(plot)
-        scrollView.layer.addSublayer(plot.shapeLayer)
-        if configure { self.configure() }
+        layer.addSublayer(plot.shapeLayer)
+        if updatePlots { self.updatePlots() }
     }
     
-    private func removePlot(_ plot: Plot, configure: Bool) {
+    private func removePlot(_ plot: Plot, updatePlots: Bool) {
         plot.shapeLayer.removeFromSuperlayer()
         plots.remove(plot)
-        if configure { self.configure() }
+        if updatePlots { self.updatePlots() }
     }
 }

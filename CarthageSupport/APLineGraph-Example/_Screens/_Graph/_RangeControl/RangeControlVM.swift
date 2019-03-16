@@ -7,15 +7,18 @@
 //
 
 import Foundation
+import APLineGraph
 
 
 struct RangeControlVM {
     
     // ******************************* MARK: - Public Properties
     
+    let initialRange: Graph.Range
+    
     // ******************************* MARK: - Initialization and Setup
     
     init() {
-        
+        initialRange = .full
     }
 }

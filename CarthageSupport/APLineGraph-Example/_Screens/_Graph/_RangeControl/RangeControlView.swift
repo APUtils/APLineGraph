@@ -12,9 +12,10 @@ import APLineGraph
 
 extension Constants {
     static let sideControlWidth: CGFloat = 32 / 3
+    static let sideControlAllowedWidthToCenterRelative: CGFloat = 0.1
     static let sideControlEnlargedWidth: CGFloat = 30
     static let sideControlEnlargedHalfWidth: CGFloat = sideControlEnlargedWidth / 2
-    static let minWidth: CGFloat = sideControlEnlargedWidth
+    static let minWidth: CGFloat = sideControlWidth * 2
 }
 
 
@@ -26,6 +27,7 @@ final class RangeControlView: UIView {
     
     // ******************************* MARK: - Public Properties
     
+    private(set) var range: Graph.Range = .full
     var onRangeDidChange: OnRangeChange?
     
     // ******************************* MARK: - @IBOutlets
@@ -52,25 +54,38 @@ final class RangeControlView: UIView {
     
     // ******************************* MARK: - UIView Overrides
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layout()
+    }
+    
+    private func layout() {
+        leftConstraint.constant = range.from * bounds.width
+        widthConstraint.constant = range.size * bounds.width
+    }
+    
     // ******************************* MARK: - Public Methods
     
     /// Configure view with provided view model
     /// - parameter vm: View model to use for setup
     func configure(vm: RangeControlVM) {
-        
+        range = vm.initialRange
+        layout()
     }
     
     // ******************************* MARK: - Actions
     
+    // TODO: Touch zone is wrong
+    // TODO: Do I actually handle multiple touches correctly? Maybe just switch back to one.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         touches.forEach { touch in
             let pointX = touch.location(in: self).x
             let leftControlLeftSide = leftConstraint.constant
             let leftControlMinX = max(leftControlLeftSide - c.sideControlEnlargedHalfWidth, 0)
-            let leftControlMaxX = leftControlLeftSide + c.sideControlWidth + min(c.sideControlEnlargedHalfWidth, widthConstraint.constant / 2)
+            let leftControlMaxX = leftControlLeftSide + c.sideControlWidth + min(c.sideControlEnlargedHalfWidth, widthConstraint.constant * c.sideControlAllowedWidthToCenterRelative)
             
             let rightControlRightSide = leftConstraint.constant + widthConstraint.constant
-            let rightControlMinX = rightControlRightSide - c.sideControlWidth - min(c.sideControlEnlargedHalfWidth, widthConstraint.constant / 2)
+            let rightControlMinX = rightControlRightSide - c.sideControlWidth - min(c.sideControlEnlargedHalfWidth, widthConstraint.constant * c.sideControlAllowedWidthToCenterRelative)
             let rightControlMaxX = min(rightControlRightSide + c.sideControlEnlargedHalfWidth, bounds.size.width)
             
             if pointX < leftControlMinX {
@@ -97,8 +112,8 @@ final class RangeControlView: UIView {
             switch action {
             case .adjustLeft(let left, let width, _):
                 let clampedTranslation = translationX.clamped(min: -left, max: width)
-                leftConstraint.constant = left + clampedTranslation
                 widthConstraint.constant = max(width - clampedTranslation, c.minWidth)
+                leftConstraint.constant = min(left + clampedTranslation, boundsWidth - c.minWidth)
                 
             case .adjustRight(let left, let width, _):
                 let clampedTranslation = translationX.clamped(min: -width, max: boundsWidth - width - left)
@@ -111,7 +126,7 @@ final class RangeControlView: UIView {
             
             let from = leftConstraint.constant / boundsWidth
             let to = (leftConstraint.constant + widthConstraint.constant) / boundsWidth
-            let range = Graph.Range(from: from, to: to)
+            range = Graph.Range(from: from, to: to)
             onRangeDidChange?(range)
         }
     }

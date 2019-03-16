@@ -8,9 +8,34 @@
 
 import Foundation
 
+// ******************************* MARK: - Scripting
+
+extension Array {
+    /// Helper method to filter out duplicates. Element will be filtered out if closure return true.
+    func filterDuplicates(_ includeElement: (_ lhs: Element, _ rhs: Element) throws -> Bool) rethrows -> [Element] {
+        var results = [Element]()
+        
+        try forEach { element in
+            let existingElements = try results.filter {
+                return try includeElement(element, $0)
+            }
+            if existingElements.count == 0 {
+                results.append(element)
+            }
+        }
+        
+        return results
+    }
+}
 // ******************************* MARK: - Equatable
 
 extension Array where Element: Equatable {
+    
+    /// Helper method to filter out duplicates
+    func filterDuplicates() -> [Element] {
+        return filterDuplicates { $0 == $1 }
+    }
+    
     /// Helper method to remove all objects that are equal to passed one.
     mutating func remove(_ element: Element) {
         while let index = index(of: element) {

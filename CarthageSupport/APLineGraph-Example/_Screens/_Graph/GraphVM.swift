@@ -22,8 +22,8 @@ struct GraphVM {
     
     // ******************************* MARK: - Public Properties
     
-    let mainGraph = Graph()
-    let helperGraph = Graph()
+    let mainGraph = Graph(showAxises: true)
+    let helperGraph = Graph(showAxises: false)
     
     // ******************************* MARK: - Private Properties
     
@@ -89,7 +89,7 @@ extension GraphModel {
         guard xValues.count == mapedValued.count else { print("X values and \(entry.rawValue) values are in desync"); return nil }
         
         let points = zip(xValues, mapedValued).map { tuple in
-            return Graph.Plot.Point(x: "\(tuple.0)", y: tuple.1)
+            return Graph.Plot.Point(date: tuple.0, value: tuple.1)
         }
         
         return Graph.Plot(name: name, lineWidth: lineWidth, lineColor: color, points: points)

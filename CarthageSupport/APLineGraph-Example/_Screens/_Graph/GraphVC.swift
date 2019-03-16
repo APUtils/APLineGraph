@@ -29,19 +29,20 @@ class GraphVC: UIViewController {
     }
     
     private func setup() {
-        let mainScrollView = vm.mainGraph.scrollView
+        let mainScrollView = vm.mainGraph
         graphContainer.addSubview(mainScrollView)
         mainScrollView.constraintSides(to: graphContainer)
+        mainScrollView.isScrollEnabled = false
         
-        let helperScrollView = vm.helperGraph.scrollView
+        let helperScrollView = vm.helperGraph
         helperScrollView.isUserInteractionEnabled = false
         graphRangeContainer.addSubview(helperScrollView)
         helperScrollView.constraintSides(to: graphRangeContainer)
+        helperScrollView.isScrollEnabled = false
         
+        rangeControlView.configure(vm: RangeControlVM())
         rangeControlView.onRangeDidChange = { [weak self] range in
-            g.animate(2) {
-                self?.vm.mainGraph.showRange(range: range)
-            }
+            self?.vm.mainGraph.showRange(range: range)
         }
     }
 }
