@@ -19,6 +19,10 @@ extension Int {
         return Double(self)
     }
     
+    var asString: String {
+        return "\(self)"
+    }
+    
     /// Computes and return clamped value within min and max bounds
     /// - parameter min: Minimum possible value.
     /// - parameter min: Maximum possible value.

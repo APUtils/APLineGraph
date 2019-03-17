@@ -16,8 +16,8 @@ private extension Constants {
 }
 
 
-extension Graph {
-class Axis: UIView {
+public extension Graph {
+public class Axis: UIView {
     
     // ******************************* MARK: - Metaclass
     
@@ -34,7 +34,27 @@ class Axis: UIView {
         return label
     }
     
-    // ******************************* MARK: - Initialization
+    // ******************************* MARK: - Initialization and Setup
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        setup()
+    }
+    
+    private func setup() {
+        backgroundColor = .clear
+    }
+    
+    // ******************************* MARK: - UIView Methods Overrides
     
     public override func layoutSubviews() {
         super.layoutSubviews()
@@ -44,7 +64,7 @@ class Axis: UIView {
     // ******************************* MARK: - Update
     
     open func update() {
-        fatalError("Should be overrided in a child class")
+        fatalError("Should be overridden in a child class")
     }
     
     // ******************************* MARK: - Reuse

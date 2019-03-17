@@ -10,12 +10,10 @@ import UIKit
 
 
 private extension Constants {
-    static let verticalPercentGap: CGFloat = 0.1
-    static let inspectionGuideColor: UIColor = #colorLiteral(red: 0.8117647059, green: 0.8196078431, blue: 0.8235294118, alpha: 1)
     static let inspectionViewTopMargin: CGFloat = 22
     static let inspectionPointSize: CGFloat = 8.66667
-    static let inspectionPointImage: UIImage = #imageLiteral(resourceName: "plot-point")
-    static let inspectionPointBackgroundImage: UIImage = #imageLiteral(resourceName: "plot-point-background")
+    static let inspectionPointImage = UIImage(named: "plot-point", in: .framework, compatibleWith: nil)
+    static let inspectionPointBackgroundImage = UIImage(named: "plot-point-background", in: .framework, compatibleWith: nil)
 }
 
 
@@ -23,23 +21,24 @@ public final class Graph: UIView {
     
     // ******************************* MARK: - Public Properties
     
-    public var showAxises: Bool = false { didSet { updateAxises() } }
-    public var lineWidth: CGFloat = 1 { didSet { updateLineLength() } }
+    /// - warning: Use initializer. Not everything might be updated after setting new configuration.
+    public var configuration: Configuration { didSet { updateApperance() } }
     
     // ******************************* MARK: - Private Properties
     
-    private let enableInspection: Bool
     private var plotsShapeLayers: [Plot: CAShapeLayer] = [:]
     private var range: RelativeRange = .full
     private var horizontalAxis: HorizontalAxis?
     private var verticalAxis: VerticalAxis?
     private let inspectionView = GraphInspectionView.create()
-    private var inspectionViewCenterX: NSLayoutConstraint?
+    private var inspectionViewCenterX: NSLayoutConstraint!
+    private var inspectionGuideViewBottomToSuperview: NSLayoutConstraint!
+    private var inspectionGuideViewBottomToAxis: NSLayoutConstraint?
     private var plotsTransform = CGAffineTransform.identity
     
     private lazy var inspectionGuideView: UIView = {
         let view = UIView()
-        view.backgroundColor = c.inspectionGuideColor
+        view.backgroundColor = configuration.inspectionGuideColor
         view.bounds = CGRect(x: 0, y: 0, width: 1, height: bounds.height)
         view.autoresizingMask = [.flexibleHeight]
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
@@ -47,12 +46,13 @@ public final class Graph: UIView {
         return view
     }()
     
-    private let inspectionPointViewsReuseController: ReuseController<UIView> = ReuseController<UIView> {
+    private lazy var inspectionPointViewsReuseController: ReuseController<UIView> = ReuseController<UIView> { [weak self] in
         let inspectionPointImageView = UIImageView(image: c.inspectionPointImage)
-        let letinspectionPointBackgroundImageView = UIImageView(image: c.inspectionPointBackgroundImage)
+        let inspectionPointBackgroundImageView = UIImageView(image: c.inspectionPointBackgroundImage)
+        inspectionPointBackgroundImageView.tintColor = self?.configuration.plotInspectionPointCenterColor ?? .white
         
         let inspectionPointView = UIView(frame: CGRect(x: 0, y: 0, width: c.inspectionPointSize, height: c.inspectionPointSize))
-        inspectionPointView.addSubview(letinspectionPointBackgroundImageView)
+        inspectionPointView.addSubview(inspectionPointBackgroundImageView)
         inspectionPointView.addSubview(inspectionPointImageView)
         inspectionPointView.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
         
@@ -61,30 +61,30 @@ public final class Graph: UIView {
     
     // ******************************* MARK: - Initialization and Setup
     
-    public init(showAxises: Bool, enableInspection: Bool, lineWidth: CGFloat) {
-        self.showAxises = showAxises
-        self.enableInspection = enableInspection
-        
+    public init(configuration: Configuration) {
+        self.configuration = configuration
         super.init(frame: UIScreen.main.bounds)
-        
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.enableInspection = false
+        self.configuration = .default
         super.init(coder: aDecoder)
+    }
+    
+    public override func awakeFromNib() {
+        super.awakeFromNib()
         setup()
     }
     
     private func setup() {
         setupProperties()
         setupInspections()
-        updateLineLength()
-        updateAxises()
+        update()
     }
     
     private func setupProperties() {
-        backgroundColor = .white
+        backgroundColor = .clear
         clipsToBounds = true
     }
     
@@ -104,7 +104,9 @@ public final class Graph: UIView {
         inspectionGuideView.translatesAutoresizingMaskIntoConstraints = false
         inspectionGuideView.isHidden = true
         
-        inspectionGuideView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        inspectionGuideViewBottomToSuperview = inspectionGuideView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        inspectionGuideViewBottomToSuperview.isActive = true
+        
         inspectionGuideView.topAnchor.constraint(equalTo: inspectionView.bottomAnchor).isActive = true
         inspectionGuideView.centerXAnchor.constraint(equalTo: inspectionView.centerXAnchor).isActive = true
     }
@@ -166,13 +168,27 @@ public final class Graph: UIView {
     
     // ******************************* MARK: - Update
     
+    private func update() {
+        updateAxises()
+        updateLineLength()
+        updatePlots()
+    }
+    
+    private func updateApperance() {
+        inspectionPointViewsReuseController.removeAll()
+        inspectionGuideView.backgroundColor = configuration.inspectionGuideColor
+        updateAxises()
+        updateLineLength()
+        updatePlots()
+    }
+    
     private func updateAxises() {
         self.horizontalAxis?.removeFromSuperview()
         self.horizontalAxis = nil
         self.verticalAxis?.removeFromSuperview()
         self.verticalAxis = nil
         
-        guard showAxises else { return }
+        guard configuration.showAxises else { return }
         
         let dates = plotsShapeLayers
             .keys
@@ -181,20 +197,24 @@ public final class Graph: UIView {
             .filterDuplicates()
             .sorted()
         
-        let horizontalAxis = HorizontalAxis(dates: dates)
+        let horizontalAxis = HorizontalAxis(dates: dates, configuration: configuration)
         self.horizontalAxis = horizontalAxis
         addSubview(horizontalAxis)
         
         let minMaxRanges = getMinMaxRanges()
-        let verticalAxis = VerticalAxis(modes: .default, minMaxRanges: minMaxRanges, verticalPercentGap: c.verticalPercentGap)
+        let verticalAxis = VerticalAxis(minMaxRanges: minMaxRanges, configuration: configuration)
         self.verticalAxis = verticalAxis
         addSubview(verticalAxis)
+        
+        inspectionGuideViewBottomToAxis = inspectionGuideView.bottomAnchor.constraint(equalTo: horizontalAxis.topAnchor)
+        inspectionGuideViewBottomToAxis?.isActive = true
+        inspectionGuideViewBottomToSuperview.isActive = false
         
         layoutAxises()
     }
     
     private func updateLineLength() {
-        plotsShapeLayers.values.forEach { $0.lineWidth = lineWidth }
+        plotsShapeLayers.values.forEach { $0.lineWidth = configuration.lineWidth }
     }
     
     private func updatePlots() {
@@ -219,7 +239,7 @@ public final class Graph: UIView {
         let maxValue: CGFloat = minMaxRange.max
         
         let rangeY: CGFloat = maxValue - minValue
-        let gap: CGFloat = height * c.verticalPercentGap
+        let gap: CGFloat = height * configuration.verticalPercentGap
         let availableHeight: CGFloat = height - 2 * gap
         
         // Scale to show range with top and bottom paddings
@@ -245,26 +265,24 @@ public final class Graph: UIView {
         plotsShapeLayers.forEach { $0.0.updatePath(shapeLayer: $0.1, transform: plotsTransform, animated: animated) }
     }
     
-    // ******************************* MARK: - Actions
+    // ******************************* MARK: - Inspections
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard enableInspection else { return }
+        guard configuration.enableInspection else { return }
         updateInspections(touches: touches)
         showInspections()
     }
     
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard enableInspection else { return }
+        guard configuration.enableInspection else { return }
         updateInspections(touches: touches)
     }
     
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard enableInspection else { return }
         hideInspections()
     }
     
     public override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard enableInspection else { return }
         hideInspections()
     }
     
@@ -277,7 +295,7 @@ public final class Graph: UIView {
     
     private func updateInspections(touches: Set<UITouch>) {
         let touchPoint = touches.first?.location(in: self) ?? .zero
-        inspectionViewCenterX?.constant = touchPoint.x
+        inspectionViewCenterX.constant = touchPoint.x
         
         let plotsPoints: [Plot: Plot.Point] = Array(plotsShapeLayers.keys).dictionaryMap { plot in
             let point = plot.getPoint(plotTransform: plotsTransform, point: touchPoint)
@@ -297,7 +315,7 @@ public final class Graph: UIView {
             .forEach { insertSubview($0, belowSubview: inspectionView) }
         
         if let date = plotsPoints.first?.value.date {
-            let vm = GraphInspectionVM(date: date, plotsPoints: plotsPoints)
+            let vm = GraphInspectionVM(date: date, plotsPoints: plotsPoints, configuration: configuration)
             inspectionView.configure(vm: vm)
         } else {
             print("Unable to get inspection date")
@@ -314,6 +332,7 @@ public final class Graph: UIView {
     
     private func addPlot(_ plot: Plot, updatePlots: Bool) {
         let shapeLayer = plot.createShapeLayer()
+        shapeLayer.lineWidth = configuration.lineWidth
         plotsShapeLayers[plot] = shapeLayer
         layer.addSublayer(shapeLayer)
         if updatePlots { self.updatePlots() }

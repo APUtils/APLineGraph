@@ -54,6 +54,11 @@ final class ReuseController<T: Equatable> {
     func queueAll() {
         takenReusables.forEach(queue)
     }
+    
+    func removeAll() {
+        takenReusables = []
+        vacantReusables = []
+    }
 }
 
 // ******************************* MARK: - UIView

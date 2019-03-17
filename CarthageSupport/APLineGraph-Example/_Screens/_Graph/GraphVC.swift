@@ -43,9 +43,11 @@ final class GraphVC: UIViewController {
     }
     
     private func setupGraphs() {
+        graphContainer.backgroundColor = .clear
         graphContainer.addSubview(vm.mainGraph)
         vm.mainGraph.constraintSides(to: graphContainer)
         
+        graphRangeContainer.backgroundColor = .clear
         graphRangeContainer.addSubview(vm.helperGraph)
         vm.helperGraph.constraintSides(to: graphRangeContainer)
     }
@@ -59,9 +61,13 @@ final class GraphVC: UIViewController {
     
     // ******************************* MARK: - Actions
     
-    @IBAction private func onSwitchToNightModeTap(_ sender: Any) {
-        // TODO:
-        print("TODO")
+    @IBAction private func onSwitchToNightModeTap(_ sender: UIButton) {
+        AppearanceManager.shared.toggleStyle()
+        
+        switch AppearanceManager.shared.style {
+        case .day: sender.setTitle("Switch to Night Mode", for: .normal)
+        case .night: sender.setTitle("Switch to Day Mode", for: .normal)
+        }
     }
 }
 

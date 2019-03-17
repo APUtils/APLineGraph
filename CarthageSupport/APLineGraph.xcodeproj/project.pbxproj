@@ -42,6 +42,16 @@
 		0DB88A4A223E72C2002B9F7D /* ClassName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A49223E72C2002B9F7D /* ClassName.swift */; };
 		0DB88A4C223E73E7002B9F7D /* ReuseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A4B223E73E7002B9F7D /* ReuseController.swift */; };
 		0DB88A4D223E80D5002B9F7D /* GraphInspectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DB88A3E223E6DEC002B9F7D /* GraphInspectionView.xib */; };
+		0DB88A50223E9FBA002B9F7D /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A4F223E9FBA002B9F7D /* AppearanceManager.swift */; };
+		0DB88A53223E9FF6002B9F7D /* AppearanceManagerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A52223E9FF6002B9F7D /* AppearanceManagerStyle.swift */; };
+		0DB88A55223EA3D2002B9F7D /* UILabel+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A54223EA3D2002B9F7D /* UILabel+Style.swift */; };
+		0DB88A58223EA994002B9F7D /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A57223EA994002B9F7D /* UIView+Style.swift */; };
+		0DB88A5A223EA9C9002B9F7D /* UITableView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A59223EA9C9002B9F7D /* UITableView+Style.swift */; };
+		0DB88A5F223EAD05002B9F7D /* GraphConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A5B223EACD6002B9F7D /* GraphConfiguration.swift */; };
+		0DB88A61223EAD59002B9F7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DB88A60223EAD59002B9F7D /* Assets.xcassets */; };
+		0DB88A63223EAE9E002B9F7D /* Bundle+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A62223EAE9E002B9F7D /* Bundle+Utils.swift */; };
+		0DB88A65223ECF00002B9F7D /* ValuesFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A64223ECF00002B9F7D /* ValuesFormatter.swift */; };
+		0DB88A68223ECFEF002B9F7D /* ValuesFormatterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A67223ECFEF002B9F7D /* ValuesFormatterStyle.swift */; };
 		0DCE43CA2237282600CB4929 /* RangeControlVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C72237282600CB4929 /* RangeControlVM.swift */; };
 		0DCE43CB2237282600CB4929 /* RangeControlViewContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */; };
 		0DCE43CC2237282600CB4929 /* RangeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C92237282600CB4929 /* RangeControlView.swift */; };
@@ -157,6 +167,16 @@
 		0DB88A45223E6E8C002B9F7D /* GraphInspectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphInspectionVM.swift; sourceTree = "<group>"; };
 		0DB88A49223E72C2002B9F7D /* ClassName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassName.swift; sourceTree = "<group>"; };
 		0DB88A4B223E73E7002B9F7D /* ReuseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseController.swift; sourceTree = "<group>"; };
+		0DB88A4F223E9FBA002B9F7D /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
+		0DB88A52223E9FF6002B9F7D /* AppearanceManagerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManagerStyle.swift; sourceTree = "<group>"; };
+		0DB88A54223EA3D2002B9F7D /* UILabel+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Style.swift"; sourceTree = "<group>"; };
+		0DB88A57223EA994002B9F7D /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
+		0DB88A59223EA9C9002B9F7D /* UITableView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Style.swift"; sourceTree = "<group>"; };
+		0DB88A5B223EACD6002B9F7D /* GraphConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphConfiguration.swift; sourceTree = "<group>"; };
+		0DB88A60223EAD59002B9F7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0DB88A62223EAE9E002B9F7D /* Bundle+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Utils.swift"; sourceTree = "<group>"; };
+		0DB88A64223ECF00002B9F7D /* ValuesFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuesFormatter.swift; sourceTree = "<group>"; };
+		0DB88A67223ECFEF002B9F7D /* ValuesFormatterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuesFormatterStyle.swift; sourceTree = "<group>"; };
 		0DCE43C72237282600CB4929 /* RangeControlVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlVM.swift; sourceTree = "<group>"; };
 		0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RangeControlViewContentView.xib; sourceTree = "<group>"; };
 		0DCE43C92237282600CB4929 /* RangeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlView.swift; sourceTree = "<group>"; };
@@ -236,6 +256,7 @@
 		0D141AA52235400F00CB6FF0 /* _Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0DB88A66223ECFBC002B9F7D /* _Values Formatter */,
 				0DE2D75D2235529C007BD043 /* _Graph */,
 				0DB88A4B223E73E7002B9F7D /* ReuseController.swift */,
 			);
@@ -258,6 +279,7 @@
 				0DB88A28223DBA7A002B9F7D /* _Classes */,
 				0DE2D75E223552A7007BD043 /* _DataSource */,
 				0DE2D77A22355F25007BD043 /* _Extensions */,
+				0DB88A4E223E9FA2002B9F7D /* _Managers */,
 				0DE2D7A82237273E007BD043 /* _Protocols */,
 				0DE2D76E223559DA007BD043 /* _Screens */,
 				0DE2D761223552FC007BD043 /* _Utils */,
@@ -360,10 +382,55 @@
 			path = _Inspection;
 			sourceTree = "<group>";
 		};
+		0DB88A4E223E9FA2002B9F7D /* _Managers */ = {
+			isa = PBXGroup;
+			children = (
+				0DB88A51223E9FBD002B9F7D /* _Appearance */,
+			);
+			path = _Managers;
+			sourceTree = "<group>";
+		};
+		0DB88A51223E9FBD002B9F7D /* _Appearance */ = {
+			isa = PBXGroup;
+			children = (
+				0DB88A4F223E9FBA002B9F7D /* AppearanceManager.swift */,
+				0DB88A52223E9FF6002B9F7D /* AppearanceManagerStyle.swift */,
+			);
+			path = _Appearance;
+			sourceTree = "<group>";
+		};
+		0DB88A56223EA982002B9F7D /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				0DB88A54223EA3D2002B9F7D /* UILabel+Style.swift */,
+				0DB88A59223EA9C9002B9F7D /* UITableView+Style.swift */,
+				0DB88A57223EA994002B9F7D /* UIView+Style.swift */,
+			);
+			path = Style;
+			sourceTree = "<group>";
+		};
+		0DB88A5D223EACDC002B9F7D /* _Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				0DB88A5B223EACD6002B9F7D /* GraphConfiguration.swift */,
+			);
+			path = _Configuration;
+			sourceTree = "<group>";
+		};
+		0DB88A66223ECFBC002B9F7D /* _Values Formatter */ = {
+			isa = PBXGroup;
+			children = (
+				0DB88A64223ECF00002B9F7D /* ValuesFormatter.swift */,
+				0DB88A67223ECFEF002B9F7D /* ValuesFormatterStyle.swift */,
+			);
+			path = "_Values Formatter";
+			sourceTree = "<group>";
+		};
 		0DE2D75122354825007BD043 /* _Support Files */ = {
 			isa = PBXGroup;
 			children = (
 				0DE2D75222354825007BD043 /* APLineGraph.h */,
+				0DB88A60223EAD59002B9F7D /* Assets.xcassets */,
 				0DE2D75322354825007BD043 /* Info.plist */,
 			);
 			name = "_Support Files";
@@ -374,6 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				0DE2D75522354B86007BD043 /* Array+Utils.swift */,
+				0DB88A62223EAE9E002B9F7D /* Bundle+Utils.swift */,
 				0DE2D79B22370D50007BD043 /* CGFloat+Utils.swift */,
 				0DE2D75922354DD1007BD043 /* Collection+Utils.swift */,
 				0DE2D7952235C0A4007BD043 /* Double+Utils.swift */,
@@ -389,6 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				0DB88A0E223D8D36002B9F7D /* _Axis */,
+				0DB88A5D223EACDC002B9F7D /* _Configuration */,
 				0DB88A3C223E6DC4002B9F7D /* _Inspection */,
 				0DB88A16223D9161002B9F7D /* _Plot */,
 				0DB88A15223D9150002B9F7D /* _Range */,
@@ -451,6 +520,7 @@
 		0DE2D77A22355F25007BD043 /* _Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0DB88A56223EA982002B9F7D /* Style */,
 				0DE2D78322356685007BD043 /* Array+Utils.swift */,
 				0DCE43CF223734A200CB4929 /* CGFloat+Utils.swift */,
 				0DE2D7642235546E007BD043 /* Data+Utils.swift */,
@@ -715,6 +785,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DB88A61223EAD59002B9F7D /* Assets.xcassets in Resources */,
 				0DB88A4D223E80D5002B9F7D /* GraphInspectionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -733,13 +804,16 @@
 				0DE2D7AA22372764007BD043 /* Instantiatable.swift in Sources */,
 				0DE2D77022355B07007BD043 /* ColumnEntry.swift in Sources */,
 				0DCE43CE22372E7E00CB4929 /* RangeControlViewAction.swift in Sources */,
+				0DB88A53223E9FF6002B9F7D /* AppearanceManagerStyle.swift in Sources */,
 				0DCE43CC2237282600CB4929 /* RangeControlView.swift in Sources */,
 				0DE2D78C2235920E007BD043 /* UIView+Utils.swift in Sources */,
 				0DE2D77F2235629C007BD043 /* Data+Utils.swift in Sources */,
 				0DB88A21223DAB46002B9F7D /* GraphSelectionCell.swift in Sources */,
+				0DB88A55223EA3D2002B9F7D /* UILabel+Style.swift in Sources */,
 				0DCE43D0223734A200CB4929 /* CGFloat+Utils.swift in Sources */,
 				0DB88A25223DADC3002B9F7D /* UITableView+Utils.swift in Sources */,
 				0DB88A22223DAB46002B9F7D /* GraphSelectionVC.swift in Sources */,
+				0DB88A50223E9FBA002B9F7D /* AppearanceManager.swift in Sources */,
 				0DE2D78E2235A2C4007BD043 /* Globals.swift in Sources */,
 				0D141ABD2235476F00CB6FF0 /* GraphVC.swift in Sources */,
 				0DE2D78422356685007BD043 /* Array+Utils.swift in Sources */,
@@ -748,6 +822,7 @@
 				0DB88A36223DBFD4002B9F7D /* GraphPlotSelectionCellVM.swift in Sources */,
 				0DB88A27223DB8F5002B9F7D /* NSLayoutConstraint+Utils.swift in Sources */,
 				0DE2D781223562CE007BD043 /* JSONDecoder+Utils.swift in Sources */,
+				0DB88A5A223EA9C9002B9F7D /* UITableView+Style.swift in Sources */,
 				0DB88A2E223DBCD1002B9F7D /* ScrollView.swift in Sources */,
 				0DE2D77D22356270007BD043 /* Constants.swift in Sources */,
 				0DE2D77C22355FCD007BD043 /* UIColor+Utils.swift in Sources */,
@@ -759,6 +834,7 @@
 				0DB88A2D223DBCD1002B9F7D /* TableView.swift in Sources */,
 				0D141ABB2235476F00CB6FF0 /* AppDelegate.swift in Sources */,
 				0DE2D7AC2237278C007BD043 /* ClassName.swift in Sources */,
+				0DB88A58223EA994002B9F7D /* UIView+Style.swift in Sources */,
 				0DE2D7822235665A007BD043 /* Dictionary+Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -797,13 +873,17 @@
 				0DE2D79A2235C59B007BD043 /* Double+Utils.swift in Sources */,
 				0DB88A14223D90F4002B9F7D /* GraphMinMaxRange.swift in Sources */,
 				0DE2D79E22370EC7007BD043 /* GraphRelativeRange.swift in Sources */,
+				0DB88A68223ECFEF002B9F7D /* ValuesFormatterStyle.swift in Sources */,
 				0DE2D75622354B86007BD043 /* Array+Utils.swift in Sources */,
 				0DE2D75822354C2A007BD043 /* GraphPlotPoint.swift in Sources */,
 				0DE2D75A22354DD1007BD043 /* Collection+Utils.swift in Sources */,
+				0DB88A65223ECF00002B9F7D /* ValuesFormatter.swift in Sources */,
 				0DCE43DE223D48CA00CB4929 /* String+Utils.swift in Sources */,
 				0DE2D7942235BFEB007BD043 /* Constants.swift in Sources */,
 				0DB88A46223E6E8C002B9F7D /* GraphInspectionVM.swift in Sources */,
+				0DB88A63223EAE9E002B9F7D /* Bundle+Utils.swift in Sources */,
 				0DB88A4A223E72C2002B9F7D /* ClassName.swift in Sources */,
+				0DB88A5F223EAD05002B9F7D /* GraphConfiguration.swift in Sources */,
 				0DB88A12223D8D5A002B9F7D /* GraphHorizontalAxis.swift in Sources */,
 				0DB88A0D223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift in Sources */,
 			);

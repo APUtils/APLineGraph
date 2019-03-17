@@ -34,6 +34,7 @@ final class RangeControlView: UIView {
     
     @IBOutlet private weak var leftConstraint: NSLayoutConstraint!
     @IBOutlet private weak var widthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var rangeControlImageView: UIImageView!
     
     // ******************************* MARK: - Private Properties
     
@@ -48,6 +49,7 @@ final class RangeControlView: UIView {
     
     private func setup() {
         createAndAttachContentView()
+        AppearanceManager.shared.addStyleListener(self)
     }
     
     // ******************************* MARK: - Configuration
@@ -147,3 +149,14 @@ final class RangeControlView: UIView {
 // ******************************* MARK: - InstantiatableContentView
 
 extension RangeControlView: InstantiatableContentView {}
+
+// ******************************* MARK: - AppearanceManagerStyleListener
+
+extension RangeControlView: AppearanceManagerStyleListener {
+    func appearanceManager(_ appearanceManager: AppearanceManager, didChangeStyle style: AppearanceManager.Style) {
+        switch style {
+        case .day: rangeControlImageView.tintColor = #colorLiteral(red: 0.8980392157, green: 0.9176470588, blue: 0.937254902, alpha: 1)
+        case .night: rangeControlImageView.tintColor = #colorLiteral(red: 0.2078431373, green: 0.2745098039, blue: 0.3490196078, alpha: 1)
+        }
+    }
+}

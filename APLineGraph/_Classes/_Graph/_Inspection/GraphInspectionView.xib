@@ -84,6 +84,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
+                <outlet property="containerView" destination="O3O-WK-nFy" id="yow-sF-u4p"/>
                 <outlet property="dateLabel" destination="K9s-P4-HRh" id="0td-sT-zBu"/>
                 <outlet property="valuesStackView" destination="YSW-GM-j2d" id="SMv-n4-gBZ"/>
                 <outlet property="yearLabel" destination="3EM-TT-bfN" id="ZkZ-sa-sPD"/>

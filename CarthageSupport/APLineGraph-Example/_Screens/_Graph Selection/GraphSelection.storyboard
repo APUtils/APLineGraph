@@ -13,10 +13,13 @@
         <scene sceneID="ScD-Z7-nCQ">
             <objects>
                 <navigationController id="Vpm-6P-MK2" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ctb-cI-kRD">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="ctb-cI-kRD">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isPrime" value="NO"/>
+                        </userDefinedRuntimeAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="h3f-Zv-HwD" kind="relationship" relationship="rootViewController" id="44Q-lH-PNs"/>
@@ -46,6 +49,10 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="stylizeSeparators" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isPrime" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="h3f-Zv-HwD" id="UQq-Yu-IbL"/>
                                     <outlet property="delegate" destination="h3f-Zv-HwD" id="7hD-oq-07c"/>

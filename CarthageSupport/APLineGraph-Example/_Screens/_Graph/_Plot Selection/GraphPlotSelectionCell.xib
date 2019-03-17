@@ -20,13 +20,17 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xF2-z3-VD7">
                         <rect key="frame" x="44" y="11.5" width="315" height="20.5"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isOnSecondary" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aI-BO-R2A">
                         <rect key="frame" x="16" y="16" width="12" height="12"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="12" id="Din-bK-0rv"/>
                             <constraint firstAttribute="height" constant="12" id="cBg-gh-a1P"/>
@@ -53,7 +57,7 @@
                 <outlet property="plotColorView" destination="3aI-BO-R2A" id="fhg-4w-ck6"/>
                 <outlet property="plotNameLabel" destination="xF2-z3-VD7" id="z4A-QX-8vt"/>
             </connections>
-            <point key="canvasLocation" x="73" y="44"/>
+            <point key="canvasLocation" x="72.799999999999997" y="43.178410794602705"/>
         </tableViewCell>
     </objects>
 </document>

@@ -9,19 +9,8 @@
       "scale" : "2x"
     },
     {
-      "resizing" : {
-        "mode" : "3-part-horizontal",
-        "center" : {
-          "mode" : "tile",
-          "width" : 1
-        },
-        "cap-insets" : {
-          "right" : 32,
-          "left" : 32
-        }
-      },
       "idiom" : "universal",
-      "filename" : "range-control-day.png",
+      "filename" : "plot-point-background.png",
       "scale" : "3x"
     }
   ],

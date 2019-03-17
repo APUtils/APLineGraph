@@ -12,12 +12,11 @@ import UIKit
 private extension Constants {
     static let verticalGap: CGFloat = 8
     static let distanceToHelperView: CGFloat = 2
-    static let helperViewBackgroundColor: UIColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
 }
 
 
-extension Graph {
-final class VerticalAxis: Axis {
+public extension Graph {
+public final class VerticalAxis: Axis {
     
     // ******************************* MARK: - Public Properties
     
@@ -25,16 +24,15 @@ final class VerticalAxis: Axis {
     
     // ******************************* MARK: - Private Properties
     
-    private let modes: [RegionDivideMode]
     private let minMaxRanges: [MinMaxRange]
-    private let verticalPercentGap: CGFloat
+    private let configuration: Graph.Configuration
     
     private lazy var helperViewsReuseController: ReuseController<UIView> = ReuseController<UIView> { [weak self] in
         guard let self = self else { return UIView() }
         
         let frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: 1)
         let view = UIView(frame: frame)
-        view.backgroundColor = c.helperViewBackgroundColor
+        view.backgroundColor = self.configuration.helpLinesColor
         view.autoresizingMask = [.flexibleWidth]
         
         return view
@@ -55,10 +53,9 @@ final class VerticalAxis: Axis {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(modes: [RegionDivideMode], minMaxRanges: [MinMaxRange], verticalPercentGap: CGFloat) {
-        self.modes = modes
+    init(minMaxRanges: [MinMaxRange], configuration: Graph.Configuration) {
         self.minMaxRanges = minMaxRanges
-        self.verticalPercentGap = verticalPercentGap
+        self.configuration = configuration
         self.range = .full
         
         super.init(frame: UIScreen.main.bounds)
@@ -72,7 +69,7 @@ final class VerticalAxis: Axis {
     
     // ******************************* MARK: - Axis Overrides
     
-    override func update() {
+    override public func update() {
         queueAllLabels()
         helperViewsReuseController.queueAll()
         
@@ -88,7 +85,7 @@ final class VerticalAxis: Axis {
         var size = max - min
         
         // Adjust min and max to match bottom and top gap
-        let additionalSize = size / (1 - 2 * verticalPercentGap) - size
+        let additionalSize = size / (1 - 2 * configuration.verticalPercentGap) - size
         min -= additionalSize / 2
         max += additionalSize / 2
         size += additionalSize
@@ -110,24 +107,24 @@ final class VerticalAxis: Axis {
         // roundedStep = 100
         // values: [100, 200]
         
-        let roundedStep = modes
+        let roundedStep = configuration.verticalAxisRegionDivideModes
             .map { $0.getRoundedStep(step: step) }
             .min() ?? step
         
         let initialValue = (min / roundedStep).rounded(.up) * roundedStep
-        var value = initialValue
-        while value < max {
+        let values = stride(from: initialValue, to: max, by: roundedStep).map { $0 }
+        var formattedValues = ValuesFormatter.shared.strings(from: values)
+        
+        values.forEach { value in
             let centerY = height * (1 - (value - min) / size)
             
-            let label = dequeueLabel(text: value.asString)
+            let label = dequeueLabel(text: formattedValues.removeFirst())
             label.center.y = centerY - maxLabelSize.height / 2 - c.distanceToHelperView
             addSubview(label)
             
             let view = helperViewsReuseController.dequeue()
             view.center.y = centerY
             addSubview(view)
-            
-            value += roundedStep
         }
     }
 }

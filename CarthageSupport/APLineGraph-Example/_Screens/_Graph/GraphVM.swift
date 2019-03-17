@@ -14,18 +14,22 @@ import APLineGraph
 
 private extension Constants {
     static let mainGraphLineWidth: CGFloat = 2
+    static let mainGraphHelperLinesDayColor: UIColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
+    static let mainGraphHelperLinesNightColor: UIColor = #colorLiteral(red: 0.1058823529, green: 0.1529411765, blue: 0.2039215686, alpha: 1)
     static let helperGraphLineWidth: CGFloat = 1
 }
 
 
-struct GraphVM {
+class GraphVM {
     
     // ******************************* MARK: - Public Properties
     
     let graphModel: GraphModel
     let plots: [Graph.Plot]
-    let mainGraph = Graph(showAxises: true, enableInspection: true, lineWidth: c.mainGraphLineWidth)
-    let helperGraph = Graph(showAxises: false, enableInspection: false, lineWidth: c.helperGraphLineWidth)
+    var mainGraphConfiguration: Graph.Configuration
+    let mainGraph: Graph
+    var helperGraphConfiguration: Graph.Configuration
+    let helperGraph: Graph
     private(set) var plotSelectionVMs: [GraphPlotSelectionCellVM]
     
     // ******************************* MARK: - Private Properties
@@ -34,6 +38,16 @@ struct GraphVM {
     
     init(graphModel: GraphModel) {
         self.graphModel = graphModel
+        
+        self.mainGraphConfiguration = Graph.Configuration.default
+        self.mainGraphConfiguration.enableInspection = true
+        self.mainGraphConfiguration.showAxises = true
+        self.mainGraphConfiguration.lineWidth = c.mainGraphLineWidth
+        self.mainGraph = Graph(configuration: self.mainGraphConfiguration)
+        
+        self.helperGraphConfiguration = Graph.Configuration.default
+        self.helperGraphConfiguration.lineWidth = c.helperGraphLineWidth
+        self.helperGraph = Graph(configuration: self.helperGraphConfiguration)
         
         let plots = graphModel
             .lines
@@ -48,13 +62,16 @@ struct GraphVM {
     
     private func setup() {
         mainGraph.addPlots(plots)
+        
         helperGraph.addPlots(plots)
         helperGraph.isUserInteractionEnabled = false
+        
+        AppearanceManager.shared.addStyleListener(self)
     }
     
     // ******************************* MARK: - Public Methods
     
-    mutating func togglePlotSelection(index: Int) {
+    func togglePlotSelection(index: Int) {
         plotSelectionVMs[index].selected.toggle()
         let plotSelectionVM = plotSelectionVMs[index]
         if plotSelectionVM.selected {
@@ -104,5 +121,27 @@ extension GraphModel {
         }
         
         return Graph.Plot(name: name, lineColor: color, points: points)
+    }
+}
+
+// ******************************* MARK: - AppearanceManagerStyleListener
+
+extension GraphVM: AppearanceManagerStyleListener {
+    func appearanceManager(_ appearanceManager: AppearanceManager, didChangeStyle style: AppearanceManager.Style) {
+        switch style {
+        case .day:
+            mainGraphConfiguration.helpLinesColor = c.mainGraphHelperLinesDayColor
+            mainGraphConfiguration.inspectionTextColor = style.separatorColor
+            mainGraphConfiguration.inspectionBlurEffect = .light
+            
+        case .night:
+            mainGraphConfiguration.helpLinesColor = c.mainGraphHelperLinesNightColor
+            mainGraphConfiguration.inspectionTextColor = style.onSecondaryColor
+            mainGraphConfiguration.inspectionBlurEffect = .dark
+        }
+        
+        mainGraphConfiguration.plotInspectionPointCenterColor = style.secondaryColor
+        mainGraphConfiguration.inspectionGuideColor = style.separatorColor
+        mainGraph.configuration = mainGraphConfiguration
     }
 }

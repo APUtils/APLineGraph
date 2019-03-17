@@ -29,7 +29,7 @@ struct GraphInspectionVM {
     // ******************************* MARK: - Types
     
     struct Value {
-        let value: String
+        let value: CGFloat
         let color: UIColor
     }
     
@@ -38,12 +38,14 @@ struct GraphInspectionVM {
     let date: String
     let year: String
     let values: [Value]
+    let configuration: Graph.Configuration
     
     // ******************************* MARK: - Initialization and Setup
     
-    init(date: Date, plotsPoints: [Graph.Plot: Graph.Plot.Point]) {
+    init(date: Date, plotsPoints: [Graph.Plot: Graph.Plot.Point], configuration: Graph.Configuration) {
         self.date = c.dateFormatter.string(from: date)
         self.year = c.yearFormatter.string(from: date)
-        self.values = plotsPoints.map { Value(value: $0.1.value.asString, color: $0.0.lineColor) }
+        self.values = plotsPoints.map { Value(value: $0.1.value, color: $0.0.lineColor) }
+        self.configuration = configuration
     }
 }

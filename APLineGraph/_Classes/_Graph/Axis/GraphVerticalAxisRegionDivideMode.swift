@@ -9,8 +9,8 @@
 import UIKit
 
 
-extension Graph.VerticalAxis {
-enum RegionDivideMode: Int {
+public extension Graph.VerticalAxis {
+public enum RegionDivideMode: Int {
     case by2 = 2
     case by4 = 4
     case by5 = 5

@@ -55,6 +55,9 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </constraint>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSeparator" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CDN-dg-Ss7">
                                                         <rect key="frame" x="16" y="1" width="343" height="288"/>
@@ -74,8 +77,11 @@
                                                     </view>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="128" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="itG-AN-e02" customClass="SelfResizableTableView" customModule="APLineGraph_Example" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="356" width="375" height="128"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="separatorInset" minX="45" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="stylizeSeparators" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <outlet property="dataSource" destination="BYZ-38-t0r" id="j32-19-6ye"/>
                                                             <outlet property="delegate" destination="BYZ-38-t0r" id="n53-VP-auZ"/>
@@ -91,6 +97,9 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </constraint>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSeparator" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -116,6 +125,9 @@
                                                     <constraint firstAttribute="trailing" secondItem="CDN-dg-Ss7" secondAttribute="trailing" constant="16" id="tGa-nM-OUQ"/>
                                                     <constraint firstItem="CDN-dg-Ss7" firstAttribute="top" secondItem="dz1-31-omb" secondAttribute="bottom" id="uh3-Mn-UqK"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isPrime" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vaa-Ew-4ti" userLabel="Night Mode Button Container">
                                                 <rect key="frame" x="0.0" y="575" width="375" height="47"/>
@@ -130,6 +142,9 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </constraint>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSeparator" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TbY-5Q-57Y">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
@@ -149,6 +164,9 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </constraint>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSeparator" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -165,6 +183,9 @@
                                                     <constraint firstAttribute="bottom" secondItem="8Qc-Ds-GuF" secondAttribute="bottom" id="lk6-DS-QpD"/>
                                                     <constraint firstItem="TbY-5Q-57Y" firstAttribute="leading" secondItem="vaa-Ew-4ti" secondAttribute="leading" id="rQU-bF-iUl"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isPrime" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -200,6 +221,9 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="O1O-Qg-ueb" secondAttribute="bottom" id="fDT-f5-P6r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isPrime" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <size key="freeformSize" width="375" height="1000"/>

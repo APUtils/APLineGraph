@@ -46,7 +46,7 @@ final class HorizontalAxis: Axis {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(dates: [Date]) {
+    init(dates: [Date], configuration: Graph.Configuration) {
         self.dates = dates
         self.range = .full
         
@@ -55,8 +55,11 @@ final class HorizontalAxis: Axis {
         setup()
     }
     
+    required init(configuration: Graph.Configuration) {
+        fatalError("init(configuration:) has not been implemented")
+    }
+    
     private func setup() {
-        backgroundColor = .white
         isUserInteractionEnabled = false
     }
     
