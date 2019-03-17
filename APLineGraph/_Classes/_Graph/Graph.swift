@@ -42,9 +42,14 @@ public final class Graph: UIView {
     }
     
     private func setup() {
-        backgroundColor = .white
+        setupProperties()
         updateLineLength()
         updateAxises()
+    }
+    
+    private func setupProperties() {
+        backgroundColor = .white
+        clipsToBounds = true
     }
     
     // ******************************* MARK: - Public Methods
@@ -90,14 +95,15 @@ public final class Graph: UIView {
     }
     
     private func layoutAxises() {
+        if let verticalAxis = verticalAxis {
+            verticalAxis.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
+            sendSubviewToBack(verticalAxis)
+        }
+        
         if let horizontalAxis = horizontalAxis {
             let height = horizontalAxis.maxLabelSize.height
             horizontalAxis.frame = CGRect(x: 0, y: bounds.height - height, width: bounds.width, height: height)
-        }
-        
-        if let verticalAxis = verticalAxis {
-            let width = verticalAxis.maxLabelSize.width
-            verticalAxis.frame = CGRect(x: 0, y: 0, width: width, height: bounds.height)
+            sendSubviewToBack(horizontalAxis)
         }
     }
     

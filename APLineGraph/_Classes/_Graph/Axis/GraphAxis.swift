@@ -58,7 +58,7 @@ class Axis: UIView {
         return label
     }
     
-    func queueLabel(label: UILabel) {
+    func queueLabel(_ label: UILabel) {
         reusableLabels.append(label)
     }
 }

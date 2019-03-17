@@ -11,6 +11,8 @@ import UIKit
 
 private extension Constants {
     static let verticalGap: CGFloat = 8
+    static let distanceToHelperView: CGFloat = 2
+    static let helperViewBackgroundColor: UIColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
 }
 
 
@@ -27,7 +29,7 @@ final class VerticalAxis: Axis {
     private let minMaxRanges: [MinMaxRange]
     private let verticalPercentGap: CGFloat
     
-    lazy var maxLabelSize: CGSize = {
+    private lazy var maxLabelSize: CGSize = {
         let height = Axis.labelFont.lineHeight
         let minValueStringWidth = minMaxRanges.map { $0.min }.min()?.asString.oneLineWidth(font: Axis.labelFont) ?? 0
         let maxValueStringWidth = minMaxRanges.map { $0.max }.max()?.asString.oneLineWidth(font: Axis.labelFont) ?? 0
@@ -49,6 +51,12 @@ final class VerticalAxis: Axis {
         self.range = .full
         
         super.init(frame: UIScreen.main.bounds)
+        
+        setup()
+    }
+    
+    private func setup() {
+        isUserInteractionEnabled = false
     }
     
     // ******************************* MARK: - Axis Overrides
@@ -59,7 +67,13 @@ final class VerticalAxis: Axis {
             .compactMap { $0 as? UILabel }
             .forEach {
                 $0.removeFromSuperview()
-                queueLabel(label: $0)
+                queueLabel($0)
+        }
+        
+        subviews
+            .forEach {
+                $0.removeFromSuperview()
+                queueHelperView($0)
         }
         
         // TODO: It's hard to read need to do something with it
@@ -79,8 +93,8 @@ final class VerticalAxis: Axis {
         max += additionalSize / 2
         size += additionalSize
         
-        let elementWidth = maxLabelSize.height + c.verticalGap
-        let elementsCount = height / elementWidth
+        let elementHeight = maxLabelSize.height + c.verticalGap
+        let elementsCount = height / elementHeight
         let step = size / elementsCount
         
         // Choice divide mode with minimum step
@@ -106,11 +120,37 @@ final class VerticalAxis: Axis {
             let centerY = height * (1 - (value - min) / size)
             
             let label = dequeueLabel(text: value.asString)
-            label.center.y = centerY
+            label.center.y = centerY - maxLabelSize.height / 2 - c.distanceToHelperView
             addSubview(label)
+            
+            let view = dequeueHelperView()
+            view.center.y = centerY
+            addSubview(view)
             
             value += roundedStep
         }
+    }
+    
+    // ******************************* MARK: - Reuse
+    
+    private var reusableHelperViews: [UIView] = []
+    
+    private func dequeueHelperView() -> UIView {
+        let view: UIView
+        if reusableHelperViews.hasElements {
+            view = reusableHelperViews.removeFirst()
+        } else {
+            let frame = CGRect(x: 0, y: 0, width: bounds.width, height: 1)
+            view = UIView(frame: frame)
+            view.backgroundColor = c.helperViewBackgroundColor
+            view.autoresizingMask = [.flexibleWidth]
+        }
+        
+        return view
+    }
+    
+    private func queueHelperView(_ view: UIView) {
+        reusableHelperViews.append(view)
     }
 }
 }

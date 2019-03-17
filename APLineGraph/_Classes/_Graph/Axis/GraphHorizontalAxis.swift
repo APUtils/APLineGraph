@@ -33,7 +33,7 @@ final class HorizontalAxis: Axis {
     
     private let dates: [Date]
     
-    lazy var maxLabelSize: CGSize = {
+    private(set) lazy var maxLabelSize: CGSize = {
         let height = Axis.labelFont.lineHeight
         let septemberDate = Date(timeIntervalSince1970: 1569082309)
         let width = c.dateFormatter.string(from: septemberDate).oneLineWidth(font: Axis.labelFont)
@@ -51,6 +51,12 @@ final class HorizontalAxis: Axis {
         self.range = .full
         
         super.init(frame: UIScreen.main.bounds)
+        
+        setup()
+    }
+    
+    private func setup() {
+        isUserInteractionEnabled = false
     }
     
     // ******************************* MARK: - Update
@@ -61,7 +67,7 @@ final class HorizontalAxis: Axis {
             .compactMap { $0 as? UILabel }
             .forEach {
                 $0.removeFromSuperview()
-                queueLabel(label: $0)
+                queueLabel($0)
         }
         
         // TODO: It's hard to read need to do something with it
