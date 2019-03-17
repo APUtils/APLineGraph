@@ -232,6 +232,7 @@
                         <outlet property="graphRangeContainer" destination="ksy-jl-eiG" id="QKY-ol-5gr"/>
                         <outlet property="plotsTableView" destination="itG-AN-e02" id="Exj-Zh-LEf"/>
                         <outlet property="rangeControlView" destination="Gdt-Ci-LYn" id="TMf-88-dWa"/>
+                        <outlet property="switchModeButton" destination="TbY-5Q-57Y" id="aV2-a7-qYr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

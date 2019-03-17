@@ -17,6 +17,7 @@ final class GraphVC: UIViewController {
     @IBOutlet private weak var graphRangeContainer: UIView!
     @IBOutlet private weak var rangeControlView: RangeControlView!
     @IBOutlet private weak var plotsTableView: UITableView!
+    @IBOutlet private weak var switchModeButton: UIButton!
     
     // ******************************* MARK: - Private Properties
     
@@ -33,6 +34,7 @@ final class GraphVC: UIViewController {
         setupTableView()
         setupGraphs()
         setupRangeControl()
+        updateButton()
     }
     
     private func setupTableView() {
@@ -63,10 +65,15 @@ final class GraphVC: UIViewController {
     
     @IBAction private func onSwitchToNightModeTap(_ sender: UIButton) {
         AppearanceManager.shared.toggleStyle()
-        
+        updateButton()
+    }
+    
+    // ******************************* MARK: - Update
+    
+    private func updateButton() {
         switch AppearanceManager.shared.style {
-        case .day: sender.setTitle("Switch to Night Mode", for: .normal)
-        case .night: sender.setTitle("Switch to Day Mode", for: .normal)
+        case .day: switchModeButton.setTitle("Switch to Night Mode", for: .normal)
+        case .night: switchModeButton.setTitle("Switch to Day Mode", for: .normal)
         }
     }
 }
