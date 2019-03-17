@@ -38,6 +38,7 @@ struct GraphVM {
         let plots = graphModel
             .lines
             .compactMap { graphModel.getPlot(entry: $0) }
+            .sorted { $0.name < $1.name }
         
         self.plots = plots
         self.plotSelectionVMs = plots.map { GraphPlotSelectionCellVM(selected: true, plot: $0) }

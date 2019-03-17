@@ -39,6 +39,7 @@ final class GraphVC: UIViewController {
         plotsTableView.registerNib(class: GraphPlotSelectionCell.self)
         plotsTableView.estimatedRowHeight = 44
         plotsTableView.rowHeight = UITableView.automaticDimension
+        plotsTableView.contentInset.bottom = -c.pixelSize
     }
     
     private func setupGraphs() {

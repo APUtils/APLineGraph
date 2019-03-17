@@ -13,6 +13,9 @@ private extension Constants {
     static let verticalPercentGap: CGFloat = 0.1
     static let inspectionGuideColor: UIColor = #colorLiteral(red: 0.8117647059, green: 0.8196078431, blue: 0.8235294118, alpha: 1)
     static let inspectionViewTopMargin: CGFloat = 22
+    static let inspectionPointSize: CGFloat = 8.66667
+    static let inspectionPointImage: UIImage = #imageLiteral(resourceName: "plot-point")
+    static let inspectionPointBackgroundImage: UIImage = #imageLiteral(resourceName: "plot-point-background")
 }
 
 
@@ -43,6 +46,18 @@ public final class Graph: UIView {
         
         return view
     }()
+    
+    private let inspectionPointViewsReuseController: ReuseController<UIView> = ReuseController<UIView> {
+        let inspectionPointImageView = UIImageView(image: c.inspectionPointImage)
+        let letinspectionPointBackgroundImageView = UIImageView(image: c.inspectionPointBackgroundImage)
+        
+        let inspectionPointView = UIView(frame: CGRect(x: 0, y: 0, width: c.inspectionPointSize, height: c.inspectionPointSize))
+        inspectionPointView.addSubview(letinspectionPointBackgroundImageView)
+        inspectionPointView.addSubview(inspectionPointImageView)
+        inspectionPointView.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+        
+        return inspectionPointView
+    }
     
     // ******************************* MARK: - Initialization and Setup
     
@@ -227,7 +242,7 @@ public final class Graph: UIView {
         // Animate graph if changes are in animation closure
         let animated = UIView.isInAnimationClosure
 
-        plotsShapeLayers.forEach { $0.0.configure(shapeLayer: $0.1, transform: plotsTransform, animated: animated) }
+        plotsShapeLayers.forEach { $0.0.updatePath(shapeLayer: $0.1, transform: plotsTransform, animated: animated) }
     }
     
     // ******************************* MARK: - Actions
@@ -265,12 +280,21 @@ public final class Graph: UIView {
         inspectionViewCenterX?.constant = touchPoint.x
         
         let plotsPoints: [Plot: Plot.Point] = Array(plotsShapeLayers.keys).dictionaryMap { plot in
-            if let point = plot.getPoint(plotTransform: plotsTransform, point: touchPoint) {
-                return (plot, point)
-            } else {
-                return nil
-            }
+            let point = plot.getPoint(plotTransform: plotsTransform, point: touchPoint)
+            return (plot, point)
         }
+        
+        inspectionPointViewsReuseController.queueAll()
+        
+        plotsPoints
+            .map { plot, point in
+                let center = plot.transform(point: point, transform: plotsTransform)
+                let inspectionPoint = inspectionPointViewsReuseController.dequeue()
+                inspectionPoint.center = center
+                inspectionPoint.tintColor = plot.lineColor
+                return inspectionPoint
+            }
+            .forEach { insertSubview($0, belowSubview: inspectionView) }
         
         if let date = plotsPoints.first?.value.date {
             let vm = GraphInspectionVM(date: date, plotsPoints: plotsPoints)
@@ -283,6 +307,7 @@ public final class Graph: UIView {
     private func hideInspections() {
         inspectionGuideView.isHidden = true
         inspectionView.isHidden = true
+        inspectionPointViewsReuseController.queueAll()
     }
     
     // ******************************* MARK: - Private Methods

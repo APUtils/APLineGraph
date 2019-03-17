@@ -75,6 +75,7 @@
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="128" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="itG-AN-e02" customClass="SelfResizableTableView" customModule="APLineGraph_Example" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="356" width="375" height="128"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="separatorInset" minX="45" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         <connections>
                                                             <outlet property="dataSource" destination="BYZ-38-t0r" id="j32-19-6ye"/>
                                                             <outlet property="delegate" destination="BYZ-38-t0r" id="n53-VP-auZ"/>

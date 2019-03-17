@@ -20,3 +20,7 @@ public struct Point {
     }
 }
 }
+
+// ******************************* MARK: - Equatable
+
+extension Graph.Plot.Point: Equatable {}

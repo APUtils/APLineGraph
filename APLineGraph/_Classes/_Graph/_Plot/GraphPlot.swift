@@ -68,7 +68,7 @@ public struct Plot {
         return shapeLayer
     }
     
-    func configure(shapeLayer: CAShapeLayer, transform: CGAffineTransform, animated: Bool) {
+    func updatePath(shapeLayer: CAShapeLayer, transform: CGAffineTransform, animated: Bool) {
         var transform = transform
         let transformedPath = path.copy(using: &transform)
         
@@ -96,10 +96,16 @@ public struct Plot {
         return MinMaxRange(min: minValue, max: maxValue)
     }
     
-    func getPoint(plotTransform: CGAffineTransform, point: CGPoint) -> Point? {
+    func getPoint(plotTransform: CGAffineTransform, point: CGPoint) -> Point {
         var index = point.applying(plotTransform.inverted()).x.rounded().asInt
         index = index.clamped(min: 0, max: points.count - 1)
         return points[index]
+    }
+    
+    func transform(point: Point, transform: CGAffineTransform) -> CGPoint {
+        guard let index = points.firstIndex(of: point) else { return .zero }
+        let pointCGPoint = CGPoint(x: index.asCGFloat, y: point.value)
+        return pointCGPoint.applying(transform)
     }
 }
 }
