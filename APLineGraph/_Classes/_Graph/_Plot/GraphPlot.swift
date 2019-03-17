@@ -58,6 +58,16 @@ public struct Plot {
     
     // ******************************* MARK: - Internal Methods
     
+    func createShapeLayer() -> CAShapeLayer {
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.strokeColor = lineColor.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineJoin = .round
+        shapeLayer.path = path
+        
+        return shapeLayer
+    }
+    
     func configure(shapeLayer: CAShapeLayer, transform: CGAffineTransform, animated: Bool) {
         var transform = transform
         let transformedPath = path.copy(using: &transform)
@@ -86,14 +96,10 @@ public struct Plot {
         return MinMaxRange(min: minValue, max: maxValue)
     }
     
-    func createShapeLayer() -> CAShapeLayer {
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.strokeColor = lineColor.cgColor
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineJoin = .round
-        shapeLayer.path = path
-        
-        return shapeLayer
+    func getPoint(plotTransform: CGAffineTransform, point: CGPoint) -> Point? {
+        var index = point.applying(plotTransform.inverted()).x.rounded().asInt
+        index = index.clamped(min: 0, max: points.count - 1)
+        return points[index]
     }
 }
 }

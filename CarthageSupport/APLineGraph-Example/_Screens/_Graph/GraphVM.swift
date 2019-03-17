@@ -24,8 +24,8 @@ struct GraphVM {
     
     let graphModel: GraphModel
     let plots: [Graph.Plot]
-    let mainGraph = Graph(showAxises: true, lineWidth: c.mainGraphLineWidth)
-    let helperGraph = Graph(showAxises: false, lineWidth: c.helperGraphLineWidth)
+    let mainGraph = Graph(showAxises: true, enableInspection: true, lineWidth: c.mainGraphLineWidth)
+    let helperGraph = Graph(showAxises: false, enableInspection: false, lineWidth: c.helperGraphLineWidth)
     private(set) var plotSelectionVMs: [GraphPlotSelectionCellVM]
     
     // ******************************* MARK: - Private Properties

@@ -16,3 +16,16 @@ extension UIView {
         return inheritedAnimationDuration > 0
     }
 }
+
+// ******************************* MARK: - Corner Radius
+
+extension UIView {
+    @IBInspectable var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+        }
+    }
+}

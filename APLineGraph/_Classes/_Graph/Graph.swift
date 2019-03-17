@@ -11,6 +11,8 @@ import UIKit
 
 private extension Constants {
     static let verticalPercentGap: CGFloat = 0.1
+    static let inspectionGuideColor: UIColor = #colorLiteral(red: 0.8117647059, green: 0.8196078431, blue: 0.8235294118, alpha: 1)
+    static let inspectionViewTopMargin: CGFloat = 22
 }
 
 
@@ -23,26 +25,45 @@ public final class Graph: UIView {
     
     // ******************************* MARK: - Private Properties
     
+    private let enableInspection: Bool
     private var plotsShapeLayers: [Plot: CAShapeLayer] = [:]
     private var range: RelativeRange = .full
     private var horizontalAxis: HorizontalAxis?
     private var verticalAxis: VerticalAxis?
+    private let inspectionView = GraphInspectionView.create()
+    private var inspectionViewCenterX: NSLayoutConstraint?
+    private var plotsTransform = CGAffineTransform.identity
+    
+    private lazy var inspectionGuideView: UIView = {
+        let view = UIView()
+        view.backgroundColor = c.inspectionGuideColor
+        view.bounds = CGRect(x: 0, y: 0, width: 1, height: bounds.height)
+        view.autoresizingMask = [.flexibleHeight]
+        view.widthAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        return view
+    }()
     
     // ******************************* MARK: - Initialization and Setup
     
-    public init(showAxises: Bool, lineWidth: CGFloat) {
+    public init(showAxises: Bool, enableInspection: Bool, lineWidth: CGFloat) {
         self.showAxises = showAxises
+        self.enableInspection = enableInspection
+        
         super.init(frame: UIScreen.main.bounds)
+        
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
+        self.enableInspection = false
         super.init(coder: aDecoder)
         setup()
     }
     
     private func setup() {
         setupProperties()
+        setupInspections()
         updateLineLength()
         updateAxises()
     }
@@ -50,6 +71,27 @@ public final class Graph: UIView {
     private func setupProperties() {
         backgroundColor = .white
         clipsToBounds = true
+    }
+    
+    private func setupInspections() {
+        // Inspection View
+        addSubview(inspectionView)
+        inspectionView.translatesAutoresizingMaskIntoConstraints = false
+        inspectionView.isHidden = true
+        
+        inspectionViewCenterX = inspectionView.centerXAnchor.constraint(equalTo: leftAnchor)
+        inspectionViewCenterX?.isActive = true
+        
+        inspectionView.topAnchor.constraint(equalTo: topAnchor, constant: c.inspectionViewTopMargin).isActive = true
+        
+        // Inspection Guide View
+        addSubview(inspectionGuideView)
+        inspectionGuideView.translatesAutoresizingMaskIntoConstraints = false
+        inspectionGuideView.isHidden = true
+        
+        inspectionGuideView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        inspectionGuideView.topAnchor.constraint(equalTo: inspectionView.bottomAnchor).isActive = true
+        inspectionGuideView.centerXAnchor.constraint(equalTo: inspectionView.centerXAnchor).isActive = true
     }
     
     // ******************************* MARK: - Public Methods
@@ -103,7 +145,7 @@ public final class Graph: UIView {
         if let horizontalAxis = horizontalAxis {
             let height = horizontalAxis.maxLabelSize.height
             horizontalAxis.frame = CGRect(x: 0, y: bounds.height - height, width: bounds.width, height: height)
-            sendSubviewToBack(horizontalAxis)
+            bringSubviewToFront(horizontalAxis)
         }
     }
     
@@ -170,7 +212,7 @@ public final class Graph: UIView {
         // Move graph min value onto axis
         let translateY: CGFloat = -minValue
         
-        let transform = CGAffineTransform.identity
+        plotsTransform = CGAffineTransform.identity
             // Move axis origin to bottom of a screen plus gap
             .translatedBy(x: 0, y: height - gap)
             // Mirror over Y axis
@@ -185,7 +227,62 @@ public final class Graph: UIView {
         // Animate graph if changes are in animation closure
         let animated = UIView.isInAnimationClosure
 
-        plotsShapeLayers.forEach { $0.0.configure(shapeLayer: $0.1, transform: transform, animated: animated) }
+        plotsShapeLayers.forEach { $0.0.configure(shapeLayer: $0.1, transform: plotsTransform, animated: animated) }
+    }
+    
+    // ******************************* MARK: - Actions
+    
+    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard enableInspection else { return }
+        updateInspections(touches: touches)
+        showInspections()
+    }
+    
+    public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard enableInspection else { return }
+        updateInspections(touches: touches)
+    }
+    
+    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard enableInspection else { return }
+        hideInspections()
+    }
+    
+    public override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard enableInspection else { return }
+        hideInspections()
+    }
+    
+    private func showInspections() {
+        inspectionGuideView.isHidden = false
+        
+        inspectionView.isHidden = false
+        bringSubviewToFront(inspectionView)
+    }
+    
+    private func updateInspections(touches: Set<UITouch>) {
+        let touchPoint = touches.first?.location(in: self) ?? .zero
+        inspectionViewCenterX?.constant = touchPoint.x
+        
+        let plotsPoints: [Plot: Plot.Point] = Array(plotsShapeLayers.keys).dictionaryMap { plot in
+            if let point = plot.getPoint(plotTransform: plotsTransform, point: touchPoint) {
+                return (plot, point)
+            } else {
+                return nil
+            }
+        }
+        
+        if let date = plotsPoints.first?.value.date {
+            let vm = GraphInspectionVM(date: date, plotsPoints: plotsPoints)
+            inspectionView.configure(vm: vm)
+        } else {
+            print("Unable to get inspection date")
+        }
+    }
+    
+    private func hideInspections() {
+        inspectionGuideView.isHidden = true
+        inspectionView.isHidden = true
     }
     
     // ******************************* MARK: - Private Methods

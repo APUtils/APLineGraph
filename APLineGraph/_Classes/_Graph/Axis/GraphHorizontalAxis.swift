@@ -13,11 +13,11 @@ private extension Constants {
     static let horizontalGap: CGFloat = 32
     
     static var dateFormatter: DateFormatter = {
-        let dateFromatter = DateFormatter()
-        dateFromatter.dateFormat = "MMM d"
-        dateFromatter.timeZone = .gmt
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d"
+        dateFormatter.timeZone = .gmt
         
-        return dateFromatter
+        return dateFormatter
     }()
 }
 
@@ -56,6 +56,7 @@ final class HorizontalAxis: Axis {
     }
     
     private func setup() {
+        backgroundColor = .white
         isUserInteractionEnabled = false
     }
     
@@ -63,12 +64,8 @@ final class HorizontalAxis: Axis {
     
     override func update() {
         // TODO: Better reuse and only show labels that actually needed. Do not need to add labels outside of a screen.
-        subviews
-            .compactMap { $0 as? UILabel }
-            .forEach {
-                $0.removeFromSuperview()
-                queueLabel($0)
-        }
+        // No need to remove labels if they just moved.
+        queueAllLabels()
         
         // TODO: It's hard to read need to do something with it
         // TODO: Need to use 2 divider

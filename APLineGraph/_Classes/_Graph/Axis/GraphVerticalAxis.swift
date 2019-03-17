@@ -29,6 +29,17 @@ final class VerticalAxis: Axis {
     private let minMaxRanges: [MinMaxRange]
     private let verticalPercentGap: CGFloat
     
+    private lazy var helperViewsReuseController: ReuseController<UIView> = ReuseController<UIView> { [weak self] in
+        guard let self = self else { return UIView() }
+        
+        let frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: 1)
+        let view = UIView(frame: frame)
+        view.backgroundColor = c.helperViewBackgroundColor
+        view.autoresizingMask = [.flexibleWidth]
+        
+        return view
+    }
+    
     private lazy var maxLabelSize: CGSize = {
         let height = Axis.labelFont.lineHeight
         let minValueStringWidth = minMaxRanges.map { $0.min }.min()?.asString.oneLineWidth(font: Axis.labelFont) ?? 0
@@ -62,19 +73,8 @@ final class VerticalAxis: Axis {
     // ******************************* MARK: - Axis Overrides
     
     override func update() {
-        // TODO: Better reuse and only show labels that actually needed. Do not need to add labels outside of a screen.
-        subviews
-            .compactMap { $0 as? UILabel }
-            .forEach {
-                $0.removeFromSuperview()
-                queueLabel($0)
-        }
-        
-        subviews
-            .forEach {
-                $0.removeFromSuperview()
-                queueHelperView($0)
-        }
+        queueAllLabels()
+        helperViewsReuseController.queueAll()
         
         // TODO: It's hard to read need to do something with it
         let height = bounds.height
@@ -123,34 +123,12 @@ final class VerticalAxis: Axis {
             label.center.y = centerY - maxLabelSize.height / 2 - c.distanceToHelperView
             addSubview(label)
             
-            let view = dequeueHelperView()
+            let view = helperViewsReuseController.dequeue()
             view.center.y = centerY
             addSubview(view)
             
             value += roundedStep
         }
-    }
-    
-    // ******************************* MARK: - Reuse
-    
-    private var reusableHelperViews: [UIView] = []
-    
-    private func dequeueHelperView() -> UIView {
-        let view: UIView
-        if reusableHelperViews.hasElements {
-            view = reusableHelperViews.removeFirst()
-        } else {
-            let frame = CGRect(x: 0, y: 0, width: bounds.width, height: 1)
-            view = UIView(frame: frame)
-            view.backgroundColor = c.helperViewBackgroundColor
-            view.autoresizingMask = [.flexibleWidth]
-        }
-        
-        return view
-    }
-    
-    private func queueHelperView(_ view: UIView) {
-        reusableHelperViews.append(view)
     }
 }
 }
