@@ -15,106 +15,70 @@ private extension Constants {
 }
 
 
-// TODO:
-// Plot should be a struct with just actual plot description.
-// Need to move out `shapeLayer`, leave `path` and rename `scalablePath`
-// into `computePath(transform:)` or something like that.
-// Idea here is to reuse path calculation so one plot can be used on two graphs but with different transforms.
-// Maybe also make creation async so it can happen on BG thread.
 public extension Graph {
-public final class Plot {
+public struct Plot {
     
     // ******************************* MARK: - Public Properties
     
-    public private(set) lazy var shapeLayer: CAShapeLayer = CAShapeLayer()
+    /// Plots considered equal if they have the same name.
     public let name: String
     public let points: [Point]
-    public let lineWidth: CGFloat
-    public let lineColor: UIColor
-    public private(set) var transform: CGAffineTransform
+    public var lineColor: UIColor
     
     // ******************************* MARK: - Internal Properties
     
-    private(set) lazy var valuesCount: Int = {
-        return points.count
-    }()
-    
-    private(set) lazy var minValue: CGFloat = {
-        return points
-            .map { $0.value }
-            .min() ?? 0
-    }()
-    
-    private(set) lazy var maxValue: CGFloat = {
-        return points
-            .map { $0.value }
-            .max() ?? 1
-    }()
+    let valuesCount: CGFloat
+    let minValue: CGFloat
+    let maxValue: CGFloat
     
     // ******************************* MARK: - Private Properties
     
-    private lazy var path: CGPath = {
-        let path = CGMutablePath()
-        
-        // Start from first
-        guard let firstPoint = points.first else { return path }
-        
-        let startPoint = CGPoint(x: 0, y: firstPoint.value)
-        path.move(to: startPoint)
-        
-        // Add lines to other points
-        for index in points.indices.dropFirst() {
-            let point = points[index]
-            let nextPointX = index.asCGFloat
-            let nextPointY = point.value
-            let nextPoint = CGPoint(x: nextPointX, y: nextPointY)
-            path.addLine(to: nextPoint)
-        }
-        
-        return path.copy()!
-    }()
-    
-    private var scaledPath: CGPath? {
-        var transform = self.transform
-        return path.copy(using: &transform)
-    }
+    private let path: CGPath
     
     // ******************************* MARK: - Initialization and Setup
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public init?(name: String, lineWidth: CGFloat, lineColor: UIColor, points: [Point]) {
+    public init?(name: String, lineColor: UIColor, points: [Point]) {
         guard points.hasElements else { return nil }
         
         self.name = name
         self.points = points
-        self.lineWidth = lineWidth
         self.lineColor = lineColor
-        self.transform = .identity
+        self.valuesCount = points.count.asCGFloat
         
-        setup()
-    }
-    
-    private func setup() {
-        setupShapeLayer()
-        configure(animated: false)
-    }
-    
-    private func setupShapeLayer() {
-        shapeLayer.lineWidth = lineWidth
-        shapeLayer.strokeColor = lineColor.cgColor
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineJoin = .round
+        self.minValue = points
+            .map { $0.value }
+            .min() ?? 0
+        
+        self.maxValue = points
+            .map { $0.value }
+            .max() ?? 100
+        
+        self.path = f_getPath(points: points)
     }
     
     // ******************************* MARK: - Internal Methods
     
+    func configure(shapeLayer: CAShapeLayer, transform: CGAffineTransform, animated: Bool) {
+        var transform = transform
+        let transformedPath = path.copy(using: &transform)
+        
+        if animated {
+            let pathAnimation = CABasicAnimation(keyPath: "path")
+            pathAnimation.fromValue = shapeLayer.path
+            pathAnimation.duration = UIView.inheritedAnimationDuration > 0 ? UIView.inheritedAnimationDuration : c.defaultAnimationDuration
+            pathAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeOut)
+            pathAnimation.fillMode = .forwards
+            shapeLayer.path = transformedPath
+            shapeLayer.add(pathAnimation, forKey: pathAnimation.keyPath)
+            
+        } else {
+            shapeLayer.path = transformedPath
+        }
+    }
+    
     func getMinMaxRange(range: Graph.RelativeRange) -> MinMaxRange {
-        // TODO: Too many casts. Can it be reduced?
-        let startIndex = (valuesCount.asCGFloat * range.from).rounded().asInt
-        let endIndex = (valuesCount.asCGFloat * range.to).rounded().asInt
+        let startIndex = (valuesCount * range.from).rounded().asInt
+        let endIndex = (valuesCount * range.to).rounded().asInt
         let subpoints = points[startIndex..<endIndex]
         let subvalues = subpoints.map { $0.value }
         let minValue = subvalues.min() ?? 0
@@ -122,26 +86,14 @@ public final class Plot {
         return MinMaxRange(min: minValue, max: maxValue)
     }
     
-    func setTransform(_ transform: CGAffineTransform, animated: Bool) {
-        self.transform = transform
-        configure(animated: animated)
-    }
-    
-    // ******************************* MARK: - Configuration
-    
-    private func configure(animated: Bool) {
-        if animated {
-            let pathAnimation = CABasicAnimation(keyPath: "path")
-            pathAnimation.fromValue = shapeLayer.path
-            pathAnimation.duration = UIView.inheritedAnimationDuration > 0 ? UIView.inheritedAnimationDuration : c.defaultAnimationDuration
-            pathAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeOut)
-            pathAnimation.fillMode = .forwards
-            shapeLayer.path = scaledPath
-            shapeLayer.add(pathAnimation, forKey: pathAnimation.keyPath)
-            
-        } else {
-            shapeLayer.path = scaledPath
-        }
+    func createShapeLayer() -> CAShapeLayer {
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.strokeColor = lineColor.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineJoin = .round
+        shapeLayer.path = path
+        
+        return shapeLayer
     }
 }
 }
@@ -150,6 +102,37 @@ public final class Plot {
 
 extension Graph.Plot: Equatable {
     public static func == (lhs: Graph.Plot, rhs: Graph.Plot) -> Bool {
-        return lhs === rhs
+        return lhs.name == rhs.name
     }
+}
+
+// ******************************* MARK: - Hashable
+
+extension Graph.Plot: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+}
+
+// ******************************* MARK: - Helper Functions
+
+private func f_getPath(points: [Graph.Plot.Point]) -> CGPath {
+    let path = CGMutablePath()
+    
+    // Start from first
+    guard let firstPoint = points.first else { return path }
+    
+    let startPoint = CGPoint(x: 0, y: firstPoint.value)
+    path.move(to: startPoint)
+    
+    // Add lines to other points
+    for index in points.indices.dropFirst() {
+        let point = points[index]
+        let nextPointX = index.asCGFloat
+        let nextPointY = point.value
+        let nextPoint = CGPoint(x: nextPointX, y: nextPointY)
+        path.addLine(to: nextPoint)
+    }
+    
+    return path.copy()!
 }

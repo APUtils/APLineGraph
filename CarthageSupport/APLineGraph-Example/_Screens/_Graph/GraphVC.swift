@@ -90,7 +90,8 @@ extension GraphVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        // TODO:
-//        let cellVM = vm.plotSelectionVMs[indexPath.row]
+        vm.togglePlotSelection(index: indexPath.row)
+        guard let cell = tableView.cellForRow(at: indexPath) as? GraphPlotSelectionCell else { return }
+        cell.configure(vm: vm.plotSelectionVMs[indexPath.row])
     }
 }

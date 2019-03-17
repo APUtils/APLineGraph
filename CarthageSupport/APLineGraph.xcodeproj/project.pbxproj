@@ -431,10 +431,10 @@
 				0DE2D78922357D31007BD043 /* Date+Utils.swift */,
 				0DE2D77822355F1A007BD043 /* Dictionary+Utils.swift */,
 				0DE2D768223555A2007BD043 /* JSONDecoder+Utils.swift */,
+				0DB88A26223DB8F5002B9F7D /* NSLayoutConstraint+Utils.swift */,
 				0DE2D77B22355FCD007BD043 /* UIColor+Utils.swift */,
 				0DB88A24223DADC3002B9F7D /* UITableView+Utils.swift */,
 				0DE2D78B2235920E007BD043 /* UIView+Utils.swift */,
-				0DB88A26223DB8F5002B9F7D /* NSLayoutConstraint+Utils.swift */,
 			);
 			path = _Extensions;
 			sourceTree = "<group>";

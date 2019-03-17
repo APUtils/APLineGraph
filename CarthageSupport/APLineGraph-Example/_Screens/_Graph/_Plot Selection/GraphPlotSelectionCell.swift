@@ -13,31 +13,14 @@ final class GraphPlotSelectionCell: UITableViewCell {
     
     // ******************************* MARK: - @IBOutlets
     
-    // TODO:
-//    @IBOutlet private weak var <#name#>: <#class#>!
-//    @IBOutlet private weak var <#name#>: <#class#>!
-//    @IBOutlet private weak var <#name#>: <#class#>!
-//    @IBOutlet private weak var <#name#>: <#class#>!
-    
-    // ******************************* MARK: - Initialization and Setup
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setup()
-    }
-    
-    private func setup() {
-        
-    }
+    @IBOutlet private weak var plotColorView: UIView!
+    @IBOutlet private weak var plotNameLabel: UILabel!
     
     // ******************************* MARK: - Configuration
     
     func configure(vm: GraphPlotSelectionCellVM) {
-        // TODO:
-//        <#name#>.<#text#> = vm.<#text#>
-//        <#name#>.<#text#> = vm.<#text#>
-//        <#name#>.<#text#> = vm.<#text#>
-//        <#name#>.<#text#> = vm.<#text#>
+        plotColorView.backgroundColor = vm.color
+        plotNameLabel.text = vm.name
+        accessoryType = vm.selected ? .checkmark : .none
     }
 }
-

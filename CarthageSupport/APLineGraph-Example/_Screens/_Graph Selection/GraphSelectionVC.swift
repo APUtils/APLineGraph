@@ -22,12 +22,17 @@ final class GraphSelectionVC: UIViewController {
     // ******************************* MARK: - Initialization and Setup
     
     override func viewDidLoad() {
-        setup()
         super.viewDidLoad()
+        setup()
     }
     
     private func setup() {
+        setupNavigation()
         setupTableView()
+    }
+    
+    private func setupNavigation() {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     private func setupTableView() {

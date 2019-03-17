@@ -22,36 +22,47 @@ struct GraphVM {
     
     // ******************************* MARK: - Public Properties
     
-    let mainGraph = Graph(showAxises: true)
-    let helperGraph = Graph(showAxises: false)
-    let plotSelectionVMs: [GraphPlotSelectionCellVM] = []
+    let graphModel: GraphModel
+    let plots: [Graph.Plot]
+    let mainGraph = Graph(showAxises: true, lineWidth: c.mainGraphLineWidth)
+    let helperGraph = Graph(showAxises: false, lineWidth: c.helperGraphLineWidth)
+    private(set) var plotSelectionVMs: [GraphPlotSelectionCellVM]
     
     // ******************************* MARK: - Private Properties
-    
-    let graphModel: GraphModel
     
     // ******************************* MARK: - Initialization and Setup
     
     init(graphModel: GraphModel) {
         self.graphModel = graphModel
+        
+        let plots = graphModel
+            .lines
+            .compactMap { graphModel.getPlot(entry: $0) }
+        
+        self.plots = plots
+        self.plotSelectionVMs = plots.map { GraphPlotSelectionCellVM(selected: true, plot: $0) }
+        
         setup()
     }
     
     private func setup() {
-        // TODO: Plots reuse
-        let mainPlots = graphModel
-            .lines
-            .compactMap { graphModel.getPlot(entry: $0, lineWidth: c.mainGraphLineWidth) }
-        
-        mainGraph.addPlots(mainPlots)
-        mainGraph.isScrollEnabled = false
-        
-        let helperPlots = graphModel
-            .lines
-            .compactMap { graphModel.getPlot(entry: $0, lineWidth: c.helperGraphLineWidth) }
-        
-        helperGraph.addPlots(helperPlots)
+        mainGraph.addPlots(plots)
+        helperGraph.addPlots(plots)
         helperGraph.isUserInteractionEnabled = false
+    }
+    
+    // ******************************* MARK: - Public Methods
+    
+    mutating func togglePlotSelection(index: Int) {
+        plotSelectionVMs[index].selected.toggle()
+        let plotSelectionVM = plotSelectionVMs[index]
+        if plotSelectionVM.selected {
+            mainGraph.addPlot(plotSelectionVM.plot)
+            helperGraph.addPlot(plotSelectionVM.plot)
+        } else {
+            mainGraph.removePlot(plotSelectionVM.plot)
+            helperGraph.removePlot(plotSelectionVM.plot)
+        }
     }
 }
 
@@ -76,7 +87,7 @@ extension GraphModel {
             .map { $0 }
     }
     
-    func getPlot(entry: GraphEntry, lineWidth: CGFloat) -> Graph.Plot? {
+    func getPlot(entry: GraphEntry) -> Graph.Plot? {
         guard let entryType = types[entry] else { print("Entry doesn't exist"); return nil }
         guard entryType == .line else { print("Plot works with `.line` type data only"); return nil }
         guard let values = self.values[entry] else { print("Values are missing"); return nil }
@@ -91,6 +102,6 @@ extension GraphModel {
             return Graph.Plot.Point(date: tuple.0, value: tuple.1)
         }
         
-        return Graph.Plot(name: name, lineWidth: lineWidth, lineColor: color, points: points)
+        return Graph.Plot(name: name, lineColor: color, points: points)
     }
 }

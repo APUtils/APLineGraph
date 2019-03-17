@@ -23,3 +23,16 @@ extension UIView {
         NSLayoutConstraint.activate(constraints)
     }
 }
+
+// ******************************* MARK: - Corner Radius
+
+extension UIView {
+    @IBInspectable var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+        }
+    }
+}

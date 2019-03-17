@@ -6,16 +6,29 @@
 //  Copyright © 2019 Anton Plebanovich. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import APLineGraph
 
 
 struct GraphPlotSelectionCellVM {
     
     // ******************************* MARK: - Public Properties
     
+    var selected: Bool
+    let plot: Graph.Plot
     
+    var color: UIColor {
+        return plot.lineColor
+    }
+    
+    var name: String {
+        return plot.name
+    }
     
     // ******************************* MARK: - Initialization and Setup
     
-    
+    init(selected: Bool, plot: Graph.Plot) {
+        self.selected = selected
+        self.plot = plot
+    }
 }

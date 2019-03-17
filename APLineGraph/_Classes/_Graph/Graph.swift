@@ -14,24 +14,23 @@ private extension Constants {
 }
 
 
-public final class Graph: UIScrollView {
+public final class Graph: UIView {
     
     // ******************************* MARK: - Public Properties
     
     public var showAxises: Bool = false { didSet { updateAxises() } }
-    public private(set) var plots: [Plot] = []
+    public var lineWidth: CGFloat = 1 { didSet { updateLineLength() } }
     
     // ******************************* MARK: - Private Properties
     
-    private var observer: NSKeyValueObservation!
-    private var configuredSize: CGSize = .zero
+    private var plotsShapeLayers: [Plot: CAShapeLayer] = [:]
     private var range: RelativeRange = .full
     private var horizontalAxis: HorizontalAxis?
     private var verticalAxis: VerticalAxis?
     
     // ******************************* MARK: - Initialization and Setup
     
-    public init(showAxises: Bool) {
+    public init(showAxises: Bool, lineWidth: CGFloat) {
         self.showAxises = showAxises
         super.init(frame: UIScreen.main.bounds)
         setup()
@@ -44,11 +43,7 @@ public final class Graph: UIScrollView {
     
     private func setup() {
         backgroundColor = .white
-        showsVerticalScrollIndicator = false
-        showsHorizontalScrollIndicator = true
-        contentInsetAdjustmentBehavior = .never
-        isScrollEnabled = true
-        
+        updateLineLength()
         updateAxises()
     }
     
@@ -71,7 +66,7 @@ public final class Graph: UIScrollView {
     }
     
     public func removeAllPlots() {
-        plots.forEach { removePlot($0, updatePlots: false) }
+        plotsShapeLayers.keys.forEach { removePlot($0, updatePlots: false) }
         updatePlots()
         updateAxises()
     }
@@ -97,12 +92,12 @@ public final class Graph: UIScrollView {
     private func layoutAxises() {
         if let horizontalAxis = horizontalAxis {
             let height = horizontalAxis.maxLabelSize.height
-            horizontalAxis.frame = CGRect(x: 0, y: bounds.height - height, width: contentSize.width, height: height)
+            horizontalAxis.frame = CGRect(x: 0, y: bounds.height - height, width: bounds.width, height: height)
         }
         
         if let verticalAxis = verticalAxis {
             let width = verticalAxis.maxLabelSize.width
-            verticalAxis.frame = CGRect(x: 0, y: 0, width: width, height: contentSize.height)
+            verticalAxis.frame = CGRect(x: 0, y: 0, width: width, height: bounds.height)
         }
     }
     
@@ -116,7 +111,8 @@ public final class Graph: UIScrollView {
         
         guard showAxises else { return }
         
-        let dates = plots
+        let dates = plotsShapeLayers
+            .keys
             .flatMap { $0.points }
             .map { $0.date }
             .filterDuplicates()
@@ -134,17 +130,17 @@ public final class Graph: UIScrollView {
         layoutAxises()
     }
     
+    private func updateLineLength() {
+        plotsShapeLayers.values.forEach { $0.lineWidth = lineWidth }
+    }
+    
     private func updatePlots() {
         let width = bounds.width
         let height = bounds.height
         
-        // Update content size
-        configuredSize = bounds.size
-        // TODO: Need to properly calcualte X size
-        contentSize = configuredSize
-        
         // Scale X
-        let maxCount = plots
+        let maxCount = plotsShapeLayers
+            .keys
             .map { $0.valuesCount }
             .max() ?? 1
         
@@ -183,38 +179,52 @@ public final class Graph: UIScrollView {
         // Animate graph if changes are in animation closure
         let animated = UIView.isInAnimationClosure
 
-        plots.forEach { $0.setTransform(transform, animated: animated) }
+        plotsShapeLayers.forEach { $0.0.configure(shapeLayer: $0.1, transform: transform, animated: animated) }
     }
     
     // ******************************* MARK: - Private Methods
     
     private func addPlot(_ plot: Plot, updatePlots: Bool) {
-        plots.append(plot)
-        layer.addSublayer(plot.shapeLayer)
+        let shapeLayer = plot.createShapeLayer()
+        plotsShapeLayers[plot] = shapeLayer
+        layer.addSublayer(shapeLayer)
         if updatePlots { self.updatePlots() }
     }
     
     private func removePlot(_ plot: Plot, updatePlots: Bool) {
-        plot.shapeLayer.removeFromSuperlayer()
-        plots.remove(plot)
+        plotsShapeLayers[plot]?.removeFromSuperlayer()
+        plotsShapeLayers[plot] = nil
         if updatePlots { self.updatePlots() }
     }
     
     private func getMinMaxRange(range: RelativeRange) -> MinMaxRange {
-        let minMaxes = plots.map { $0.getMinMaxRange(range: range) }
-        let minValue = minMaxes.map { $0.min }.min() ?? 0
-        let maxValue = minMaxes.map { $0.max }.max() ?? 1
+        let minMaxes = plotsShapeLayers
+            .keys
+            .map { $0.getMinMaxRange(range: range) }
+        
+        let minValue = minMaxes
+            .map { $0.min }
+            .min() ?? 0
+        
+        let maxValue = minMaxes
+            .map { $0.max }
+            .max() ?? 1
+        
         return MinMaxRange(min: minValue, max: maxValue)
     }
     
     private func getMinMaxRanges() -> [MinMaxRange] {
-        let count = plots
+        let count = plotsShapeLayers
+            .keys
             .map { $0.points.count }
             .min() ?? 0
         
         var minMaxRanges: [MinMaxRange] = []
         for i in 0..<count {
-            let values = plots.map { $0.points[i].value }
+            let values = plotsShapeLayers
+                .keys
+                .map { $0.points[i].value }
+            
             let min = values.min() ?? 0
             let max = values.max() ?? 0
             let minMaxRange = MinMaxRange(min: min, max: max)
