@@ -26,9 +26,7 @@ class GraphVM {
     
     let graphModel: GraphModel
     let plots: [Graph.Plot]
-    var mainGraphConfiguration: Graph.Configuration
     let mainGraph: Graph
-    var helperGraphConfiguration: Graph.Configuration
     let helperGraph: Graph
     private(set) var plotSelectionVMs: [GraphPlotSelectionCellVM]
     
@@ -39,15 +37,12 @@ class GraphVM {
     init(graphModel: GraphModel) {
         self.graphModel = graphModel
         
-        self.mainGraphConfiguration = Graph.Configuration.default
-        self.mainGraphConfiguration.enableInspection = true
-        self.mainGraphConfiguration.showAxises = true
-        self.mainGraphConfiguration.lineWidth = c.mainGraphLineWidth
-        self.mainGraph = Graph(configuration: self.mainGraphConfiguration)
+        let mainGraphConfiguration = f_getMainConfiguration(style: AppearanceManager.shared.style)
+        self.mainGraph = Graph(configuration: mainGraphConfiguration)
         
-        self.helperGraphConfiguration = Graph.Configuration.default
-        self.helperGraphConfiguration.lineWidth = c.helperGraphLineWidth
-        self.helperGraph = Graph(configuration: self.helperGraphConfiguration)
+        var helperGraphConfiguration = Graph.Configuration.default
+        helperGraphConfiguration.lineWidth = c.helperGraphLineWidth
+        self.helperGraph = Graph(configuration: helperGraphConfiguration)
         
         let plots = graphModel
             .lines
@@ -62,10 +57,8 @@ class GraphVM {
     
     private func setup() {
         mainGraph.addPlots(plots)
-        
         helperGraph.addPlots(plots)
         helperGraph.isUserInteractionEnabled = false
-        
         AppearanceManager.shared.addStyleListener(self)
     }
     
@@ -128,20 +121,30 @@ extension GraphModel {
 
 extension GraphVM: AppearanceManagerStyleListener {
     func appearanceManager(_ appearanceManager: AppearanceManager, didChangeStyle style: AppearanceManager.Style) {
-        switch style {
-        case .day:
-            mainGraphConfiguration.helpLinesColor = c.mainGraphHelperLinesDayColor
-            mainGraphConfiguration.inspectionTextColor = style.separatorColor
-            mainGraphConfiguration.inspectionBlurEffect = .light
-            
-        case .night:
-            mainGraphConfiguration.helpLinesColor = c.mainGraphHelperLinesNightColor
-            mainGraphConfiguration.inspectionTextColor = style.onSecondaryColor
-            mainGraphConfiguration.inspectionBlurEffect = .dark
-        }
-        
-        mainGraphConfiguration.plotInspectionPointCenterColor = style.secondaryColor
-        mainGraphConfiguration.inspectionGuideColor = style.separatorColor
-        mainGraph.configuration = mainGraphConfiguration
+        mainGraph.configuration = f_getMainConfiguration(style: style)
     }
+}
+
+private func f_getMainConfiguration(style: AppearanceManager.Style) -> Graph.Configuration {
+    var mainGraphConfiguration = Graph.Configuration.default
+    mainGraphConfiguration.enableInspection = true
+    mainGraphConfiguration.showAxises = true
+    mainGraphConfiguration.lineWidth = c.mainGraphLineWidth
+    
+    switch style {
+    case .day:
+        mainGraphConfiguration.helpLinesColor = c.mainGraphHelperLinesDayColor
+        mainGraphConfiguration.inspectionTextColor = style.separatorColor
+        mainGraphConfiguration.inspectionBlurEffect = .light
+        
+    case .night:
+        mainGraphConfiguration.helpLinesColor = c.mainGraphHelperLinesNightColor
+        mainGraphConfiguration.inspectionTextColor = style.onSecondaryColor
+        mainGraphConfiguration.inspectionBlurEffect = .dark
+    }
+    
+    mainGraphConfiguration.plotInspectionPointCenterColor = style.secondaryColor
+    mainGraphConfiguration.inspectionGuideColor = style.separatorColor
+    
+    return mainGraphConfiguration
 }

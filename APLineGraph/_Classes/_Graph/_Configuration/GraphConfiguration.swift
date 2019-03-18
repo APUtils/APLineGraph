@@ -25,6 +25,8 @@ public struct Configuration {
 }
 }
 
+extension Graph.Configuration: Equatable {}
+
 // ******************************* MARK: - Computed Properties
 
 public extension Graph.Configuration {

@@ -22,7 +22,12 @@ public final class Graph: UIView {
     // ******************************* MARK: - Public Properties
     
     /// - warning: Use initializer. Not everything might be updated after setting new configuration.
-    public var configuration: Configuration { didSet { updateApperance() } }
+    public var configuration: Configuration {
+        didSet {
+            guard oldValue != configuration else { return }
+            updateApperance()
+        }
+    }
     
     // ******************************* MARK: - Private Properties
     
@@ -194,23 +199,22 @@ public final class Graph: UIView {
         self.verticalAxis = nil
         
         guard configuration.showAxises else { return }
-        
-        let dates = plotsShapeLayers
-            .keys
-            .flatMap { $0.points }
-            .map { $0.date }
-            .filterDuplicates()
-            .sorted()
+        guard let dates = plotsShapeLayers.keys.first?.points.map({ $0.date }) else { return }
         
         let horizontalAxis = HorizontalAxis(dates: dates, configuration: configuration)
+        self.horizontalAxis?.removeFromSuperview()
         self.horizontalAxis = horizontalAxis
         addSubview(horizontalAxis)
         
+        // 0.001417
+        // TODO: Optimize later
         let minMaxRanges = getMinMaxRanges()
         let verticalAxis = VerticalAxis(minMaxRanges: minMaxRanges, configuration: configuration)
+        self.verticalAxis?.removeFromSuperview()
         self.verticalAxis = verticalAxis
         addSubview(verticalAxis)
         
+        inspectionGuideViewBottomToAxis?.isActive = false
         inspectionGuideViewBottomToAxis = inspectionGuideView.bottomAnchor.constraint(equalTo: horizontalAxis.topAnchor)
         inspectionGuideViewBottomToAxis?.isActive = true
         inspectionGuideViewBottomToSuperview.isActive = false
