@@ -29,6 +29,9 @@ final class GraphInspectionView: UIView {
     private let valueLabelsReuseController: ReuseController<UILabel> = ReuseController<UILabel> {
         let label = UILabel()
         label.font = c.valueLabelFont
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        
         return label
     }
     

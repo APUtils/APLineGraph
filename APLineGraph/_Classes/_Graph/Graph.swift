@@ -31,7 +31,7 @@ public final class Graph: UIView {
     private var horizontalAxis: HorizontalAxis?
     private var verticalAxis: VerticalAxis?
     private let inspectionView = GraphInspectionView.create()
-    private var inspectionViewCenterX: NSLayoutConstraint!
+    private var inspectionGuideViewCenterX: NSLayoutConstraint!
     private var inspectionGuideViewBottomToSuperview: NSLayoutConstraint!
     private var inspectionGuideViewBottomToAxis: NSLayoutConstraint?
     private var plotsTransform = CGAffineTransform.identity
@@ -94,9 +94,8 @@ public final class Graph: UIView {
         inspectionView.translatesAutoresizingMaskIntoConstraints = false
         inspectionView.isHidden = true
         
-        inspectionViewCenterX = inspectionView.centerXAnchor.constraint(equalTo: leftAnchor)
-        inspectionViewCenterX?.isActive = true
-        
+        inspectionView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor).isActive = true
+        rightAnchor.constraint(greaterThanOrEqualTo: inspectionView.rightAnchor).isActive = true
         inspectionView.topAnchor.constraint(equalTo: topAnchor, constant: c.inspectionViewTopMargin).isActive = true
         
         // Inspection Guide View
@@ -108,7 +107,13 @@ public final class Graph: UIView {
         inspectionGuideViewBottomToSuperview.isActive = true
         
         inspectionGuideView.topAnchor.constraint(equalTo: inspectionView.bottomAnchor).isActive = true
-        inspectionGuideView.centerXAnchor.constraint(equalTo: inspectionView.centerXAnchor).isActive = true
+        
+        let centersX = inspectionGuideView.centerXAnchor.constraint(equalTo: inspectionView.centerXAnchor)
+        centersX.priority = .init(rawValue: 999)
+        centersX.isActive = true
+        
+        inspectionGuideViewCenterX = inspectionGuideView.centerXAnchor.constraint(equalTo: leftAnchor)
+        inspectionGuideViewCenterX?.isActive = true
     }
     
     // ******************************* MARK: - Public Methods
@@ -295,7 +300,7 @@ public final class Graph: UIView {
     
     private func updateInspections(touches: Set<UITouch>) {
         let touchPoint = touches.first?.location(in: self) ?? .zero
-        inspectionViewCenterX.constant = touchPoint.x
+        inspectionGuideViewCenterX.constant = touchPoint.x
         
         let plotsPoints: [Plot: Plot.Point] = Array(plotsShapeLayers.keys).dictionaryMap { plot in
             let point = plot.getPoint(plotTransform: plotsTransform, point: touchPoint)

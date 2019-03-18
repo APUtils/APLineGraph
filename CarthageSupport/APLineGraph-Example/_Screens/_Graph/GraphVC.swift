@@ -13,6 +13,7 @@ final class GraphVC: UIViewController {
     
     // ******************************* MARK: - @IBOutlets
     
+    @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var graphContainer: UIView!
     @IBOutlet private weak var graphRangeContainer: UIView!
     @IBOutlet private weak var rangeControlView: RangeControlView!
@@ -31,6 +32,7 @@ final class GraphVC: UIViewController {
     }
     
     private func setup() {
+        scrollView.contentInset.bottom = 36
         setupTableView()
         setupGraphs()
         setupRangeControl()
