@@ -25,14 +25,19 @@ public class Axis: UIView {
     
     // ******************************* MARK: - Internal Properties
     
-    private lazy var labelsReuseController: ReuseController<UILabel> = ReuseController<UILabel> {
+    private var previousSize: CGSize = .zero
+    
+    private lazy var labelsReuseController: ReuseController<UILabel> = ReuseController<UILabel>(create: {
         let label = UILabel(frame: .zero)
         label.font = c.font
         label.textColor = c.textColor
         label.autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+        label.alpha = 0
         
         return label
-    }
+    }, prepareForReuse: {
+        $0.alpha = 0
+    })
     
     // ******************************* MARK: - Initialization and Setup
     
@@ -58,6 +63,9 @@ public class Axis: UIView {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
+        
+        guard previousSize != bounds.size else { return }
+        previousSize = bounds.size
         update()
     }
     
@@ -69,11 +77,13 @@ public class Axis: UIView {
     
     // ******************************* MARK: - Reuse
     
-    func dequeueLabel(text: String) -> UILabel {
-        let label = labelsReuseController.dequeue()
+    func addLabel(text: String, center: CGPoint) -> UILabel {
+        let label = labelsReuseController.dequeueClosest(center: center)
         label.text = text
         label.sizeToFit()
-        label.frame.origin = .zero
+        label.alpha = 1
+        label.center = center
+        addSubview(label)
         
         return label
     }

@@ -67,4 +67,20 @@ extension ReuseController where T: UIView {
     convenience init(create: @escaping Create) {
         self.init(create: create) { $0.removeFromSuperview() }
     }
+    
+    func dequeueClosest(center: CGPoint) -> T {
+        let _closestView = vacantReusables.min { center.distance(to: $0.center) < center.distance(to: $1.center) }
+        
+        let reusable: T
+        if let closestView = _closestView {
+            vacantReusables.remove(closestView)
+            reusable = closestView
+        } else {
+            reusable = create()
+        }
+        
+        takenReusables.append(reusable)
+        
+        return reusable
+    }
 }

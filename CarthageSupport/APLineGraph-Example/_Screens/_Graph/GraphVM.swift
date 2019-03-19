@@ -67,12 +67,14 @@ class GraphVM {
     func togglePlotSelection(index: Int) {
         plotSelectionVMs[index].selected.toggle()
         let plotSelectionVM = plotSelectionVMs[index]
-        if plotSelectionVM.selected {
-            mainGraph.addPlot(plotSelectionVM.plot)
-            helperGraph.addPlot(plotSelectionVM.plot)
-        } else {
-            mainGraph.removePlot(plotSelectionVM.plot)
-            helperGraph.removePlot(plotSelectionVM.plot)
+        g.animate {
+            if plotSelectionVM.selected {
+                self.mainGraph.addPlot(plotSelectionVM.plot)
+                self.helperGraph.addPlot(plotSelectionVM.plot)
+            } else {
+                self.mainGraph.removePlot(plotSelectionVM.plot)
+                self.helperGraph.removePlot(plotSelectionVM.plot)
+            }
         }
     }
 }

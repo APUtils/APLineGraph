@@ -52,6 +52,8 @@
 		0DB88A63223EAE9E002B9F7D /* Bundle+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A62223EAE9E002B9F7D /* Bundle+Utils.swift */; };
 		0DB88A65223ECF00002B9F7D /* ValuesFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A64223ECF00002B9F7D /* ValuesFormatter.swift */; };
 		0DB88A68223ECFEF002B9F7D /* ValuesFormatterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A67223ECFEF002B9F7D /* ValuesFormatterStyle.swift */; };
+		0DB88A6C22403EE8002B9F7D /* CGPoint+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A6B22403EE8002B9F7D /* CGPoint+Utils.swift */; };
+		0DB88A6E22405399002B9F7D /* CALayer+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A6D22405399002B9F7D /* CALayer+Utils.swift */; };
 		0DCE43CA2237282600CB4929 /* RangeControlVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C72237282600CB4929 /* RangeControlVM.swift */; };
 		0DCE43CB2237282600CB4929 /* RangeControlViewContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */; };
 		0DCE43CC2237282600CB4929 /* RangeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C92237282600CB4929 /* RangeControlView.swift */; };
@@ -177,6 +179,8 @@
 		0DB88A62223EAE9E002B9F7D /* Bundle+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Utils.swift"; sourceTree = "<group>"; };
 		0DB88A64223ECF00002B9F7D /* ValuesFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuesFormatter.swift; sourceTree = "<group>"; };
 		0DB88A67223ECFEF002B9F7D /* ValuesFormatterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuesFormatterStyle.swift; sourceTree = "<group>"; };
+		0DB88A6B22403EE8002B9F7D /* CGPoint+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Utils.swift"; sourceTree = "<group>"; };
+		0DB88A6D22405399002B9F7D /* CALayer+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Utils.swift"; sourceTree = "<group>"; };
 		0DCE43C72237282600CB4929 /* RangeControlVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlVM.swift; sourceTree = "<group>"; };
 		0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RangeControlViewContentView.xib; sourceTree = "<group>"; };
 		0DCE43C92237282600CB4929 /* RangeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlView.swift; sourceTree = "<group>"; };
@@ -442,7 +446,9 @@
 			children = (
 				0DE2D75522354B86007BD043 /* Array+Utils.swift */,
 				0DB88A62223EAE9E002B9F7D /* Bundle+Utils.swift */,
+				0DB88A6D22405399002B9F7D /* CALayer+Utils.swift */,
 				0DE2D79B22370D50007BD043 /* CGFloat+Utils.swift */,
+				0DB88A6B22403EE8002B9F7D /* CGPoint+Utils.swift */,
 				0DE2D75922354DD1007BD043 /* Collection+Utils.swift */,
 				0DE2D7952235C0A4007BD043 /* Double+Utils.swift */,
 				0DE2D79F22371A40007BD043 /* Int+Utils.swift */,
@@ -878,6 +884,7 @@
 				0DE2D75822354C2A007BD043 /* GraphPlotPoint.swift in Sources */,
 				0DE2D75A22354DD1007BD043 /* Collection+Utils.swift in Sources */,
 				0DB88A65223ECF00002B9F7D /* ValuesFormatter.swift in Sources */,
+				0DB88A6E22405399002B9F7D /* CALayer+Utils.swift in Sources */,
 				0DCE43DE223D48CA00CB4929 /* String+Utils.swift in Sources */,
 				0DE2D7942235BFEB007BD043 /* Constants.swift in Sources */,
 				0DB88A46223E6E8C002B9F7D /* GraphInspectionVM.swift in Sources */,
@@ -885,6 +892,7 @@
 				0DB88A4A223E72C2002B9F7D /* ClassName.swift in Sources */,
 				0DB88A5F223EAD05002B9F7D /* GraphConfiguration.swift in Sources */,
 				0DB88A12223D8D5A002B9F7D /* GraphHorizontalAxis.swift in Sources */,
+				0DB88A6C22403EE8002B9F7D /* CGPoint+Utils.swift in Sources */,
 				0DB88A0D223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

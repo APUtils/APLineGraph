@@ -47,10 +47,15 @@ final class GraphVC: UIViewController {
     }
     
     private func setupGraphs() {
+        // Main
         graphContainer.backgroundColor = .clear
         graphContainer.addSubview(vm.mainGraph)
         vm.mainGraph.constraintSides(to: graphContainer)
         
+        vm.mainGraph.onStartTouching = { [weak self] in self?.scrollView.isScrollEnabled = false }
+        vm.mainGraph.onStopTouching = { [weak self] in self?.scrollView.isScrollEnabled = true }
+        
+        // Helper
         graphRangeContainer.backgroundColor = .clear
         graphRangeContainer.addSubview(vm.helperGraph)
         vm.helperGraph.constraintSides(to: graphRangeContainer)
@@ -58,8 +63,18 @@ final class GraphVC: UIViewController {
     
     private func setupRangeControl() {
         rangeControlView.configure(vm: RangeControlVM())
-        rangeControlView.onRangeDidChange = { [weak self] range in
-            self?.vm.mainGraph.showRange(range: range)
+        rangeControlView.onRangeDidChange = { [weak self] in self?.vm.mainGraph.showRange(range: $0) }
+        
+        rangeControlView.onStartTouching = { [weak self] in
+            guard let self = self else { return }
+            self.scrollView.isScrollEnabled = false
+            g.animate { self.vm.mainGraph.autoScale = false }
+        }
+        
+        rangeControlView.onStopTouching = { [weak self] in
+            guard let self = self else { return }
+            self.scrollView.isScrollEnabled = true
+            g.animate { self.vm.mainGraph.autoScale = true }
         }
     }
     

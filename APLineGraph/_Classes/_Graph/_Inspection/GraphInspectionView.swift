@@ -26,14 +26,16 @@ final class GraphInspectionView: UIView {
     
     // ******************************* MARK: - Private Properties
     
-    private let valueLabelsReuseController: ReuseController<UILabel> = ReuseController<UILabel> {
+    private let valueLabelsReuseController: ReuseController<UILabel> = ReuseController<UILabel>(create: {
         let label = UILabel()
         label.font = c.valueLabelFont
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         
         return label
-    }
+    }, prepareForReuse: {
+        $0.removeFromSuperview()
+    })
     
     // ******************************* MARK: - Configuration
     

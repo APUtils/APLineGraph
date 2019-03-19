@@ -27,11 +27,10 @@ final class HorizontalAxis: Axis {
     
     // ******************************* MARK: - Public Properties
     
+    var dates: [Date] { didSet { update() } }
     var range: Graph.RelativeRange { didSet { update() } }
     
     // ******************************* MARK: - Private Properties
-    
-    private let dates: [Date]
     
     private(set) lazy var maxLabelSize: CGSize = {
         let height = Axis.labelFont.lineHeight
@@ -85,9 +84,9 @@ final class HorizontalAxis: Axis {
             let date = dates[index]
             let text = c.dateFormatter.string(from: date)
             let centerX = widthDividedOnRangeSize * (index.asCGFloat / pointsCount - range.from)
-            let label = dequeueLabel(text: text)
-            label.center.x = centerX
-            addSubview(label)
+            let center = CGPoint(x: centerX, y: maxLabelSize.height / 2)
+            let label = addLabel(text: text, center: center)
+            label.frame.origin.y = 0
             
             index += indexStepInt
         }

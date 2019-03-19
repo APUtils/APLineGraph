@@ -27,7 +27,7 @@ public struct Plot {
     
     // ******************************* MARK: - Internal Properties
     
-    let valuesCount: CGFloat
+    let lastIndex: CGFloat
     let minValue: CGFloat
     let maxValue: CGFloat
     
@@ -43,7 +43,7 @@ public struct Plot {
         self.name = name
         self.points = points
         self.lineColor = lineColor
-        self.valuesCount = points.count.asCGFloat
+        self.lastIndex = points.count.asCGFloat - 1
         
         self.minValue = points
             .map { $0.value }
@@ -87,12 +87,37 @@ public struct Plot {
     }
     
     func getMinMaxRange(range: Graph.RelativeRange) -> MinMaxRange {
-        let startIndex = (valuesCount * range.from).rounded().asInt
-        let endIndex = (valuesCount * range.to).rounded().asInt
-        let subpoints = points[startIndex..<endIndex]
+        let startIndexCGFloat = (lastIndex * range.from)
+        let startIndexInt = startIndexCGFloat.rounded().asInt
+        let endIndexCGFloat = (lastIndex * range.to)
+        let endIndexInt = endIndexCGFloat.rounded().asInt
+        let subpoints = points[startIndexInt...endIndexInt]
         let subvalues = subpoints.map { $0.value }
+        
+//        // Also compare with left and right partial points
+//        if startIndexInt > 0 && startIndexInt < points.count {
+//            let leftValue = points[startIndexInt - 1].value
+//            let rightValue = points[startIndexInt].value
+//            let leftToRightProgress = startIndexCGFloat.truncatingRemainder(dividingBy: 1)
+//            let leftPartialValue = getPartialValue(leftValue: leftValue, rightValue: rightValue, leftToRightProgress: leftToRightProgress)
+//            print("Left: \(leftPartialValue)")
+//            subvalues.append(leftPartialValue)
+//        }
+//
+//        if endIndexInt > 0 && endIndexInt < points.count {
+//            let leftValue = points[endIndexInt - 1].value
+//            let rightValue = points[endIndexInt].value
+//            let leftToRightProgress = endIndexCGFloat.truncatingRemainder(dividingBy: 1)
+//            let rightPartialValue = getPartialValue(leftValue: leftValue, rightValue: rightValue, leftToRightProgress: leftToRightProgress)
+//            print("Right: \(rightPartialValue)")
+//            subvalues.append(rightPartialValue)
+//        }
+        
         let minValue = subvalues.min() ?? 0
         let maxValue = subvalues.max() ?? 1
+        
+//        print("Min: \(minValue), Max: \(maxValue)\n")
+        
         return MinMaxRange(min: minValue, max: maxValue)
     }
     
@@ -106,6 +131,12 @@ public struct Plot {
         guard let index = points.firstIndex(of: point) else { return .zero }
         let pointCGPoint = CGPoint(x: index.asCGFloat, y: point.value)
         return pointCGPoint.applying(transform)
+    }
+    
+    // ******************************* MARK: - Private Methods
+    
+    private func getPartialValue(leftValue: CGFloat, rightValue: CGFloat, leftToRightProgress: CGFloat) -> CGFloat {
+        return (rightValue - leftValue) * leftToRightProgress + leftValue
     }
 }
 }

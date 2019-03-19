@@ -27,16 +27,19 @@ public final class VerticalAxis: Axis {
     private let minMaxRanges: [MinMaxRange]
     private let configuration: Graph.Configuration
     
-    private lazy var helperViewsReuseController: ReuseController<UIView> = ReuseController<UIView> { [weak self] in
+    private lazy var helperViewsReuseController: ReuseController<UIView> = ReuseController<UIView>(create: { [weak self] in
         guard let self = self else { return UIView() }
         
         let frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: 1)
         let view = UIView(frame: frame)
         view.backgroundColor = self.configuration.helpLinesColor
         view.autoresizingMask = [.flexibleWidth]
+        view.alpha = 0
         
         return view
-    }
+    }, prepareForReuse: {
+        $0.alpha = 0
+    })
     
     private lazy var maxLabelSize: CGSize = {
         let height = Axis.labelFont.lineHeight
@@ -77,8 +80,8 @@ public final class VerticalAxis: Axis {
         let height = bounds.height
         
         let maxIndex = minMaxRanges.count.asCGFloat - 1
-        let minRangeIndex = (maxIndex * range.from).rounded(.up).asInt
-        let maxRangeIndex = (maxIndex * range.to).rounded(.down).asInt
+        let minRangeIndex = (maxIndex * range.from).rounded().asInt
+        let maxRangeIndex = (maxIndex * range.to).rounded().asInt
         let selectedMinMaxRanges = minMaxRanges[minRangeIndex...maxRangeIndex]
         var min = selectedMinMaxRanges.map { $0.min }.min() ?? 0
         var max = selectedMinMaxRanges.map { $0.max }.max() ?? 0
@@ -117,13 +120,16 @@ public final class VerticalAxis: Axis {
         
         values.forEach { value in
             let centerY = height * (1 - (value - min) / size)
+            let center = CGPoint(x: bounds.width / 2, y: centerY)
             
-            let label = dequeueLabel(text: formattedValues.removeFirst())
-            label.center.y = centerY - maxLabelSize.height / 2 - c.distanceToHelperView
-            addSubview(label)
+            let labelCenterY = centerY - maxLabelSize.height / 2 - c.distanceToHelperView
+            let labelCenter = CGPoint(x: maxLabelSize.width / 2, y: labelCenterY)
+            let label = addLabel(text: formattedValues.removeFirst(), center: labelCenter)
+            label.frame.origin.x = 0
             
-            let view = helperViewsReuseController.dequeue()
-            view.center.y = centerY
+            let view = helperViewsReuseController.dequeueClosest(center: center)
+            view.center = center
+            view.alpha = 1
             addSubview(view)
         }
     }

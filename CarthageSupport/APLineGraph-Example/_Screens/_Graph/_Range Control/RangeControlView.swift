@@ -24,11 +24,15 @@ final class RangeControlView: UIView {
     // ******************************* MARK: - Types
     
     typealias OnRangeChange = (Graph.RelativeRange) -> Void
+    typealias OnStartTouching = () -> Void
+    typealias OnStopTouching = () -> Void
     
     // ******************************* MARK: - Public Properties
     
     private(set) var range: Graph.RelativeRange = .full
     var onRangeDidChange: OnRangeChange?
+    var onStartTouching: OnStartTouching?
+    var onStopTouching: OnStopTouching?
     
     // ******************************* MARK: - @IBOutlets
     
@@ -80,6 +84,8 @@ final class RangeControlView: UIView {
     // TODO: Touch zone is wrong
     // TODO: Do I actually handle multiple touches correctly? Maybe just switch back to one.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        onStartTouching?()
+        
         touches.forEach { touch in
             let pointX = touch.location(in: self).x
             let leftControlLeftSide = leftConstraint.constant
@@ -135,10 +141,12 @@ final class RangeControlView: UIView {
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         touches.forEach { actions[$0] = nil }
+        onStopTouching?()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         touches.forEach { actions[$0] = nil }
+        onStopTouching?()
     }
     
     // ******************************* MARK: - Private Methods
