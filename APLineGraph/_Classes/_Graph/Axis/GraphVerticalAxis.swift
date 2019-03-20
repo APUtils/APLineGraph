@@ -20,12 +20,28 @@ public final class VerticalAxis: Axis {
     
     // ******************************* MARK: - Public Properties
     
-    var range: RelativeRange { didSet { update() } }
-    var minMaxRanges: [MinMaxRange] { didSet { update() } }
+    var range: RelativeRange {
+        didSet {
+            guard oldValue != range else { return }
+            update()
+        }
+    }
+    
+    var minMaxRanges: [MinMaxRange] {
+        didSet {
+            guard oldValue != minMaxRanges else { return }
+            update()
+        }
+    }
+    
+    var configuration: Graph.Configuration {
+        didSet {
+            guard oldValue != configuration else { return }
+            updateAppearance()
+        }
+    }
     
     // ******************************* MARK: - Private Properties
-    
-    private let configuration: Graph.Configuration
     
     private lazy var helperViewsReuseController: ReuseController<UIView> = ReuseController<UIView>(create: { [weak self] in
         guard let self = self else { return UIView() }
@@ -70,7 +86,11 @@ public final class VerticalAxis: Axis {
         isUserInteractionEnabled = false
     }
     
-    // ******************************* MARK: - Axis Overrides
+    // ******************************* MARK: - Update
+    
+    private func updateAppearance() {
+        helperViewsReuseController.takenReusables.forEach { $0.backgroundColor = configuration.helpLinesColor }
+    }
     
     override public func update() {
         queueAllLabels()

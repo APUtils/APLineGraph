@@ -183,7 +183,7 @@ final class HorizontalAxis: Axis {
         activeLabels.append(label)
         
         label.alpha = 0
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.2) {
             label.alpha = 1
         }
     }
@@ -192,7 +192,7 @@ final class HorizontalAxis: Axis {
         activeLabels.remove(label)
         
         label.alpha = 1
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             label.alpha = 0
         }, completion: { _ in
             guard let index = self.labels.firstIndex(of: label) else { return }

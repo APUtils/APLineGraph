@@ -21,6 +21,10 @@ public struct MinMaxRange {
 }
 }
 
+// ******************************* MARK: - Equatable
+
+extension Graph.MinMaxRange: Equatable {}
+
 // ******************************* MARK: - Computed Properties
 
 public extension Graph.MinMaxRange {
