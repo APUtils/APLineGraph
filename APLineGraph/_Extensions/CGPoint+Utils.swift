@@ -10,9 +10,9 @@ import UIKit
 
 
 extension CGPoint {
-    func distance(to point: CGPoint) -> CGFloat {
+    func simplifiedDistance(to point: CGPoint) -> CGFloat {
         let xDist = (point.x - x)
         let yDist = (point.y - y)
-        return sqrt((xDist * xDist) + (yDist * yDist))
+        return abs(xDist + yDist)
     }
 }

@@ -220,8 +220,9 @@ public final class Graph: UIView {
         if configuration.showAxises {
             guard let dates = plotsShapeLayers.keys.first?.points.map({ $0.date }) else { return }
             
-            if let horizontalAxis = horizontalAxis, verticalAxis != nil {
+            if let horizontalAxis = horizontalAxis, let verticalAxis = verticalAxis {
                 horizontalAxis.dates = dates
+                verticalAxis.minMaxRanges = getMinMaxRanges()
                 
             } else {
                 let horizontalAxis = HorizontalAxis(dates: dates, configuration: configuration)

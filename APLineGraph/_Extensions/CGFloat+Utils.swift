@@ -34,4 +34,12 @@ extension CGFloat {
     func clamped(min: CGFloat, max: CGFloat) -> CGFloat {
         return Swift.max(Swift.min(self, max), min)
     }
+    
+    func fractionedUp(divider: CGFloat) -> CGFloat {
+        return (self / divider).rounded(.up) * divider
+    }
+    
+    func fractionedDown(divider: CGFloat) -> CGFloat {
+        return (self / divider).rounded(.down) * divider
+    }
 }

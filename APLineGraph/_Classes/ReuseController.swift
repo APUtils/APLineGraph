@@ -69,7 +69,7 @@ extension ReuseController where T: UIView {
     }
     
     func dequeueClosest(center: CGPoint) -> T {
-        let _closestView = vacantReusables.min { center.distance(to: $0.center) < center.distance(to: $1.center) }
+        let _closestView = vacantReusables.min { center.simplifiedDistance(to: $0.center) < center.simplifiedDistance(to: $1.center) }
         
         let reusable: T
         if let closestView = _closestView {

@@ -54,10 +54,6 @@ final class HorizontalAxis: Axis {
         setup()
     }
     
-    required init(configuration: Graph.Configuration) {
-        fatalError("init(configuration:) has not been implemented")
-    }
-    
     private func setup() {
         isUserInteractionEnabled = false
     }
@@ -69,26 +65,31 @@ final class HorizontalAxis: Axis {
         // No need to remove labels if they just moved.
         queueAllLabels()
         
-        // TODO: It's hard to read need to do something with it
-        // TODO: Need to use 2 divider
-        let pointsCount = dates.count.asCGFloat
+        let lastDatesIndexInt = dates.count - 1
+        let lastDatesIndex = lastDatesIndexInt.asCGFloat
         let width = bounds.width
         let elementWidth = maxLabelSize.width + c.horizontalGap
-        let widthDividedOnRangeSize = width / range.size
-        let indexStepCGFloat = elementWidth / widthDividedOnRangeSize * pointsCount
-        let indexStepInt = max(1, indexStepCGFloat.rounded().asInt)
-        let initialIndex = indexStepCGFloat / 2
-        var index = initialIndex.rounded().asInt
-        let pointsCountInt = pointsCount.asInt
-        while index < pointsCountInt {
+        let graphSize = width / range.size
+        let graphElementsCount = pow(2, log2(graphSize / elementWidth - 1).rounded(.down)) + 1
+        let graphIdealStep = (graphSize - elementWidth) / (graphElementsCount - 1)
+        let graphDateStep = graphSize / lastDatesIndex
+        let graphVisibleAreaStart = graphSize * range.from
+        let graphStartCenterX = (graphVisibleAreaStart - elementWidth / 2).fractionedUp(divider: graphIdealStep) + elementWidth / 2
+        let graphVisibleAreaEnd = graphSize * range.to
+        var graphCenterX = graphStartCenterX
+        while graphCenterX <= graphVisibleAreaEnd {
+            let index = (graphCenterX / graphDateStep).rounded().asInt
+            guard index != 0 else { graphCenterX += graphIdealStep; continue }
+            guard index != lastDatesIndexInt else { break }
+            
             let date = dates[index]
             let text = c.dateFormatter.string(from: date)
-            let centerX = widthDividedOnRangeSize * (index.asCGFloat / pointsCount - range.from)
-            let center = CGPoint(x: centerX, y: maxLabelSize.height / 2)
+            let realCenterX = (graphCenterX - graphSize * range.from)
+            let center = CGPoint(x: realCenterX, y: maxLabelSize.height / 2)
             let label = addLabel(text: text, center: center)
             label.frame.origin.y = 0
             
-            index += indexStepInt
+            graphCenterX += graphIdealStep
         }
     }
 }

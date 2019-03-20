@@ -21,10 +21,10 @@ public final class VerticalAxis: Axis {
     // ******************************* MARK: - Public Properties
     
     var range: RelativeRange { didSet { update() } }
+    var minMaxRanges: [MinMaxRange] { didSet { update() } }
     
     // ******************************* MARK: - Private Properties
     
-    private let minMaxRanges: [MinMaxRange]
     private let configuration: Graph.Configuration
     
     private lazy var helperViewsReuseController: ReuseController<UIView> = ReuseController<UIView>(create: { [weak self] in
