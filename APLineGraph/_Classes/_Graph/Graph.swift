@@ -414,6 +414,7 @@ public final class Graph: UIView {
         }
     }
     
+    // TODO: Optimize
     private func getMinMaxRange(range: RelativeRange) -> MinMaxRange {
         let minMaxes = plotsShapeLayers
             .keys

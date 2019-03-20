@@ -118,6 +118,7 @@ public final class VerticalAxis: Axis {
         let values = stride(from: initialValue, to: max, by: roundedStep).map { $0 }
         var formattedValues = ValuesFormatter.shared.strings(from: values)
         
+        // TODO: Optimize
         values.forEach { value in
             let centerY = height * (1 - (value - min) / size)
             let center = CGPoint(x: bounds.width / 2, y: centerY)

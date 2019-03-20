@@ -25,9 +25,7 @@ public class Axis: UIView {
     
     // ******************************* MARK: - Internal Properties
     
-    private var previousSize: CGSize = .zero
-    
-    private lazy var labelsReuseController: ReuseController<UILabel> = ReuseController<UILabel>(create: {
+    lazy var labelsReuseController: ReuseController<UILabel> = ReuseController<UILabel>(create: {
         let label = UILabel(frame: .zero)
         label.font = c.font
         label.textColor = c.textColor
@@ -38,6 +36,10 @@ public class Axis: UIView {
     }, prepareForReuse: {
         $0.alpha = 0
     })
+    
+    // ******************************* MARK: - Private Properties
+    
+    private var previousSize: CGSize = .zero
     
     // ******************************* MARK: - Initialization and Setup
     
