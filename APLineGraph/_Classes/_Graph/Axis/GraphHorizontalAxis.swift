@@ -125,10 +125,22 @@ final class HorizontalAxis: Axis {
         let halfElementWidth = elementWidth / 2
         let graphWidth = width / range.size
         let graphFrame = CGRect(x: -(graphWidth * range.from), y: 0, width: graphWidth, height: bounds.height)
+        let visibleGraphFrame = CGRect(x: graphWidth * range.from, y: 0, width: graphWidth * range.size, height: bounds.height)
+        let visibleLabelsFrame = visibleGraphFrame.insetBy(dx: -halfElementWidth, dy: 0)
         let dateStep = graphWidth / lastIndex
+        let leftVisibleIndex = (visibleLabelsFrame.minX / dateStep).rounded(.down).clamped(min: 0, max: lastIndex)
+        let rightVisibleIndex = (visibleLabelsFrame.maxX / dateStep).rounded(.up).clamped(min: 0, max: lastIndex)
         
         // Layout
-        zip(labels, indexes).forEach { setCenterX(label: $0.0, dateStep: dateStep, index: $0.1, graphFrame: graphFrame) }
+        zip(labels, indexes)
+            .forEach {
+                if $0.1 >= leftVisibleIndex && $0.1 <= rightVisibleIndex {
+                    $0.0.isHidden = false
+                    setCenterX(label: $0.0, dateStep: dateStep, index: $0.1, graphFrame: graphFrame)
+                } else {
+                    $0.0.isHidden = true
+                }
+        }
         
         // Add labels if possible
         var positionSortedLabels: [UILabel] = []
@@ -138,6 +150,7 @@ final class HorizontalAxis: Axis {
             wasAdded = false
             
             positionSortedLabels = activeLabels
+                .filter { !$0.isHidden }
                 .sorted { $0.center.x < $1.center.x }
             
             for (index, rightLabel) in positionSortedLabels.enumerated().dropFirst() {
@@ -158,14 +171,24 @@ final class HorizontalAxis: Axis {
             }
         }
         
+        let labelsToCheck = activeLabels
+            .dropFirst()
+            .dropFirst()
+            .filter { !$0.isHidden }
+            .reversed()
+        
+        let positionSortedLabelsLastIndex = positionSortedLabels.count - 1
+        
         // Remove collided
-        for label in activeLabels.reversed().dropLast().dropLast() {
+        for label in labelsToCheck {
             guard let sortedLabelsIndex = positionSortedLabels.firstIndex(of: label) else { continue }
             
+            guard sortedLabelsIndex - 1 >= 0 else { continue }
             let leftLabel = positionSortedLabels[sortedLabelsIndex - 1]
             guard activeLabels.firstIndex(of: leftLabel) != nil else { continue }
             let leftLabelRect = getElementRect(label: leftLabel, halfElementWidth: halfElementWidth, elementWidth: elementWidth)
             
+            guard sortedLabelsIndex + 1 <= positionSortedLabelsLastIndex else { continue }
             let rightLabel = positionSortedLabels[sortedLabelsIndex + 1]
             guard activeLabels.firstIndex(of: rightLabel) != nil else { continue }
             let rightLabelRect = getElementRect(label: rightLabel, halfElementWidth: halfElementWidth, elementWidth: elementWidth)

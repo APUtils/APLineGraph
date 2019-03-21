@@ -34,6 +34,7 @@ public struct Plot {
     // ******************************* MARK: - Private Properties
     
     private let path: CGPath
+    private let minMaxFullRange: MinMaxRange
     
     // ******************************* MARK: - Initialization and Setup
     
@@ -54,6 +55,7 @@ public struct Plot {
             .max() ?? 100
         
         self.path = f_getPath(points: points)
+        self.minMaxFullRange = MinMaxRange(min: self.minValue, max: self.maxValue)
     }
     
     // ******************************* MARK: - Internal Methods
@@ -87,36 +89,16 @@ public struct Plot {
     }
     
     func getMinMaxRange(range: Graph.RelativeRange) -> MinMaxRange {
+        if range == .full { return minMaxFullRange }
+        
         let startIndexCGFloat = (lastIndex * range.from)
         let startIndexInt = startIndexCGFloat.rounded().asInt
         let endIndexCGFloat = (lastIndex * range.to)
         let endIndexInt = endIndexCGFloat.rounded().asInt
         let subpoints = points[startIndexInt...endIndexInt]
         let subvalues = subpoints.map { $0.value }
-        
-//        // Also compare with left and right partial points
-//        if startIndexInt > 0 && startIndexInt < points.count {
-//            let leftValue = points[startIndexInt - 1].value
-//            let rightValue = points[startIndexInt].value
-//            let leftToRightProgress = startIndexCGFloat.truncatingRemainder(dividingBy: 1)
-//            let leftPartialValue = getPartialValue(leftValue: leftValue, rightValue: rightValue, leftToRightProgress: leftToRightProgress)
-//            print("Left: \(leftPartialValue)")
-//            subvalues.append(leftPartialValue)
-//        }
-//
-//        if endIndexInt > 0 && endIndexInt < points.count {
-//            let leftValue = points[endIndexInt - 1].value
-//            let rightValue = points[endIndexInt].value
-//            let leftToRightProgress = endIndexCGFloat.truncatingRemainder(dividingBy: 1)
-//            let rightPartialValue = getPartialValue(leftValue: leftValue, rightValue: rightValue, leftToRightProgress: leftToRightProgress)
-//            print("Right: \(rightPartialValue)")
-//            subvalues.append(rightPartialValue)
-//        }
-        
-        let minValue = subvalues.min() ?? 0
-        let maxValue = subvalues.max() ?? 1
-        
-//        print("Min: \(minValue), Max: \(maxValue)\n")
+        let minValue = subvalues.min()!
+        let maxValue = subvalues.max()!
         
         return MinMaxRange(min: minValue, max: maxValue)
     }

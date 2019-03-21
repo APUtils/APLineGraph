@@ -34,6 +34,7 @@ final class ValuesFormatter {
         return values.reduce(true) { $0 && $1.truncatingRemainder(dividingBy: style.divider / 100) == 0 }
     }
     
+    // TODO: Write compact
     private func apply(style: Style, values: [CGFloat]) -> [String] {
         let dividedValues = values.map { $0 / style.divider }
         let isAllCeil = values.reduce(true) { $0 && $1.truncatingRemainder(dividingBy: style.divider) == 0 }
