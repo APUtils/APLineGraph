@@ -31,7 +31,7 @@ final class ValuesFormatter {
     // ******************************* MARK: - Private Methods
     
     private func areValues(_ values: [CGFloat], suitableFor style: Style) -> Bool {
-        return values.reduce(true) { $0 && $1.truncatingRemainder(dividingBy: style.divider / 10) == 0 }
+        return values.reduce(true) { $0 && $1.truncatingRemainder(dividingBy: style.divider / 100) == 0 }
     }
     
     private func apply(style: Style, values: [CGFloat]) -> [String] {
@@ -47,11 +47,22 @@ final class ValuesFormatter {
                 }
             }
         } else {
-            return dividedValues.map {
-                if $0 == 0 {
-                    return "0"
-                } else {
-                    return String(format: "%.1f%@", $0, style.shortcut)
+            let isAllDivideBy10 = values.reduce(true) { $0 && $1.truncatingRemainder(dividingBy: style.divider / 10) == 0 }
+            if isAllDivideBy10 {
+                return dividedValues.map {
+                    if $0 == 0 {
+                        return "0"
+                    } else {
+                        return String(format: "%.1f%@", $0, style.shortcut)
+                    }
+                }
+            } else {
+                return dividedValues.map {
+                    if $0 == 0 {
+                        return "0"
+                    } else {
+                        return String(format: "%.2f%@", $0, style.shortcut)
+                    }
                 }
             }
         }
