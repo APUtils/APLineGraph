@@ -23,7 +23,17 @@ final class AppearanceManager {
     
     // ******************************* MARK: - Public Properties
     
-    var style: Style = .day { didSet { update() } }
+    private let styleUserDefaultsKey = "style"
+    var style: Style {
+        get {
+            return Style(rawValue: UserDefaults.standard.integer(forKey: styleUserDefaultsKey)) ?? .day
+        }
+        set {
+            guard style != newValue else { return }
+            UserDefaults.standard.set(newValue.rawValue, forKey: styleUserDefaultsKey)
+            update()
+        }
+    }
     
     // ******************************* MARK: - Private Properties
     

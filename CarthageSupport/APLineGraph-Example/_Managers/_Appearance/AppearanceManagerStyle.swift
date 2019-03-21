@@ -11,7 +11,7 @@ import UIKit
 
 
 extension AppearanceManager {
-enum Style {
+    enum Style: Int {
     case day
     case night
 }
