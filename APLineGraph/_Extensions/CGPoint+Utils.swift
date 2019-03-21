@@ -15,4 +15,10 @@ extension CGPoint {
         let yDist = (point.y - y)
         return abs(xDist + yDist)
     }
+    
+    func middle(to point: CGPoint) -> CGPoint {
+        let middleX = (point.x - x) / 2 + x
+        let middleY = (point.y - y) / 2 + y
+        return CGPoint(x: middleX, y: middleY)
+    }
 }

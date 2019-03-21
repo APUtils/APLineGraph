@@ -54,6 +54,8 @@
 		0DB88A68223ECFEF002B9F7D /* ValuesFormatterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A67223ECFEF002B9F7D /* ValuesFormatterStyle.swift */; };
 		0DB88A6C22403EE8002B9F7D /* CGPoint+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A6B22403EE8002B9F7D /* CGPoint+Utils.swift */; };
 		0DB88A6E22405399002B9F7D /* CALayer+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A6D22405399002B9F7D /* CALayer+Utils.swift */; };
+		0DB88A75224414FA002B9F7D /* GraphVerticalAxisElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A73224414FA002B9F7D /* GraphVerticalAxisElementView.swift */; };
+		0DB88A76224414FA002B9F7D /* GraphVerticalAxisElementView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DB88A74224414FA002B9F7D /* GraphVerticalAxisElementView.xib */; };
 		0DCE43CA2237282600CB4929 /* RangeControlVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C72237282600CB4929 /* RangeControlVM.swift */; };
 		0DCE43CB2237282600CB4929 /* RangeControlViewContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */; };
 		0DCE43CC2237282600CB4929 /* RangeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C92237282600CB4929 /* RangeControlView.swift */; };
@@ -181,6 +183,8 @@
 		0DB88A67223ECFEF002B9F7D /* ValuesFormatterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuesFormatterStyle.swift; sourceTree = "<group>"; };
 		0DB88A6B22403EE8002B9F7D /* CGPoint+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Utils.swift"; sourceTree = "<group>"; };
 		0DB88A6D22405399002B9F7D /* CALayer+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Utils.swift"; sourceTree = "<group>"; };
+		0DB88A73224414FA002B9F7D /* GraphVerticalAxisElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphVerticalAxisElementView.swift; sourceTree = "<group>"; };
+		0DB88A74224414FA002B9F7D /* GraphVerticalAxisElementView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GraphVerticalAxisElementView.xib; sourceTree = "<group>"; };
 		0DCE43C72237282600CB4929 /* RangeControlVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlVM.swift; sourceTree = "<group>"; };
 		0DCE43C82237282600CB4929 /* RangeControlViewContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RangeControlViewContentView.xib; sourceTree = "<group>"; };
 		0DCE43C92237282600CB4929 /* RangeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlView.swift; sourceTree = "<group>"; };
@@ -260,7 +264,6 @@
 		0D141AA52235400F00CB6FF0 /* _Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0DB88A66223ECFBC002B9F7D /* _Values Formatter */,
 				0DE2D75D2235529C007BD043 /* _Graph */,
 				0DB88A4B223E73E7002B9F7D /* ReuseController.swift */,
 			);
@@ -316,9 +319,8 @@
 		0DB88A0E223D8D36002B9F7D /* _Axis */ = {
 			isa = PBXGroup;
 			children = (
+				0DB88A712244146D002B9F7D /* Vertical */,
 				0DCE43D6223D2DCE00CB4929 /* GraphAxis.swift */,
-				0DB88A0C223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift */,
-				0DB88A0F223D8D4D002B9F7D /* GraphVerticalAxis.swift */,
 				0DB88A11223D8D5A002B9F7D /* GraphHorizontalAxis.swift */,
 			);
 			name = _Axis;
@@ -428,6 +430,26 @@
 				0DB88A67223ECFEF002B9F7D /* ValuesFormatterStyle.swift */,
 			);
 			path = "_Values Formatter";
+			sourceTree = "<group>";
+		};
+		0DB88A712244146D002B9F7D /* Vertical */ = {
+			isa = PBXGroup;
+			children = (
+				0DB88A72224414C7002B9F7D /* _Element */,
+				0DB88A66223ECFBC002B9F7D /* _Values Formatter */,
+				0DB88A0C223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift */,
+				0DB88A0F223D8D4D002B9F7D /* GraphVerticalAxis.swift */,
+			);
+			path = Vertical;
+			sourceTree = "<group>";
+		};
+		0DB88A72224414C7002B9F7D /* _Element */ = {
+			isa = PBXGroup;
+			children = (
+				0DB88A73224414FA002B9F7D /* GraphVerticalAxisElementView.swift */,
+				0DB88A74224414FA002B9F7D /* GraphVerticalAxisElementView.xib */,
+			);
+			path = _Element;
 			sourceTree = "<group>";
 		};
 		0DE2D75122354825007BD043 /* _Support Files */ = {
@@ -793,6 +815,7 @@
 			files = (
 				0DB88A61223EAD59002B9F7D /* Assets.xcassets in Resources */,
 				0DB88A4D223E80D5002B9F7D /* GraphInspectionView.xib in Resources */,
+				0DB88A76224414FA002B9F7D /* GraphVerticalAxisElementView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -868,6 +891,7 @@
 				0DB88A4C223E73E7002B9F7D /* ReuseController.swift in Sources */,
 				0DB88A10223D8D4D002B9F7D /* GraphVerticalAxis.swift in Sources */,
 				0DB88A43223E6E53002B9F7D /* GraphInspectionView.swift in Sources */,
+				0DB88A75224414FA002B9F7D /* GraphVerticalAxisElementView.swift in Sources */,
 				0DB88A42223E6E36002B9F7D /* Instantiatable.swift in Sources */,
 				0DCE43DC223D3E0700CB4929 /* TimeZone+Utils.swift in Sources */,
 				0DCE43D7223D2DCE00CB4929 /* GraphAxis.swift in Sources */,
@@ -945,11 +969,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UW54N2U6G5;
 				INFOPLIST_FILE = "APLineGraph-Example/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -964,11 +989,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UW54N2U6G5;
 				INFOPLIST_FILE = "APLineGraph-Example/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1184,9 +1210,9 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = UW54N2U6G5;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1199,8 +1225,9 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph-Framework";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -1213,9 +1240,9 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = UW54N2U6G5;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1228,8 +1255,9 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.APLineGraph-Framework";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

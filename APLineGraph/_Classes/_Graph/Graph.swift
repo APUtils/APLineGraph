@@ -223,6 +223,7 @@ public final class Graph: UIView {
             if let horizontalAxis = horizontalAxis, let verticalAxis = verticalAxis {
                 horizontalAxis.dates = dates
                 verticalAxis.minMaxRanges = getMinMaxRanges()
+                verticalAxis.configuration = configuration
                 
             } else {
                 let horizontalAxis = HorizontalAxis(dates: dates, configuration: configuration)
@@ -414,6 +415,7 @@ public final class Graph: UIView {
         }
     }
     
+    // TODO: Optimize
     private func getMinMaxRange(range: RelativeRange) -> MinMaxRange {
         let minMaxes = plotsShapeLayers
             .keys

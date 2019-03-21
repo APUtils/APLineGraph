@@ -24,6 +24,10 @@ public struct RelativeRange {
 }
 }
 
+// ******************************* MARK: - Equatable
+
+extension Graph.RelativeRange: Equatable {}
+
 // ******************************* MARK: - Computed Properties
 
 public extension Graph.RelativeRange {
