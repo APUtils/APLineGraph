@@ -161,7 +161,7 @@ final class HorizontalAxis: Axis {
                 guard let rightLabelIndex = getIndex(label: rightLabel) else { continue }
                 guard rightLabelIndex - leftLabelIndex > 1 else { continue }
                 let newLabelCenter = leftLabel.center.middle(to: rightLabel.center)
-                let newLabelIndex = ((newLabelCenter.x - graphFrame.origin.x) / dateStep).rounded()
+                let newLabelIndex = (newLabelCenter.x - graphFrame.origin.x) / dateStep
                 let newLabelDate = dates[newLabelIndex.asInt]
                 let newLabelText = c.dateFormatter.string(from: newLabelDate)
                 let newLabel = addLabel(text: newLabelText, center: newLabelCenter)
