@@ -203,11 +203,9 @@ public final class VerticalAxis: Axis {
                 removePair(element: element)
             }
             
-            // Update text only if it isn't step change because old labels will animate avay on step change no need to change their text
-            if !isStepChanged {
-                if let textIndex = values.firstIndex(of: value) {
-                    element.label.text = formattedValues[textIndex]
-                }
+            // Update text only if this value will stay
+            if let textIndex = values.firstIndex(of: value) {
+                element.label.text = formattedValues[textIndex]
             }
         }
         
