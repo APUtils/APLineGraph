@@ -206,7 +206,7 @@ final class HorizontalAxis: Axis {
         activeLabels.append(label)
         
         label.alpha = 0
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: Axis.animationDuration) {
             label.alpha = 1
         }
     }
@@ -215,13 +215,12 @@ final class HorizontalAxis: Axis {
         activeLabels.remove(label)
         
         label.alpha = 1
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: Axis.animationDuration, animations: {
             label.alpha = 0
         }, completion: { _ in
             guard let index = self.labels.firstIndex(of: label) else { return }
             self.labels.remove(at: index)
             self.indexes.remove(at: index)
-            label.removeFromSuperview()
             self.queueLabel(label)
         })
     }

@@ -16,13 +16,16 @@ final class ReuseController<T: Equatable> {
     typealias Create = () -> T
     typealias PrepareForReuse = (T) -> Void
     
-    private(set) var takenReusables: [T] = []
+    var reusables: [T] {
+        return vacantReusables + takenReusables
+    }
     
     // ******************************* MARK: - Private Properties
     
     private let create: Create
     private let prepareForReuse: PrepareForReuse
     private var vacantReusables: [T] = []
+    private var takenReusables: [T] = []
     
     // ******************************* MARK: - Initialization and Setup
     

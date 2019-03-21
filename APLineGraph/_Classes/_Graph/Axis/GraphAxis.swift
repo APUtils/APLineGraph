@@ -13,14 +13,17 @@ private extension Constants {
     static let fontSize: CGFloat = 11
     static let font: UIFont = UIFont.systemFont(ofSize: fontSize)
     static let textColor: UIColor = #colorLiteral(red: 0.5960784314, green: 0.6196078431, blue: 0.6392156863, alpha: 1)
+    static let animationDuration: TimeInterval = 0.2
 }
 
 
+// TODO: Unite with Horizontal label. This base class is useless
 public extension Graph {
 public class Axis: UIView {
     
     // ******************************* MARK: - Metaclass
     
+    static let animationDuration = c.animationDuration
     static let labelFont = c.font
     
     // ******************************* MARK: - Internal Properties
@@ -33,8 +36,6 @@ public class Axis: UIView {
         label.alpha = 0
         
         return label
-    }, prepareForReuse: {
-        $0.alpha = 0
     })
     
     // ******************************* MARK: - Private Properties

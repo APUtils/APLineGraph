@@ -78,7 +78,7 @@ public struct Plot {
             let pathAnimation = CABasicAnimation(keyPath: "path")
             pathAnimation.fromValue = shapeLayer.path
             pathAnimation.duration = UIView.inheritedAnimationDuration > 0 ? UIView.inheritedAnimationDuration : c.defaultAnimationDuration
-            pathAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeOut)
+            pathAnimation.timingFunction = .init(name: .easeInEaseOut)
             pathAnimation.fillMode = .forwards
             shapeLayer.path = transformedPath
             shapeLayer.add(pathAnimation, forKey: pathAnimation.keyPath)
