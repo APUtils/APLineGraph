@@ -128,8 +128,10 @@ final class HorizontalAxis: Axis {
         let visibleGraphFrame = CGRect(x: graphWidth * range.from, y: 0, width: graphWidth * range.size, height: bounds.height)
         let visibleLabelsFrame = visibleGraphFrame.insetBy(dx: -halfElementWidth, dy: 0)
         let dateStep = graphWidth / lastIndex
-        let leftVisibleIndex = (visibleLabelsFrame.minX / dateStep).rounded(.down).clamped(min: 0, max: lastIndex)
-        let rightVisibleIndex = (visibleLabelsFrame.maxX / dateStep).rounded(.up).clamped(min: 0, max: lastIndex)
+        
+        let additionalIndex = visibleLabelsFrame.size.width / dateStep
+        let leftVisibleIndex = (visibleLabelsFrame.minX / dateStep - additionalIndex).rounded(.down).clamped(min: 0, max: lastIndex)
+        let rightVisibleIndex = (visibleLabelsFrame.maxX / dateStep + additionalIndex).rounded(.up).clamped(min: 0, max: lastIndex)
         
         // Layout
         zip(labels, indexes)
@@ -162,7 +164,7 @@ final class HorizontalAxis: Axis {
                 guard rightLabelIndex - leftLabelIndex > 1 else { continue }
                 let newLabelCenter = leftLabel.center.middle(to: rightLabel.center)
                 let newLabelIndex = (newLabelCenter.x - graphFrame.origin.x) / dateStep
-                let newLabelDate = dates[newLabelIndex.asInt]
+                let newLabelDate = dates[newLabelIndex.rounded().asInt]
                 let newLabelText = c.dateFormatter.string(from: newLabelDate)
                 let newLabel = addLabel(text: newLabelText, center: newLabelCenter)
                 setCenterX(label: newLabel, dateStep: dateStep, index: newLabelIndex, graphFrame: graphFrame)
