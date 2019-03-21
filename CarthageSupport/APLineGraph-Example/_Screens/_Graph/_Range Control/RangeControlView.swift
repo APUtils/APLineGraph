@@ -119,13 +119,13 @@ final class RangeControlView: UIView {
             
             switch action {
             case .adjustLeft(let left, let width, _):
-                let clampedTranslation = translationX.clamped(min: -left, max: width)
-                widthConstraint.constant = max(width - clampedTranslation, c.minWidth)
-                leftConstraint.constant = min(left + clampedTranslation, boundsWidth - c.minWidth)
+                let clampedTranslation = translationX.clamped(min: -left, max: width - c.minWidth)
+                widthConstraint.constant = width - clampedTranslation
+                leftConstraint.constant = left + clampedTranslation
                 
             case .adjustRight(let left, let width, _):
-                let clampedTranslation = translationX.clamped(min: -width, max: boundsWidth - width - left)
-                widthConstraint.constant = max(width + clampedTranslation, c.minWidth)
+                let clampedTranslation = translationX.clamped(min: c.minWidth - width, max: boundsWidth - width - left)
+                widthConstraint.constant = width + clampedTranslation
                 
             case .move(let left, let width, _):
                 let clampedTranslation = translationX.clamped(min: -left, max: boundsWidth - width - left)
