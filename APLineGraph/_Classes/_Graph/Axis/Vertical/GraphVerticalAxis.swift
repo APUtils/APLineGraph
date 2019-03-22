@@ -45,6 +45,8 @@ public final class VerticalAxis: Axis {
     
     private var elements: [GraphVerticalAxisElementView] = []
     private var values: [CGFloat] = []
+    private var removingElements: [GraphVerticalAxisElementView] = []
+    private var removingValues: [CGFloat] = []
     private var previousStep: CGFloat = 0
     private var previousValues: [CGFloat] = []
     private var previousGraphHeight: CGFloat?
@@ -57,6 +59,7 @@ public final class VerticalAxis: Axis {
         view.bounds.size.width = self.bounds.width
         view.label.font = Axis.labelFont
         view.helperGuide.backgroundColor = self.configuration.helpLinesColor
+        view.helperGuide.layer.removeAllAnimations()
         view.alpha = 0
         
         return view
@@ -150,9 +153,7 @@ public final class VerticalAxis: Axis {
         
         let isStepChanged = roundedStep != previousStep
         if isStepChanged && previousValues.hasElements {
-            // TODO: Need to remove all current elements and add new one on proper position
-            // Then animate to new position
-            removeAbsent(newValues: values)
+            removeAll()
         }
         
         // TODO: Optimize
@@ -209,6 +210,17 @@ public final class VerticalAxis: Axis {
             }
         }
         
+        // Update position for removing elements
+        removingValues.forEach { value in
+            let centerY = height * (1 - (value - minY) / graphHeight) + helperGuideHalfHeight - elementHalfHeight
+            let center = CGPoint(x: bounds.width / 2, y: centerY)
+            
+            guard let index = removingValues.firstIndex(of: value) else { return }
+            let element = removingElements[index]
+            
+            element.center = center
+        }
+        
         previousValues = values
         previousStep = roundedStep
         previousGraphHeight = graphHeight
@@ -227,22 +239,25 @@ public final class VerticalAxis: Axis {
     }
     
     private func removePair(element: GraphVerticalAxisElementView) {
+        guard let index = self.elements.firstIndex(of: element) else { return }
+        removingElements.append(element)
+        removingValues.append(values[index])
+        elements.remove(at: index)
+        values.remove(at: index)
+        
         element.alpha = 1
         UIView.animate(withDuration: Axis.animationDuration, animations: {
             element.alpha = 0
         }, completion: { _ in
-            guard let index = self.elements.firstIndex(of: element) else { return }
-            self.elements.remove(at: index)
-            self.values.remove(at: index)
+            guard let index = self.removingElements.firstIndex(of: element) else { return }
+            self.removingValues.remove(at: index)
+            self.removingElements.remove(at: index)
             self.elementsReuseController.queue(element)
         })
     }
     
-    private func removeAbsent(newValues: [CGFloat]) {
-        values
-            .filter { !newValues.contains($0) }
-            .compactMap { values.firstIndex(of: $0) }
-            .map { elements[$0] }
+    private func removeAll() {
+        elements
             .forEach(removePair(element:))
     }
 }

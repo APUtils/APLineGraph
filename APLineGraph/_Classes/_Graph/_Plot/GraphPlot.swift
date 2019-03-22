@@ -76,11 +76,13 @@ public struct Plot {
         
         if animated {
             let pathAnimation = CABasicAnimation(keyPath: "path")
-            pathAnimation.fromValue = shapeLayer.path
+            pathAnimation.fromValue = shapeLayer.presentation()?.path ?? shapeLayer.path
             pathAnimation.duration = UIView.inheritedAnimationDuration > 0 ? UIView.inheritedAnimationDuration : c.defaultAnimationDuration
             pathAnimation.timingFunction = .init(name: .easeInEaseOut)
             pathAnimation.fillMode = .forwards
             shapeLayer.path = transformedPath
+            
+            shapeLayer.removeAnimation(forKey: "path")
             shapeLayer.add(pathAnimation, forKey: pathAnimation.keyPath)
             
         } else {
