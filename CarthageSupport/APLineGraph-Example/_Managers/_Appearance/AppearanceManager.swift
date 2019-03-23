@@ -138,6 +138,7 @@ final class AppearanceManager {
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: style.onSecondaryColor]
         navigationBar.barTintColor = style.primaryColor
         navigationBar.tintColor = style.onSecondaryColor
+        navigationBar.layoutIfNeeded()
     }
     
     private func updateStatusBar() {
