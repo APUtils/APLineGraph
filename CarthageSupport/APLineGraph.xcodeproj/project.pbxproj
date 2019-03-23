@@ -18,6 +18,7 @@
 		0D141ADB2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D141ADA2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift */; };
 		0D141AE62235478B00CB6FF0 /* APLineGraph.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E202681322117D03004CC28A /* APLineGraph.framework */; };
 		0D141AE72235478B00CB6FF0 /* APLineGraph.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E202681322117D03004CC28A /* APLineGraph.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0DAF32E32246853500C1E70E /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAF32E22246853500C1E70E /* Globals.swift */; };
 		0DB88A0D223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A0C223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift */; };
 		0DB88A10223D8D4D002B9F7D /* GraphVerticalAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A0F223D8D4D002B9F7D /* GraphVerticalAxis.swift */; };
 		0DB88A12223D8D5A002B9F7D /* GraphHorizontalAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB88A11223D8D5A002B9F7D /* GraphHorizontalAxis.swift */; };
@@ -61,7 +62,6 @@
 		0DCE43CC2237282600CB4929 /* RangeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43C92237282600CB4929 /* RangeControlView.swift */; };
 		0DCE43CE22372E7E00CB4929 /* RangeControlViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43CD22372E7E00CB4929 /* RangeControlViewAction.swift */; };
 		0DCE43D0223734A200CB4929 /* CGFloat+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43CF223734A200CB4929 /* CGFloat+Utils.swift */; };
-		0DCE43D7223D2DCE00CB4929 /* GraphAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43D6223D2DCE00CB4929 /* GraphAxis.swift */; };
 		0DCE43DC223D3E0700CB4929 /* TimeZone+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43DB223D3E0700CB4929 /* TimeZone+Utils.swift */; };
 		0DCE43DE223D48CA00CB4929 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE43DD223D48CA00CB4929 /* String+Utils.swift */; };
 		0DE2D75622354B86007BD043 /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2D75522354B86007BD043 /* Array+Utils.swift */; };
@@ -147,6 +147,7 @@
 		0D141AD62235477100CB6FF0 /* APLineGraph-ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "APLineGraph-ExampleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D141ADA2235477100CB6FF0 /* APLineGraph_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APLineGraph_ExampleUITests.swift; sourceTree = "<group>"; };
 		0D141ADC2235477100CB6FF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DAF32E22246853500C1E70E /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		0DB88A0C223D8078002B9F7D /* GraphVerticalAxisRegionDivideMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphVerticalAxisRegionDivideMode.swift; sourceTree = "<group>"; };
 		0DB88A0F223D8D4D002B9F7D /* GraphVerticalAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphVerticalAxis.swift; sourceTree = "<group>"; };
 		0DB88A11223D8D5A002B9F7D /* GraphHorizontalAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphHorizontalAxis.swift; sourceTree = "<group>"; };
@@ -190,7 +191,6 @@
 		0DCE43C92237282600CB4929 /* RangeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlView.swift; sourceTree = "<group>"; };
 		0DCE43CD22372E7E00CB4929 /* RangeControlViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeControlViewAction.swift; sourceTree = "<group>"; };
 		0DCE43CF223734A200CB4929 /* CGFloat+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Utils.swift"; sourceTree = "<group>"; };
-		0DCE43D6223D2DCE00CB4929 /* GraphAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphAxis.swift; sourceTree = "<group>"; };
 		0DCE43DB223D3E0700CB4929 /* TimeZone+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeZone+Utils.swift"; sourceTree = "<group>"; };
 		0DCE43DD223D48CA00CB4929 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		0DE2D75222354825007BD043 /* APLineGraph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APLineGraph.h; sourceTree = "<group>"; };
@@ -320,7 +320,6 @@
 			isa = PBXGroup;
 			children = (
 				0DB88A712244146D002B9F7D /* Vertical */,
-				0DCE43D6223D2DCE00CB4929 /* GraphAxis.swift */,
 				0DB88A11223D8D5A002B9F7D /* GraphHorizontalAxis.swift */,
 			);
 			name = _Axis;
@@ -567,6 +566,7 @@
 			isa = PBXGroup;
 			children = (
 				0DE2D7932235BFCF007BD043 /* Constants.swift */,
+				0DAF32E22246853500C1E70E /* Globals.swift */,
 			);
 			path = _Utils;
 			sourceTree = "<group>";
@@ -894,7 +894,6 @@
 				0DB88A75224414FA002B9F7D /* GraphVerticalAxisElementView.swift in Sources */,
 				0DB88A42223E6E36002B9F7D /* Instantiatable.swift in Sources */,
 				0DCE43DC223D3E0700CB4929 /* TimeZone+Utils.swift in Sources */,
-				0DCE43D7223D2DCE00CB4929 /* GraphAxis.swift in Sources */,
 				0DE2D7A022371A40007BD043 /* Int+Utils.swift in Sources */,
 				0DE2D79C22370D50007BD043 /* CGFloat+Utils.swift in Sources */,
 				0D141AA92235409500CB6FF0 /* GraphPlot.swift in Sources */,
@@ -913,6 +912,7 @@
 				0DE2D7942235BFEB007BD043 /* Constants.swift in Sources */,
 				0DB88A46223E6E8C002B9F7D /* GraphInspectionVM.swift in Sources */,
 				0DB88A63223EAE9E002B9F7D /* Bundle+Utils.swift in Sources */,
+				0DAF32E32246853500C1E70E /* Globals.swift in Sources */,
 				0DB88A4A223E72C2002B9F7D /* ClassName.swift in Sources */,
 				0DB88A5F223EAD05002B9F7D /* GraphConfiguration.swift in Sources */,
 				0DB88A12223D8D5A002B9F7D /* GraphHorizontalAxis.swift in Sources */,

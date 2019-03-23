@@ -26,14 +26,14 @@ public final class Graph: UIView {
     public var configuration: Configuration {
         didSet {
             guard oldValue != configuration else { return }
-            updateApperance()
+            updateApperance(animated: true)
         }
     }
     
     /// Automatically scale graph Y axis to show full range of values
     public var autoScale: Bool = true {
         didSet {
-            showRange(range: range)
+            showRange(range: range, animated: true)
         }
     }
     
@@ -51,7 +51,9 @@ public final class Graph: UIView {
     private var inspectionGuideViewCenterX: NSLayoutConstraint!
     private var inspectionGuideViewBottomToSuperview: NSLayoutConstraint!
     private var inspectionGuideViewBottomToAxis: NSLayoutConstraint?
-    private var plotsTransform = CGAffineTransform.identity
+    private var plotsTranslateX: CGFloat = 0
+    private var plotsScaleX: CGFloat = 0
+    private var plotsTransformX = CGAffineTransform.identity
     
     private var availableHeight: CGFloat {
         if configuration.showAxises {
@@ -59,6 +61,10 @@ public final class Graph: UIView {
         } else {
             return bounds.height
         }
+    }
+    
+    private var plotsSizeY: CGFloat {
+        return availableHeight * (1 - configuration.verticalPercentGap)
     }
     
     private lazy var inspectionGuideView: UIView = {
@@ -107,7 +113,7 @@ public final class Graph: UIView {
     private func setup() {
         setupProperties()
         setupInspections()
-        update()
+        update(animated: false)
     }
     
     private func setupProperties() {
@@ -145,35 +151,35 @@ public final class Graph: UIView {
     
     // ******************************* MARK: - Public Methods
     
-    public func addPlot(_ plot: Plot) {
-        addPlot(plot, updatePlots: true)
-        updateAxises()
+    public func addPlot(_ plot: Plot, animated: Bool) {
+        addPlot(plot, updatePlots: true, animated: animated)
+        updateAxises(animated: animated)
     }
     
-    public func removePlot(_ plot: Plot) {
-        removePlot(plot, updatePlots: true)
-        updateAxises()
+    public func removePlot(_ plot: Plot, animated: Bool) {
+        removePlot(plot, updatePlots: true, animated: animated)
+        updateAxises(animated: animated)
     }
     
-    public func addPlots(_ plots: [Plot]) {
-        plots.forEach { addPlot($0, updatePlots: false) }
-        updatePlots()
-        updateAxises()
+    public func addPlots(_ plots: [Plot], animated: Bool) {
+        plots.forEach { addPlot($0, updatePlots: false, animated: animated) }
+        updatePlots(animated: false)
+        updateAxises(animated: animated)
     }
     
-    public func removeAllPlots() {
-        plotsShapeLayers.keys.forEach { removePlot($0, updatePlots: false) }
-        updatePlots()
-        updateAxises()
+    public func removeAllPlots(animated: Bool) {
+        plotsShapeLayers.keys.forEach { removePlot($0, updatePlots: false, animated: animated) }
+        updatePlots(animated: false)
+        updateAxises(animated: animated)
     }
     
     // TODO: Rethink this method so it convenient for anyone to use
-    public func showRange(range: RelativeRange) {
+    public func showRange(range: RelativeRange, animated: Bool) {
         // TODO: if range size didn't change just scroll
         self.range = range
         horizontalAxis?.range = range
         verticalAxis?.range = autoScale ? range : .full
-        updatePlots()
+        updatePlots(animated: animated)
     }
     
     // ******************************* MARK: - Layout
@@ -184,7 +190,7 @@ public final class Graph: UIView {
         guard previousSize != bounds.size else { return }
         previousSize = bounds.size
         layoutAxises()
-        updatePlots()
+        updatePlots(animated: false)
     }
     
     private func layoutAxises() {
@@ -202,59 +208,61 @@ public final class Graph: UIView {
     
     // ******************************* MARK: - Update
     
-    private func update() {
-        updateAxises()
-        updateLineLength()
-        updatePlots()
+    private func update(animated: Bool) {
+        updateAxises(animated: animated)
+        updateLineLength(animated: animated)
+        updatePlots(animated: animated)
     }
     
-    private func updateApperance() {
+    private func updateApperance(animated: Bool) {
         inspectionPointViewsReuseController.removeAll()
         inspectionGuideView.backgroundColor = configuration.inspectionGuideColor
-        updateAxises()
-        updateLineLength()
-        updatePlots()
+        updateAxises(animated: animated)
+        updateLineLength(animated: animated)
+        updatePlots(animated: animated)
     }
     
-    private func updateAxises() {
-        if configuration.showAxises {
-            guard let dates = plotsShapeLayers.keys.first?.points.map({ $0.date }) else { return }
-            
-            if let horizontalAxis = horizontalAxis, let verticalAxis = verticalAxis {
-                horizontalAxis.dates = dates
-                verticalAxis.minMaxRanges = getMinMaxRanges()
-                verticalAxis.configuration = configuration
+    private func updateAxises(animated: Bool) {
+        perform(animated: animated) {
+            if self.configuration.showAxises {
+                guard let dates = self.plotsShapeLayers.keys.first?.points.map({ $0.date }) else { return }
+                
+                if let horizontalAxis = self.horizontalAxis, let verticalAxis = self.verticalAxis {
+                    horizontalAxis.dates = dates
+                    verticalAxis.minMaxRanges = self.getMinMaxRanges()
+                    verticalAxis.configuration = self.configuration
+                    
+                } else {
+                    let horizontalAxis = HorizontalAxis(dates: dates, configuration: self.configuration)
+                    self.horizontalAxis = horizontalAxis
+                    self.addSubview(horizontalAxis)
+                    
+                    let minMaxRanges = self.getMinMaxRanges()
+                    let verticalAxis = VerticalAxis(minMaxRanges: minMaxRanges, configuration: self.configuration)
+                    self.verticalAxis = verticalAxis
+                    self.addSubview(verticalAxis)
+                    
+                    self.inspectionGuideViewBottomToAxis = self.inspectionGuideView.bottomAnchor.constraint(equalTo: horizontalAxis.topAnchor)
+                    self.inspectionGuideViewBottomToAxis?.isActive = true
+                    self.inspectionGuideViewBottomToSuperview.isActive = false
+                }
+                
+                self.layoutAxises()
                 
             } else {
-                let horizontalAxis = HorizontalAxis(dates: dates, configuration: configuration)
-                self.horizontalAxis = horizontalAxis
-                addSubview(horizontalAxis)
-                
-                let minMaxRanges = getMinMaxRanges()
-                let verticalAxis = VerticalAxis(minMaxRanges: minMaxRanges, configuration: configuration)
-                self.verticalAxis = verticalAxis
-                addSubview(verticalAxis)
-                
-                inspectionGuideViewBottomToAxis = inspectionGuideView.bottomAnchor.constraint(equalTo: horizontalAxis.topAnchor)
-                inspectionGuideViewBottomToAxis?.isActive = true
-                inspectionGuideViewBottomToSuperview.isActive = false
+                self.horizontalAxis?.removeFromSuperview()
+                self.horizontalAxis = nil
+                self.verticalAxis?.removeFromSuperview()
+                self.verticalAxis = nil
             }
-            
-            layoutAxises()
-            
-        } else {
-            self.horizontalAxis?.removeFromSuperview()
-            self.horizontalAxis = nil
-            self.verticalAxis?.removeFromSuperview()
-            self.verticalAxis = nil
         }
     }
     
-    private func updateLineLength() {
+    private func updateLineLength(animated: Bool) {
         plotsShapeLayers.values.forEach { $0.lineWidth = configuration.lineWidth }
     }
     
-    private func updatePlots(animated: Bool = UIView.isInAnimationClosure) {
+    private func updatePlots(animated: Bool) {
         let width = bounds.width
         let height = self.availableHeight
         
@@ -283,9 +291,11 @@ public final class Graph: UIView {
         // Move graph min value onto axis
         let translateY: CGFloat = -minValue
         
-        plotsTransform = CGAffineTransform.identity
+        plotsTranslateX = translateX
+        plotsScaleX = scaleX
+        plotsTransformX = CGAffineTransform.identity
             // Move axis origin to bottom of a screen plus gap
-            .translatedBy(x: 0, y: height - gap)
+            .translatedBy(x: 0, y: plotsSizeY)
             // Mirror over Y axis
             .scaledBy(x: 1, y: -1)
             // Scale graph by Y so it's in available range
@@ -294,8 +304,14 @@ public final class Graph: UIView {
             // Apply X translation so graph on range start
             // Apply Y translation so graph is in available range
             .translatedBy(x: translateX, y: translateY)
-
-        plotsShapeLayers.forEach { $0.0.updatePath(shapeLayer: $0.1, transform: plotsTransform, animated: animated) }
+        
+        // TODO: Last thing left!
+        // Calculate animation duration
+        // duration is always less then Axis.animationDuration
+        // duration = height change / max height in range
+        
+        let duration = animated ? configuration.animationDuration : 0
+        plotsShapeLayers.forEach { $0.0.updatePath(shapeLayer: $0.1, translateX: translateX, scaleX: scaleX, sizeY: plotsSizeY, transform: plotsTransformX, duration: duration) }
     }
     
     // ******************************* MARK: - Inspections
@@ -334,7 +350,7 @@ public final class Graph: UIView {
         inspectionGuideViewCenterX.constant = touchPoint.x
         
         let plotsPoints: [Plot: Plot.Point] = Array(plotsShapeLayers.keys).dictionaryMap { plot in
-            let point = plot.getPoint(plotTransform: plotsTransform, point: touchPoint)
+            let point = plot.getPoint(plotTransform: plotsTransformX, point: touchPoint)
             return (plot, point)
         }
         
@@ -342,7 +358,7 @@ public final class Graph: UIView {
         
         plotsPoints
             .map { plot, point in
-                let center = plot.transform(point: point, transform: plotsTransform)
+                let center = plot.transform(point: point, transform: plotsTransformX)
                 let inspectionPoint = inspectionPointViewsReuseController.dequeue()
                 inspectionPoint.center = center
                 inspectionPoint.tintColor = plot.lineColor
@@ -367,7 +383,7 @@ public final class Graph: UIView {
     
     // ******************************* MARK: - Private Methods
     
-    private func addPlot(_ plot: Plot, updatePlots: Bool) {
+    private func addPlot(_ plot: Plot, updatePlots: Bool, animated: Bool) {
         let shapeLayer = plot.createShapeLayer()
         shapeLayer.lineWidth = configuration.lineWidth
         let initialGraph = plotsShapeLayers.isEmpty
@@ -379,39 +395,40 @@ public final class Graph: UIView {
             if updatePlots { self.updatePlots(animated: false) }
             
             // Fade in
-            shapeLayer.showAnimated()
+            if animated { shapeLayer.showAnimated() }
             
         } else {
             // Layout plot according to current transform
-            plot.updatePath(shapeLayer: shapeLayer, transform: plotsTransform, animated: false)
+            plot.updatePath(shapeLayer: shapeLayer, translateX: plotsTranslateX, scaleX: plotsScaleX, sizeY: plotsSizeY, transform: plotsTransformX, duration: 0)
             
             // Then fade in
-            shapeLayer.showAnimated()
+            if animated { shapeLayer.showAnimated() }
             
             // Then scale all to actual size
-            if updatePlots { self.updatePlots() }
+            if updatePlots { self.updatePlots(animated: animated) }
         }
     }
     
-    private func removePlot(_ plot: Plot, updatePlots: Bool) {
+    private func removePlot(_ plot: Plot, updatePlots: Bool, animated: Bool) {
         guard let shapeLayer = plotsShapeLayers[plot] else { return }
         
         let isLastPlot = plotsShapeLayers.count == 1
         plotsShapeLayers[plot] = nil
         
-        if isLastPlot {
-            // Fade out and remove
+        // Fade out and remove
+        if animated {
             shapeLayer.hideAnimated { shapeLayer.removeFromSuperlayer() }
-            
         } else {
-            // Fade out and remove
-            shapeLayer.hideAnimated { shapeLayer.removeFromSuperlayer() }
-            
+            shapeLayer.removeFromSuperlayer()
+        }
+        
+        if !isLastPlot {
             // Calculate new transform for left plots and update them
-            if updatePlots { self.updatePlots() }
+            if updatePlots { self.updatePlots(animated: animated) }
             
             // Update removing plot with new transform
-            plot.updatePath(shapeLayer: shapeLayer, transform: plotsTransform, animated: UIView.isInAnimationClosure)
+            let duration = animated ? configuration.animationDuration : 0
+            plot.updatePath(shapeLayer: shapeLayer, translateX: plotsTranslateX, scaleX: plotsScaleX, sizeY: plotsSizeY, transform: plotsTransformX, duration: duration)
         }
     }
     
@@ -451,5 +468,10 @@ public final class Graph: UIView {
         }
         
         return minMaxRanges
+    }
+    
+    private func perform(animated: Bool, operations: @escaping Globals.SimpleClosure) {
+        let duration = animated ? configuration.animationDuration : 0
+        g.animateIfNeeded(duration, animations: operations)
     }
 }

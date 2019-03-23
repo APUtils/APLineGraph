@@ -10,13 +10,15 @@ import Foundation
 import UIKit
 
 
-private extension Constants {
-    static let defaultAnimationDuration: TimeInterval = 0.3
-}
-
-
 public extension Graph {
-public struct Plot {
+final class Plot {
+    
+    // ******************************* MARK: - Types
+    
+    struct AnimationPair {
+        let from: CGFloat
+        let to: CGFloat
+    }
     
     // ******************************* MARK: - Public Properties
     
@@ -70,23 +72,45 @@ public struct Plot {
         return shapeLayer
     }
     
-    func updatePath(shapeLayer: CAShapeLayer, transform: CGAffineTransform, animated: Bool) {
-        var transform = transform
-        let transformedPath = path.copy(using: &transform)
+    func updatePath(shapeLayer: CAShapeLayer, translateX: CGFloat, scaleX: CGFloat, sizeY: CGFloat, transform: CGAffineTransform, duration: TimeInterval) {
+        // Idea here is that we never animate X transformations but always animate Y transformations
         
-        if animated {
+        // End transform and path
+        var endTransform = transform
+        let endPath = path.copy(using: &endTransform)!
+        
+        // If duration is less then one frame in 60 fps then just set new value
+        // 1 / 60 = 0.0166666...
+        if duration > 0.0166 {
+            
+            // Getting current Y transform params
+            let currentPath = shapeLayer.presentation()?.path ?? shapeLayer.path ?? endPath
+            let currentPathBoundingBoxOfPath = currentPath.boundingBoxOfPath
+            let pathBoundingBoxOfPath = path.boundingBoxOfPath
+            let currentScaleY = currentPathBoundingBoxOfPath.height / pathBoundingBoxOfPath.height
+            let currentTranslateY = -(path.currentPoint.y + currentPath.currentPoint.y / currentScaleY)
+            
+            // Calculate start transform and path using current Y params and new X params
+            var startTransform = CGAffineTransform
+                .identity
+                .scaledBy(x: scaleX, y: -currentScaleY)
+                .translatedBy(x: translateX, y: currentTranslateY)
+            
+            let startPath = path.copy(using: &startTransform)
+            
+            // Animate
             let pathAnimation = CABasicAnimation(keyPath: "path")
-            pathAnimation.fromValue = shapeLayer.presentation()?.path ?? shapeLayer.path
-            pathAnimation.duration = UIView.inheritedAnimationDuration > 0 ? UIView.inheritedAnimationDuration : c.defaultAnimationDuration
-            pathAnimation.timingFunction = .init(name: .easeInEaseOut)
+            pathAnimation.fromValue = startPath
+            pathAnimation.duration = duration
+            pathAnimation.timingFunction = .init(name: .linear)
             pathAnimation.fillMode = .forwards
-            shapeLayer.path = transformedPath
+            shapeLayer.path = endPath
             
             shapeLayer.removeAnimation(forKey: "path")
             shapeLayer.add(pathAnimation, forKey: pathAnimation.keyPath)
             
         } else {
-            shapeLayer.path = transformedPath
+            shapeLayer.path = endPath
         }
     }
     
