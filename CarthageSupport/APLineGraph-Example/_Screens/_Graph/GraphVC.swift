@@ -80,7 +80,9 @@ final class GraphVC: UIViewController {
     // ******************************* MARK: - Actions
     
     @IBAction private func onSwitchToNightModeTap(_ sender: UIButton) {
-        AppearanceManager.shared.toggleStyle()
+        UIView.animate(withDuration: 0.5) {
+            AppearanceManager.shared.toggleStyle()
+        }
         updateButton()
     }
     

@@ -60,6 +60,7 @@ final class ReuseController<T: Equatable> {
     }
     
     func removeAll() {
+        queueAll()
         takenReusables = []
         vacantReusables = []
     }
