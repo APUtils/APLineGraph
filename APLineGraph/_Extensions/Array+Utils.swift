@@ -6,7 +6,7 @@
 //  Copyright © 2019 Anton Plebanovich. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // ******************************* MARK: - Scripting
 
@@ -69,6 +69,180 @@ extension Array where Element: Comparable {
         }
         
         return (minimum, maximum)
+    }
+}
+
+extension ArraySlice where Element: Comparable {
+    var minMax: (min: Element, max: Element) {
+        var minimum = first!
+        var maximum = minimum
+        
+        // if 'array' has an odd number of items, let 'minimum' or 'maximum' deal with the leftover
+        var i = startIndex + count % 2 // 1 if odd, skipping the first element
+        while i < endIndex {
+            let left = self[i]
+            let right = self[i+1]
+            
+            if left > right {
+                if left > maximum {
+                    maximum = left
+                }
+                if right < minimum {
+                    minimum = right
+                }
+            } else {
+                if right > maximum {
+                    maximum = right
+                }
+                if left < minimum {
+                    minimum = left
+                }
+            }
+            
+            i += 2
+        }
+        
+        return (minimum, maximum)
+    }
+}
+
+extension Array where Element == CGFloat {
+    func minMax(step: Int) -> (min: Element, max: Element) {
+        var minimum = first!
+        var maximum = minimum
+        
+        var i = step
+        let maxI = count - step
+        while i < maxI {
+            let left = self[(i-step)...i].average
+            let right = self[(i+1)...(i+step)].average
+            
+            if left > right {
+                if left > maximum {
+                    maximum = left
+                }
+                if right < minimum {
+                    minimum = right
+                }
+            } else {
+                if right > maximum {
+                    maximum = right
+                }
+                if left < minimum {
+                    minimum = left
+                }
+            }
+            
+            i += 2 * step
+        }
+        
+        return (minimum, maximum)
+    }
+}
+
+extension ArraySlice where Element == Graph.Plot.Point {
+    func minMax(step: Int) -> (min: CGFloat, max: CGFloat) {
+        var minimum = first!.value
+        var maximum = minimum
+        
+        var i = startIndex + step
+        let maxI = endIndex - step
+        while i < maxI {
+            let left = self[(i-step)...i].average
+            let right = self[(i+1)...(i+step)].average
+            
+            if left > right {
+                if left > maximum {
+                    maximum = left
+                }
+                if right < minimum {
+                    minimum = right
+                }
+            } else {
+                if right > maximum {
+                    maximum = right
+                }
+                if left < minimum {
+                    minimum = left
+                }
+            }
+            
+            i += 2 * step
+        }
+        
+        return (minimum, maximum)
+    }
+}
+
+extension Array where Element == Graph.MinMaxRange {
+    var minMax: (min: CGFloat, max: CGFloat) {
+        var minimum = first!.min
+        var maximum = first!.max
+        
+        var i = 1
+        while i < count {
+            let current = self[i]
+            let min = current.min
+            let max = current.max
+            
+            if max > maximum {
+                maximum = max
+            }
+            
+            if min < minimum {
+                minimum = min
+            }
+            
+            i += 1
+        }
+        
+        return (minimum, maximum)
+    }
+}
+
+extension ArraySlice where Element == Graph.MinMaxRange {
+    var minMax: (min: CGFloat, max: CGFloat) {
+        var minimum = first!.min
+        var maximum = first!.max
+        
+        var i = startIndex + 1
+        while i < endIndex {
+            let current = self[i]
+            let min = current.min
+            let max = current.max
+            
+            if max > maximum {
+                maximum = max
+            }
+            
+            if min < minimum {
+                minimum = min
+            }
+            
+            i += 1
+        }
+        
+        return (minimum, maximum)
+    }
+}
+
+// ******************************* MARK: - Average
+
+extension Array where Element == Graph.Plot.Point {
+    var average: CGFloat {
+        return reduce(0) { $0 + $1.value } / count.asCGFloat
+    }
+}
+
+extension ArraySlice where Element == CGFloat {
+    var average: CGFloat {
+        return reduce(0, +) / count.asCGFloat
+    }
+}
+
+extension ArraySlice where Element == Graph.Plot.Point {
+    var average: CGFloat {
+        return reduce(0) { $0 + $1.value } / count.asCGFloat
     }
 }
 

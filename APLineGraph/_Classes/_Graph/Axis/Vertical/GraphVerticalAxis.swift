@@ -141,9 +141,9 @@ public final class VerticalAxis: UIView {
         let maxIndex = minMaxRanges.count.asCGFloat - 1
         let minRangeIndex = (maxIndex * range.from).rounded().asInt
         let maxRangeIndex = (maxIndex * range.to).rounded().asInt
-        let selectedMinMaxRanges = minMaxRanges[minRangeIndex...maxRangeIndex]
-        var minY = selectedMinMaxRanges.map { $0.min }.min() ?? 0
-        var maxY = selectedMinMaxRanges.map { $0.max }.max() ?? 0
+        let minMax = minMaxRanges[minRangeIndex...maxRangeIndex].minMax
+        var minY = minMax.0
+        var maxY = minMax.1
         var graphHeight = maxY - minY
         
         // Adjust min and max to match bottom and top gap

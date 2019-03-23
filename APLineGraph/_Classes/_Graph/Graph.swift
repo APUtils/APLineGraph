@@ -52,7 +52,7 @@ public final class Graph: UIView {
     private var inspectionGuideViewBottomToSuperview: NSLayoutConstraint!
     private var inspectionGuideViewBottomToAxis: NSLayoutConstraint?
     private var plotsTranslateX: CGFloat = 0
-    private var plotsScaleX: CGFloat = 0
+    private var plotsScaleX: CGFloat = 1
     private var plotsTransformX = CGAffineTransform.identity
     
     private var previousPlotsMinMax: MinMaxRange?
@@ -202,6 +202,7 @@ public final class Graph: UIView {
         guard previousSize != bounds.size else { return }
         previousSize = bounds.size
         layoutAxises()
+        plotsShapeLayers.values.forEach { $0.frame = bounds }
         updatePlots(animated: false, minMaxRange: previousPlotsMinMax)
     }
     
@@ -394,6 +395,7 @@ public final class Graph: UIView {
     
     private func addPlot(_ plot: Plot, updatePlots: Bool, animated: Bool) {
         let shapeLayer = plot.createShapeLayer()
+        shapeLayer.frame = bounds
         shapeLayer.lineWidth = configuration.lineWidth
         let initialGraph = plotsShapeLayers.isEmpty
         plotsShapeLayers[plot] = shapeLayer
@@ -441,21 +443,12 @@ public final class Graph: UIView {
         }
     }
     
-    // TODO: Optimize
     private func getMinMaxRange(range: RelativeRange) -> MinMaxRange {
         let minMaxes = plotsShapeLayers
-            .keys
-            .map { $0.getMinMaxRange(range: range) }
+            .map { $0.getMinMaxRange(layerWidth: $1.bounds.width, range: range) }
+            .minMax
         
-        let minValue = minMaxes
-            .map { $0.min }
-            .min() ?? 0
-        
-        let maxValue = minMaxes
-            .map { $0.max }
-            .max() ?? 1
-        
-        return MinMaxRange(min: minValue, max: maxValue)
+        return MinMaxRange(min: minMaxes.0, max: minMaxes.1)
     }
     
     private func getMinMaxRanges() -> [MinMaxRange] {
@@ -470,9 +463,8 @@ public final class Graph: UIView {
                 .keys
                 .map { $0.points[i].value }
             
-            let min = values.min() ?? 0
-            let max = values.max() ?? 0
-            let minMaxRange = MinMaxRange(min: min, max: max)
+            let minMax = values.minMax
+            let minMaxRange = MinMaxRange(min: minMax.min, max: minMax.max)
             minMaxRanges.append(minMaxRange)
         }
         
