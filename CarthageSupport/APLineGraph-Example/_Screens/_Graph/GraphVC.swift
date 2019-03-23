@@ -61,17 +61,20 @@ final class GraphVC: UIViewController {
     
     private func setupRangeControl() {
         rangeControlView.configure(vm: RangeControlVM())
-        rangeControlView.onRangeDidChange = { [weak self] in self?.vm.mainGraph.showRange(range: $0) }
-        
-        rangeControlView.onStartTouching = { [weak self] in
-            guard let self = self else { return }
-            g.animate { self.vm.mainGraph.autoScale = false }
+        rangeControlView.onRangeDidChange = { [weak self] range in
+            self?.vm.mainGraph.showRange(range: range, animated: true)
         }
         
-        rangeControlView.onStopTouching = { [weak self] in
-            guard let self = self else { return }
-            g.animate { self.vm.mainGraph.autoScale = true }
-        }
+        // Uncomment to change animation behavior
+//        rangeControlView.onStartTouching = { [weak self] in
+//            guard let self = self else { return }
+//            g.animate { self.vm.mainGraph.autoScale = false }
+//        }
+//        
+//        rangeControlView.onStopTouching = { [weak self] in
+//            guard let self = self else { return }
+//            g.animate { self.vm.mainGraph.autoScale = true }
+//        }
     }
     
     // ******************************* MARK: - Actions

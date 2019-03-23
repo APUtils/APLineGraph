@@ -16,21 +16,14 @@ private extension Constants {
 
 
 public extension Graph {
-public final class VerticalAxis: Axis {
+public final class VerticalAxis: UIView {
     
     // ******************************* MARK: - Public Properties
-    
-    var range: RelativeRange {
-        didSet {
-            guard oldValue != range else { return }
-            update()
-        }
-    }
     
     var minMaxRanges: [MinMaxRange] {
         didSet {
             guard oldValue != minMaxRanges else { return }
-            update()
+            performUpdate(animated: true)
         }
     }
     
@@ -43,6 +36,7 @@ public final class VerticalAxis: Axis {
     
     // ******************************* MARK: - Private Properties
     
+    private var range: RelativeRange
     private var elements: [GraphVerticalAxisElementView] = []
     private var values: [CGFloat] = []
     private var removingElements: [GraphVerticalAxisElementView] = []
@@ -51,13 +45,15 @@ public final class VerticalAxis: Axis {
     private var previousValues: [CGFloat] = []
     private var previousGraphHeight: CGFloat?
     private var previousMinY: CGFloat?
+    private var previousSize: CGSize = .zero
     
     private lazy var elementsReuseController: ReuseController<GraphVerticalAxisElementView> = ReuseController<GraphVerticalAxisElementView>(create: { [weak self] in
         guard let self = self else { return GraphVerticalAxisElementView() }
         
         let view = GraphVerticalAxisElementView.create()
         view.bounds.size.width = self.bounds.width
-        view.label.font = Axis.labelFont
+        view.label.font = self.configuration.axisLabelFont
+        view.label.textColor = self.configuration.axisLabelColor
         view.helperGuide.backgroundColor = self.configuration.helpLinesColor
         view.helperGuide.layer.removeAllAnimations()
         view.alpha = 0
@@ -66,9 +62,10 @@ public final class VerticalAxis: Axis {
     })
     
     private lazy var maxLabelSize: CGSize = {
-        let height = Axis.labelFont.lineHeight
-        let minValueStringWidth = minMaxRanges.map { $0.min }.min()?.asString.oneLineWidth(font: Axis.labelFont) ?? 0
-        let maxValueStringWidth = minMaxRanges.map { $0.max }.max()?.asString.oneLineWidth(font: Axis.labelFont) ?? 0
+        let font = configuration.axisLabelFont
+        let height = font.lineHeight
+        let minValueStringWidth = minMaxRanges.map { $0.min }.min()?.asString.oneLineWidth(font: font) ?? 0
+        let maxValueStringWidth = minMaxRanges.map { $0.max }.max()?.asString.oneLineWidth(font: font) ?? 0
         let width = Swift.max(minValueStringWidth, maxValueStringWidth)
         
         return CGSize(width: width, height: height)
@@ -91,7 +88,27 @@ public final class VerticalAxis: Axis {
     }
     
     private func setup() {
+        backgroundColor = .clear
         isUserInteractionEnabled = false
+    }
+    
+    // ******************************* MARK: - Internal Methods
+    
+    func setRange(range: RelativeRange, duration: TimeInterval) {
+        g.animateIfNeeded(duration, animations: {
+            self.range = range
+            self.update()
+        })
+    }
+    
+    // ******************************* MARK: - UIView Methods Overrides
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        guard previousSize != bounds.size else { return }
+        previousSize = bounds.size
+        performUpdate(animated: false)
     }
     
     // ******************************* MARK: - Update
@@ -100,7 +117,17 @@ public final class VerticalAxis: Axis {
         elementsReuseController.reusables.forEach { $0.helperGuide.backgroundColor = configuration.helpLinesColor }
     }
     
-    override public func update() {
+    private func performUpdate(animated: Bool) {
+        if animated {
+            g.animateIfNeeded(configuration.animationDuration, animations: {
+                self.update()
+            })
+        } else {
+            update()
+        }
+    }
+    
+    private func update() {
         // Need to bind container to specific value
         // If axis changes mode need to continue moving current containers and fade them out in the same time create new containers in a place where transformation started and animate then onto final position.
         // In a case mode stays the same - just move axises onto new position
@@ -114,9 +141,9 @@ public final class VerticalAxis: Axis {
         let maxIndex = minMaxRanges.count.asCGFloat - 1
         let minRangeIndex = (maxIndex * range.from).rounded().asInt
         let maxRangeIndex = (maxIndex * range.to).rounded().asInt
-        let selectedMinMaxRanges = minMaxRanges[minRangeIndex...maxRangeIndex]
-        var minY = selectedMinMaxRanges.map { $0.min }.min() ?? 0
-        var maxY = selectedMinMaxRanges.map { $0.max }.max() ?? 0
+        let minMax = minMaxRanges[minRangeIndex...maxRangeIndex].minMax
+        var minY = minMax.0
+        var maxY = minMax.1
         var graphHeight = maxY - minY
         
         // Adjust min and max to match bottom and top gap
@@ -227,18 +254,18 @@ public final class VerticalAxis: Axis {
         previousMinY = minY
     }
     
-    private func addPair(element: GraphVerticalAxisElementView, value: CGFloat) {
+    private func addPair(element: GraphVerticalAxisElementView, value: CGFloat, animated: Bool = UIView.isInAnimationClosure) {
         addSubview(element)
         elements.append(element)
         values.append(value)
         
         element.alpha = 0
-        UIView.animate(withDuration: Axis.animationDuration) {
+        g.animateIfNeeded(animated ? configuration.animationDuration : 0) {
             element.alpha = 1
         }
     }
     
-    private func removePair(element: GraphVerticalAxisElementView) {
+    private func removePair(element: GraphVerticalAxisElementView, animated: Bool = UIView.isInAnimationClosure) {
         guard let index = self.elements.firstIndex(of: element) else { return }
         removingElements.append(element)
         removingValues.append(values[index])
@@ -246,7 +273,7 @@ public final class VerticalAxis: Axis {
         values.remove(at: index)
         
         element.alpha = 1
-        UIView.animate(withDuration: Axis.animationDuration, animations: {
+        g.animateIfNeeded(animated ? configuration.animationDuration : 0, animations: {
             element.alpha = 0
         }, completion: { _ in
             guard let index = self.removingElements.firstIndex(of: element) else { return }
@@ -256,9 +283,9 @@ public final class VerticalAxis: Axis {
         })
     }
     
-    private func removeAll() {
+    private func removeAll(animated: Bool = UIView.isInAnimationClosure) {
         elements
-            .forEach(removePair(element:))
+            .forEach { removePair(element: $0, animated: animated) }
     }
 }
 }

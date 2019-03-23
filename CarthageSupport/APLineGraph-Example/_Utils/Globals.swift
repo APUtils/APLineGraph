@@ -16,25 +16,7 @@ final class Globals {
     // ******************************* MARK: - Typealiases
     
     /// Closure that takes Void and returns Void.
-    public typealias SimpleClosure = () -> Void
-    
-    // ******************************* MARK: - Animations
-    
-    func animate(animations: @escaping SimpleClosure) {
-        animate(animations: animations, completion: nil)
-    }
-    
-    func animate(_ duration: TimeInterval, animations: @escaping SimpleClosure) {
-        animate(duration, animations: animations, completion: nil)
-    }
-    
-    func animate(_ duration: TimeInterval, options: UIView.AnimationOptions, animations: @escaping SimpleClosure) {
-        animate(duration, options: options, animations: animations, completion: nil)
-    }
-    
-    func animate(_ duration: TimeInterval = 0.3, delay: TimeInterval = 0, options: UIView.AnimationOptions = .beginFromCurrentState, animations: @escaping SimpleClosure, completion: ((Bool) -> ())? = nil) {
-        UIView.animate(withDuration: duration, delay: delay, options: options, animations: animations, completion: completion)
-    }
+    typealias SimpleClosure = () -> Void
     
     // ******************************* MARK: - Dispatch
     

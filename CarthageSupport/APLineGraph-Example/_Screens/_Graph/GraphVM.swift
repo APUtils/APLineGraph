@@ -56,8 +56,8 @@ class GraphVM {
     }
     
     private func setup() {
-        mainGraph.addPlots(plots)
-        helperGraph.addPlots(plots)
+        mainGraph.addPlots(plots, animated: false)
+        helperGraph.addPlots(plots, animated: false)
         helperGraph.isUserInteractionEnabled = false
         AppearanceManager.shared.addStyleListener(self)
     }
@@ -67,14 +67,12 @@ class GraphVM {
     func togglePlotSelection(index: Int) {
         plotSelectionVMs[index].selected.toggle()
         let plotSelectionVM = plotSelectionVMs[index]
-        g.animate {
-            if plotSelectionVM.selected {
-                self.mainGraph.addPlot(plotSelectionVM.plot)
-                self.helperGraph.addPlot(plotSelectionVM.plot)
-            } else {
-                self.mainGraph.removePlot(plotSelectionVM.plot)
-                self.helperGraph.removePlot(plotSelectionVM.plot)
-            }
+        if plotSelectionVM.selected {
+            mainGraph.addPlot(plotSelectionVM.plot, animated: true)
+            helperGraph.addPlot(plotSelectionVM.plot, animated: true)
+        } else {
+            mainGraph.removePlot(plotSelectionVM.plot, animated: true)
+            helperGraph.removePlot(plotSelectionVM.plot, animated: true)
         }
     }
 }

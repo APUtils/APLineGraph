@@ -72,7 +72,7 @@
                                                         <viewLayoutGuide key="safeArea" id="K7n-SI-Hyt"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="43" translatesAutoresizingMaskIntoConstraints="NO" id="Gdt-Ci-LYn" customClass="RangeControlView" customModule="APLineGraph_Example" customModuleProvider="target">
-                                                        <rect key="frame" x="16" y="305" width="343" height="43"/>
+                                                        <rect key="frame" x="0.0" y="305" width="375" height="43"/>
                                                         <color key="backgroundColor" red="1" green="0.51512984149999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </view>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="128" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="itG-AN-e02" customClass="SelfResizableTableView" customModule="APLineGraph_Example" customModuleProvider="target">
@@ -106,6 +106,7 @@
                                                 <constraints>
                                                     <constraint firstItem="ksy-jl-eiG" firstAttribute="top" secondItem="CDN-dg-Ss7" secondAttribute="bottom" constant="16" id="6yy-3T-0XC"/>
                                                     <constraint firstItem="dz1-31-omb" firstAttribute="leading" secondItem="vG2-iq-sZF" secondAttribute="leading" id="DRf-Ew-1kG"/>
+                                                    <constraint firstItem="Gdt-Ci-LYn" firstAttribute="leading" secondItem="vG2-iq-sZF" secondAttribute="leading" id="EQN-qG-IMu"/>
                                                     <constraint firstAttribute="trailing" secondItem="VOT-a0-d5F" secondAttribute="trailing" id="Q41-Nu-7Rm"/>
                                                     <constraint firstItem="ksy-jl-eiG" firstAttribute="leading" secondItem="vG2-iq-sZF" secondAttribute="leading" constant="16" id="R2W-pX-3BX"/>
                                                     <constraint firstItem="Gdt-Ci-LYn" firstAttribute="top" secondItem="ksy-jl-eiG" secondAttribute="top" id="SqP-nQ-wUu"/>
@@ -115,13 +116,12 @@
                                                     <constraint firstItem="CDN-dg-Ss7" firstAttribute="leading" secondItem="vG2-iq-sZF" secondAttribute="leading" constant="16" id="aIz-He-zEm"/>
                                                     <constraint firstItem="dz1-31-omb" firstAttribute="top" secondItem="vG2-iq-sZF" secondAttribute="top" id="aYO-ph-sOH"/>
                                                     <constraint firstItem="VOT-a0-d5F" firstAttribute="leading" secondItem="vG2-iq-sZF" secondAttribute="leading" id="bTT-I6-vin"/>
-                                                    <constraint firstItem="Gdt-Ci-LYn" firstAttribute="trailing" secondItem="ksy-jl-eiG" secondAttribute="trailing" id="iBD-lw-FG6"/>
                                                     <constraint firstItem="itG-AN-e02" firstAttribute="top" secondItem="ksy-jl-eiG" secondAttribute="bottom" constant="8" id="jgk-Xc-uKY"/>
                                                     <constraint firstAttribute="bottom" secondItem="VOT-a0-d5F" secondAttribute="bottom" id="k80-5L-jul"/>
                                                     <constraint firstItem="Gdt-Ci-LYn" firstAttribute="bottom" secondItem="ksy-jl-eiG" secondAttribute="bottom" id="pqO-bt-iDh"/>
-                                                    <constraint firstItem="Gdt-Ci-LYn" firstAttribute="leading" secondItem="ksy-jl-eiG" secondAttribute="leading" id="qgy-uN-LH8"/>
                                                     <constraint firstAttribute="trailing" secondItem="dz1-31-omb" secondAttribute="trailing" id="raD-nt-I5z"/>
                                                     <constraint firstAttribute="trailing" secondItem="ksy-jl-eiG" secondAttribute="trailing" constant="16" id="t3f-O6-JJd"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Gdt-Ci-LYn" secondAttribute="trailing" id="t3p-gH-I5j"/>
                                                     <constraint firstAttribute="trailing" secondItem="CDN-dg-Ss7" secondAttribute="trailing" constant="16" id="tGa-nM-OUQ"/>
                                                     <constraint firstItem="CDN-dg-Ss7" firstAttribute="top" secondItem="dz1-31-omb" secondAttribute="bottom" id="uh3-Mn-UqK"/>
                                                 </constraints>

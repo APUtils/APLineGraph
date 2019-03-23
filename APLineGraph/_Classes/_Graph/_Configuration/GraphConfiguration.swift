@@ -12,6 +12,9 @@ import UIKit
 
 public extension Graph {
 public struct Configuration {
+    public var animationDuration: TimeInterval = 0.2
+    public var axisLabelColor: UIColor = #colorLiteral(red: 0.5960784314, green: 0.6196078431, blue: 0.6392156863, alpha: 1)
+    public var axisLabelFont: UIFont = .systemFont(ofSize: 11)
     public var enableInspection: Bool = false
     public var helpLinesColor: UIColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
     public var inspectionBlurEffect: UIBlurEffect.Style = .light

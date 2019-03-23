@@ -10,8 +10,6 @@ import UIKit
 
 
 private extension Constants {
-    static let horizontalGap: CGFloat = 16
-    
     static var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d"
@@ -23,42 +21,58 @@ private extension Constants {
 
 
 extension Graph {
-final class HorizontalAxis: Axis {
-    
-    // ******************************* MARK: - Types
-    
-    
+final class HorizontalAxis: UIView {
     
     // ******************************* MARK: - Public Properties
     
     var dates: [Date] {
         didSet {
             guard oldValue != dates else { return }
-            onDatesUpdate()
+            onDatesUpdate(animated: true)
         }
     }
     
     var range: Graph.RelativeRange {
         didSet {
             guard oldValue != range else { return }
-            update()
+            update(animated: true)
         }
     }
     
     // ******************************* MARK: - Private Properties
     
+    private var configuration: Graph.Configuration
     private var labels: [UILabel] = []
     private var indexes: [CGFloat] = []
     private var activeLabels: [UILabel] = []
+    private var previousSize: CGSize = .zero
     
     private var lastIndex: CGFloat {
         return (dates.count - 1).asCGFloat
     }
     
+    private var horizontalGap: CGFloat {
+        return configuration.axisLabelFont.pointSize * 1.5
+    }
+    
+    private lazy var labelsReuseController: ReuseController<UILabel> = ReuseController<UILabel>(create: { [weak self] in
+        guard let self = self else { return UILabel() }
+        
+        let label = UILabel(frame: CGRect(origin: .zero, size: self.maxLabelSize))
+        label.font = self.configuration.axisLabelFont
+        label.textColor = self.configuration.axisLabelColor
+        label.autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+        label.alpha = 0
+        label.lineBreakMode = .byClipping
+        
+        return label
+    })
+    
     private(set) lazy var maxLabelSize: CGSize = {
-        let height = Axis.labelFont.lineHeight
-        let septemberDate = Date(timeIntervalSince1970: 1569082309)
-        let width = c.dateFormatter.string(from: septemberDate).oneLineWidth(font: Axis.labelFont)
+        let height = configuration.axisLabelFont.lineHeight
+        // May 22
+        let septemberDate = Date(timeIntervalSince1970: 1558542309)
+        let width = c.dateFormatter.string(from: septemberDate).oneLineWidth(font: configuration.axisLabelFont)
         return CGSize(width: width, height: height)
     }()
     
@@ -70,6 +84,7 @@ final class HorizontalAxis: Axis {
     
     init(dates: [Date], configuration: Graph.Configuration) {
         self.dates = dates
+        self.configuration = configuration
         self.range = .full
         
         super.init(frame: UIScreen.main.bounds)
@@ -78,36 +93,47 @@ final class HorizontalAxis: Axis {
     }
     
     private func setup() {
+        backgroundColor = .clear
         isUserInteractionEnabled = false
-        onDatesUpdate()
+        onDatesUpdate(animated: false)
+    }
+    
+    // ******************************* MARK: - UIView Methods Overrides
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        guard previousSize != bounds.size else { return }
+        previousSize = bounds.size
+        update(animated: false)
     }
     
     // ******************************* MARK: - Update
     
-    private func onDatesUpdate() {
+    private func onDatesUpdate(animated: Bool) {
         queueAllLabels()
         labels = []
         indexes = []
         activeLabels = []
-        attachSideLabels()
-        update()
+        attachSideLabels(animated: animated)
+        update(animated: animated)
     }
     
-    private func attachSideLabels() {
+    private func attachSideLabels(animated: Bool) {
         guard let firstDate = dates.first, let lastDate = dates.last else { return }
         
         let leftLabelText = c.dateFormatter.string(from: firstDate)
-        let leftLabel = addLabel(text: leftLabelText, center: .zero)
+        let leftLabel = addLabel(text: leftLabelText, centerX: 0)
         leftLabel.frame.origin = .zero
-        addPair(label: leftLabel, index: 0)
+        addPair(label: leftLabel, index: 0, animated: animated)
         
         let rightLabelText = c.dateFormatter.string(from: lastDate)
-        let rightLabel = addLabel(text: rightLabelText, center: .zero)
+        let rightLabel = addLabel(text: rightLabelText, centerX: 0)
         rightLabel.frame.origin = CGPoint(x: bounds.width - rightLabel.bounds.width, y: 0)
-        addPair(label: rightLabel, index: lastIndex)
+        addPair(label: rightLabel, index: lastIndex, animated: animated)
     }
     
-    override func update() {
+    func update(animated: Bool) {
         // Labels should bind to specific dates
         // There should be array of labels which we check from back and remove collided labels
         // Side labels are special. They are binded to side dates but not centered under them. Instead they just glue to graph sides.
@@ -121,7 +147,7 @@ final class HorizontalAxis: Axis {
         
         let lastIndex = self.lastIndex
         let width = bounds.width
-        let elementWidth = maxLabelSize.width + c.horizontalGap
+        let elementWidth = maxLabelSize.width + horizontalGap
         let halfElementWidth = elementWidth / 2
         let graphWidth = width / range.size
         let graphFrame = CGRect(x: -(graphWidth * range.from), y: 0, width: graphWidth, height: bounds.height)
@@ -162,13 +188,13 @@ final class HorizontalAxis: Axis {
                 guard let leftLabelIndex = getIndex(label: leftLabel) else { continue }
                 guard let rightLabelIndex = getIndex(label: rightLabel) else { continue }
                 guard rightLabelIndex - leftLabelIndex > 1 else { continue }
-                let newLabelCenter = leftLabel.center.middle(to: rightLabel.center)
-                let newLabelIndex = (newLabelCenter.x - graphFrame.origin.x) / dateStep
+                let newLabelCenterX = leftLabel.center.middleX(to: rightLabel.center)
+                let newLabelIndex = (newLabelCenterX - graphFrame.origin.x) / dateStep
                 let newLabelDate = dates[newLabelIndex.rounded().asInt]
                 let newLabelText = c.dateFormatter.string(from: newLabelDate)
-                let newLabel = addLabel(text: newLabelText, center: newLabelCenter)
+                let newLabel = addLabel(text: newLabelText, centerX: newLabelCenterX)
                 setCenterX(label: newLabel, dateStep: dateStep, index: newLabelIndex, graphFrame: graphFrame)
-                addPair(label: newLabel, index: newLabelIndex)
+                addPair(label: newLabel, index: newLabelIndex, animated: animated)
                 wasAdded = true
             }
         }
@@ -197,27 +223,27 @@ final class HorizontalAxis: Axis {
             
             let labelRect = getElementRect(label: label, halfElementWidth: halfElementWidth, elementWidth: elementWidth)
             if labelRect.intersects(leftLabelRect) || labelRect.intersects(rightLabelRect) {
-                removePair(label: label)
+                removePair(label: label, animated: animated)
             }
         }
     }
     
-    private func addPair(label: UILabel, index: CGFloat) {
+    private func addPair(label: UILabel, index: CGFloat, animated: Bool) {
         labels.append(label)
         indexes.append(index)
         activeLabels.append(label)
         
         label.alpha = 0
-        UIView.animate(withDuration: Axis.animationDuration) {
+        g.animateIfNeeded(animated ? configuration.animationDuration : 0) {
             label.alpha = 1
         }
     }
     
-    private func removePair(label: UILabel) {
+    private func removePair(label: UILabel, animated: Bool) {
         activeLabels.remove(label)
         
         label.alpha = 1
-        UIView.animate(withDuration: Axis.animationDuration, animations: {
+        g.animateIfNeeded(animated ? configuration.animationDuration : 0, animations: {
             label.alpha = 0
         }, completion: { _ in
             guard let index = self.labels.firstIndex(of: label) else { return }
@@ -232,15 +258,35 @@ final class HorizontalAxis: Axis {
         return indexes[index]
     }
     
-    // TODO: Optimize
     private func setCenterX(label: UILabel, dateStep: CGFloat, index: CGFloat, graphFrame: CGRect) {
-        label.center.x = dateStep * index + graphFrame.origin.x
-        label.frame.origin.x = min(label.frame.origin.x, graphFrame.maxX - label.bounds.width)
-        label.frame.origin.x = max(label.frame.origin.x, graphFrame.origin.x)
+        var originX = dateStep * index + graphFrame.origin.x - label.bounds.width / 2
+        originX = originX.clamped(min: graphFrame.origin.x, max: graphFrame.maxX - label.bounds.width)
+        
+        label.frame.origin.x = originX
     }
     
     private func getElementRect(label: UILabel, halfElementWidth: CGFloat, elementWidth: CGFloat) -> CGRect {
         return CGRect(x: label.center.x - halfElementWidth, y: 0, width: elementWidth, height: label.bounds.height)
+    }
+    
+    // ******************************* MARK: - Reuse
+    
+    private func addLabel(text: String, centerX: CGFloat) -> UILabel {
+        let label = labelsReuseController.dequeue()
+        label.text = text
+        label.alpha = 1
+        label.center.x = centerX
+        addSubview(label)
+        
+        return label
+    }
+    
+    private func queueLabel(_ label: UILabel) {
+        labelsReuseController.queue(label)
+    }
+    
+    private func queueAllLabels() {
+        labelsReuseController.queueAll()
     }
 }
 }

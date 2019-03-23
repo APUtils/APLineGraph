@@ -16,9 +16,7 @@ extension CGPoint {
         return abs(xDist + yDist)
     }
     
-    func middle(to point: CGPoint) -> CGPoint {
-        let middleX = (point.x - x) / 2 + x
-        let middleY = (point.y - y) / 2 + y
-        return CGPoint(x: middleX, y: middleY)
+    func middleX(to point: CGPoint) -> CGFloat {
+        return (point.x + x) / 2
     }
 }

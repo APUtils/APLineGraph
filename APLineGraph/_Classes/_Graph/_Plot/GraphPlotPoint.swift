@@ -24,3 +24,11 @@ public struct Point {
 // ******************************* MARK: - Equatable
 
 extension Graph.Plot.Point: Equatable {}
+
+// ******************************* MARK: - Comparable
+
+extension Graph.Plot.Point: Comparable {
+    public static func < (lhs: Graph.Plot.Point, rhs: Graph.Plot.Point) -> Bool {
+        return lhs.value < rhs.value
+    }
+}

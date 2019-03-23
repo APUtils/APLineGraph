@@ -16,7 +16,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lmw-Ql-9LK">
-                    <rect key="frame" x="0.0" y="8" width="29" height="13"/>
+                    <rect key="frame" x="0.0" y="8" width="375" height="13"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                     <color key="textColor" red="0.59607843140000005" green="0.61960784310000006" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -37,6 +37,7 @@
                 <constraint firstAttribute="bottom" secondItem="gQS-eY-t1K" secondAttribute="bottom" id="Q2g-eX-9cL"/>
                 <constraint firstItem="gQS-eY-t1K" firstAttribute="top" secondItem="Lmw-Ql-9LK" secondAttribute="bottom" constant="2" id="dYE-1K-p75"/>
                 <constraint firstItem="Lmw-Ql-9LK" firstAttribute="leading" secondItem="Cly-fC-ONJ" secondAttribute="leading" id="iMp-Yo-Ms7"/>
+                <constraint firstAttribute="trailing" secondItem="Lmw-Ql-9LK" secondAttribute="trailing" id="lYn-f4-1cs"/>
                 <constraint firstItem="gQS-eY-t1K" firstAttribute="leading" secondItem="Cly-fC-ONJ" secondAttribute="leading" id="qJn-IC-aqP"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

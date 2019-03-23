@@ -10,7 +10,7 @@ import Foundation
 
 
 enum Constants {
-    
+    static let minimumAnimationDuration: TimeInterval = 1 / 60
 }
 
 let c = Constants.self

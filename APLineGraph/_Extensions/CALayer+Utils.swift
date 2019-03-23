@@ -18,7 +18,7 @@ extension CALayer {
         animation.fromValue = 1
         animation.toValue = 0
         animation.duration = UIView.inheritedAnimationDuration
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
         CATransaction.setCompletionBlock(completion)
         add(animation, forKey: "fadeOut")
         CATransaction.commit()
@@ -32,7 +32,7 @@ extension CALayer {
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = UIView.inheritedAnimationDuration
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
         CATransaction.setCompletionBlock(completion)
         add(animation, forKey: "fadeIn")
         CATransaction.commit()

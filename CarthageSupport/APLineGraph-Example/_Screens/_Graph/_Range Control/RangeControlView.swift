@@ -11,6 +11,7 @@ import APLineGraph
 
 
 extension Constants {
+    static let sideMargin: CGFloat = 16
     static let sideControlWidth: CGFloat = 32 / 3
     static let sideControlAllowedWidthToCenterRelative: CGFloat = 0.1
     static let sideControlEnlargedWidth: CGFloat = 30
@@ -66,8 +67,8 @@ final class RangeControlView: UIView {
     }
     
     private func layout() {
-        leftConstraint.constant = range.from * bounds.width
-        widthConstraint.constant = range.size * bounds.width
+        leftConstraint.constant = range.from * bounds.width + c.sideMargin
+        widthConstraint.constant = range.size * (bounds.width - 2 * c.sideMargin)
     }
     
     // ******************************* MARK: - Public Methods
@@ -119,21 +120,30 @@ final class RangeControlView: UIView {
             
             switch action {
             case .adjustLeft(let left, let width, _):
-                let clampedTranslation = translationX.clamped(min: -left, max: width - c.minWidth)
+                let min = -left + c.sideMargin
+                let max = width - c.minWidth
+                let clampedTranslation = translationX.clamped(min: min, max: max)
                 widthConstraint.constant = width - clampedTranslation
                 leftConstraint.constant = left + clampedTranslation
                 
             case .adjustRight(let left, let width, _):
-                let clampedTranslation = translationX.clamped(min: c.minWidth - width, max: boundsWidth - width - left)
+                let min = c.minWidth - width
+                let max = boundsWidth - width - left - c.sideMargin
+                let clampedTranslation = translationX.clamped(min: min, max: max)
                 widthConstraint.constant = width + clampedTranslation
                 
             case .move(let left, let width, _):
-                let clampedTranslation = translationX.clamped(min: -left, max: boundsWidth - width - left)
+                let min = -left + c.sideMargin
+                let max = boundsWidth - width - left - c.sideMargin
+                let clampedTranslation = translationX.clamped(min: min, max: max)
                 leftConstraint.constant = left + clampedTranslation
             }
             
-            let from = leftConstraint.constant / boundsWidth
-            let to = (leftConstraint.constant + widthConstraint.constant) / boundsWidth
+            let availableBounds = boundsWidth - 2 * c.sideMargin
+            let left = leftConstraint.constant - c.sideMargin
+            let width = widthConstraint.constant
+            let from = left / availableBounds
+            let to = (left + width) / availableBounds
             range = Graph.RelativeRange(from: from, to: to)
             onRangeDidChange?(range)
         }
