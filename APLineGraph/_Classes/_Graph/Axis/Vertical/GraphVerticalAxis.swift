@@ -20,13 +20,6 @@ public final class VerticalAxis: UIView {
     
     // ******************************* MARK: - Public Properties
     
-    var range: RelativeRange {
-        didSet {
-            guard oldValue != range else { return }
-            performUpdate(animated: true)
-        }
-    }
-    
     var minMaxRanges: [MinMaxRange] {
         didSet {
             guard oldValue != minMaxRanges else { return }
@@ -43,6 +36,7 @@ public final class VerticalAxis: UIView {
     
     // ******************************* MARK: - Private Properties
     
+    private var range: RelativeRange
     private var elements: [GraphVerticalAxisElementView] = []
     private var values: [CGFloat] = []
     private var removingElements: [GraphVerticalAxisElementView] = []
@@ -96,6 +90,15 @@ public final class VerticalAxis: UIView {
     private func setup() {
         backgroundColor = .clear
         isUserInteractionEnabled = false
+    }
+    
+    // ******************************* MARK: - Internal Methods
+    
+    func setRange(range: RelativeRange, duration: TimeInterval) {
+        g.animateIfNeeded(duration, animations: {
+            self.range = range
+            self.update()
+        })
     }
     
     // ******************************* MARK: - UIView Methods Overrides

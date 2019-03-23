@@ -25,4 +25,12 @@ extension Double {
             return "\(Int(rounded()))"
         }
     }
+    
+    /// Computes and return clamped value within min and max bounds
+    /// - parameter min: Minimum possible value.
+    /// - parameter min: Maximum possible value.
+    /// - returns: Clamped value.
+    func clamped(min: Double, max: Double) -> Double {
+        return Swift.max(Swift.min(self, max), min)
+    }
 }

@@ -55,6 +55,11 @@ public final class Graph: UIView {
     private var plotsScaleX: CGFloat = 0
     private var plotsTransformX = CGAffineTransform.identity
     
+    private var previousPlotsMinMax: MinMaxRange?
+    private var plotsMinMax: MinMaxRange {
+        return  autoScale ? getMinMaxRange(range: range) : getMinMaxRange(range: .full)
+    }
+    
     private var availableHeight: CGFloat {
         if configuration.showAxises {
             return bounds.height - c.horizontalAxisOffset
@@ -113,7 +118,6 @@ public final class Graph: UIView {
     private func setup() {
         setupProperties()
         setupInspections()
-        update(animated: false)
     }
     
     private func setupProperties() {
@@ -163,23 +167,29 @@ public final class Graph: UIView {
     
     public func addPlots(_ plots: [Plot], animated: Bool) {
         plots.forEach { addPlot($0, updatePlots: false, animated: animated) }
-        updatePlots(animated: false)
+        updatePlots(animated: false, minMaxRange: nil)
         updateAxises(animated: animated)
     }
     
     public func removeAllPlots(animated: Bool) {
         plotsShapeLayers.keys.forEach { removePlot($0, updatePlots: false, animated: animated) }
-        updatePlots(animated: false)
+        updatePlots(animated: false, minMaxRange: nil)
         updateAxises(animated: animated)
     }
     
-    // TODO: Rethink this method so it convenient for anyone to use
     public func showRange(range: RelativeRange, animated: Bool) {
-        // TODO: if range size didn't change just scroll
+        guard self.range != range else { return }
+        
         self.range = range
         horizontalAxis?.range = range
-        verticalAxis?.range = autoScale ? range : .full
-        updatePlots(animated: animated)
+        
+        let duration = animated ? getAnimationDuration(oldRange: self.range, newRange: range) : 0
+        
+        let verticalAxisRange: RelativeRange = autoScale ? range : .full
+        let verticalAxisDuration = autoScale ? duration : configuration.animationDuration
+        verticalAxis?.setRange(range: verticalAxisRange, duration: verticalAxisDuration)
+        
+        updatePlots(duration: duration, minMaxRange: plotsMinMax)
     }
     
     // ******************************* MARK: - Layout
@@ -190,7 +200,7 @@ public final class Graph: UIView {
         guard previousSize != bounds.size else { return }
         previousSize = bounds.size
         layoutAxises()
-        updatePlots(animated: false)
+        updatePlots(animated: false, minMaxRange: previousPlotsMinMax)
     }
     
     private func layoutAxises() {
@@ -211,7 +221,7 @@ public final class Graph: UIView {
     private func update(animated: Bool) {
         updateAxises(animated: animated)
         updateLineLength(animated: animated)
-        updatePlots(animated: animated)
+        updatePlots(animated: animated, minMaxRange: previousPlotsMinMax)
     }
     
     private func updateApperance(animated: Bool) {
@@ -219,7 +229,7 @@ public final class Graph: UIView {
         inspectionGuideView.backgroundColor = configuration.inspectionGuideColor
         updateAxises(animated: animated)
         updateLineLength(animated: animated)
-        updatePlots(animated: animated)
+        updatePlots(animated: animated, minMaxRange: previousPlotsMinMax)
     }
     
     private func updateAxises(animated: Bool) {
@@ -262,7 +272,11 @@ public final class Graph: UIView {
         plotsShapeLayers.values.forEach { $0.lineWidth = configuration.lineWidth }
     }
     
-    private func updatePlots(animated: Bool) {
+    private func updatePlots(animated: Bool, minMaxRange: MinMaxRange?) {
+        updatePlots(duration: animated ? configuration.animationDuration : 0, minMaxRange: minMaxRange)
+    }
+    
+    private func updatePlots(duration: TimeInterval, minMaxRange: MinMaxRange?) {
         let width = bounds.width
         let height = self.availableHeight
         
@@ -278,11 +292,9 @@ public final class Graph: UIView {
         let translateX: CGFloat = -plotSize * range.from
         
         // Scale Y
-        let minMaxRange = autoScale ? getMinMaxRange(range: range) : getMinMaxRange(range: .full)
+        let minMaxRange = minMaxRange ?? self.plotsMinMax
         let minValue: CGFloat = minMaxRange.min
-        let maxValue: CGFloat = minMaxRange.max
-        
-        let rangeY: CGFloat = maxValue - minValue
+        let rangeY: CGFloat = minMaxRange.size
         let gap: CGFloat = height * configuration.verticalPercentGap
         let availableHeight: CGFloat = height - 2 * gap
         
@@ -291,6 +303,7 @@ public final class Graph: UIView {
         // Move graph min value onto axis
         let translateY: CGFloat = -minValue
         
+        previousPlotsMinMax = minMaxRange
         plotsTranslateX = translateX
         plotsScaleX = scaleX
         plotsTransformX = CGAffineTransform.identity
@@ -305,12 +318,6 @@ public final class Graph: UIView {
             // Apply Y translation so graph is in available range
             .translatedBy(x: translateX, y: translateY)
         
-        // TODO: Last thing left!
-        // Calculate animation duration
-        // duration is always less then Axis.animationDuration
-        // duration = height change / max height in range
-        
-        let duration = animated ? configuration.animationDuration : 0
         plotsShapeLayers.forEach { $0.0.updatePath(shapeLayer: $0.1, translateX: translateX, scaleX: scaleX, sizeY: plotsSizeY, transform: plotsTransformX, duration: duration) }
     }
     
@@ -392,7 +399,7 @@ public final class Graph: UIView {
         
         if initialGraph {
             // Show graph on its position
-            if updatePlots { self.updatePlots(animated: false) }
+            if updatePlots { self.updatePlots(animated: false, minMaxRange: nil) }
             
             // Fade in
             if animated { shapeLayer.showAnimated() }
@@ -405,7 +412,7 @@ public final class Graph: UIView {
             if animated { shapeLayer.showAnimated() }
             
             // Then scale all to actual size
-            if updatePlots { self.updatePlots(animated: animated) }
+            if updatePlots { self.updatePlots(animated: animated, minMaxRange: nil) }
         }
     }
     
@@ -424,7 +431,7 @@ public final class Graph: UIView {
         
         if !isLastPlot {
             // Calculate new transform for left plots and update them
-            if updatePlots { self.updatePlots(animated: animated) }
+            if updatePlots { self.updatePlots(animated: animated, minMaxRange: nil) }
             
             // Update removing plot with new transform
             let duration = animated ? configuration.animationDuration : 0
@@ -473,5 +480,32 @@ public final class Graph: UIView {
     private func perform(animated: Bool, operations: @escaping Globals.SimpleClosure) {
         let duration = animated ? configuration.animationDuration : 0
         g.animateIfNeeded(duration, animations: operations)
+    }
+    
+    private func getAnimationDuration(oldRange: RelativeRange, newRange: RelativeRange) -> TimeInterval {
+        // TODO: Last thing left!
+        // Calculate animation duration
+        // duration is always less then Axis.animationDuration
+        // duration = height change / max height in range
+        
+        // TODO: Optimize
+        
+        if let previousPlotsMinMax = previousPlotsMinMax {
+            let previousSize = previousPlotsMinMax.size
+            let currentSize = plotsMinMax.size
+            let defaultDuration = configuration.animationDuration
+            // Full animation time on quarter size change
+            // Zero on same size
+            let fullAnimationDurationSizeDiff = 0.9
+            let coef = 1 / (1 - fullAnimationDurationSizeDiff)
+            if currentSize >= previousSize {
+                return (coef * ((currentSize - previousSize) / currentSize).asTimeInterval * defaultDuration).clamped(min: 0, max: defaultDuration)
+            } else {
+                return (coef * ((previousSize - currentSize) / previousSize).asTimeInterval * defaultDuration).clamped(min: 0, max: defaultDuration)
+            }
+            
+        } else {
+            return configuration.animationDuration
+        }
     }
 }
