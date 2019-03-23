@@ -82,7 +82,6 @@ final class RangeControlView: UIView {
     
     // ******************************* MARK: - Actions
     
-    // TODO: Touch zone is wrong
     // TODO: Do I actually handle multiple touches correctly? Maybe just switch back to one.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         onStartTouching?()

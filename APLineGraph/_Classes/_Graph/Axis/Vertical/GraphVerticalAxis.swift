@@ -183,8 +183,6 @@ public final class VerticalAxis: UIView {
             removeAll()
         }
         
-        // TODO: Optimize
-        
         // Dequeue flow
         let helperGuideHalfHeight: CGFloat = 0.5
         let elementHalfHeight: CGFloat = elementHeight / 2

@@ -75,6 +75,8 @@ final class Plot {
     func updatePath(shapeLayer: CAShapeLayer, translateX: CGFloat, scaleX: CGFloat, sizeY: CGFloat, transform: CGAffineTransform, duration: TimeInterval) {
         // Idea here is that we never animate X transformations but always animate Y transformations
         
+        // TODO: There is one more big optimization - reduced path should not contain points outside of visible zone. Only two side points so scale will work as always. Though, it isn't a bottle neck right now even for 30k points. And 30k points graphs aren't very usable with current UI.
+        
         // Using reduced path if possible
         let path = getReducedPath(layerWidth: shapeLayer.bounds.width, scaleX: scaleX)
         
