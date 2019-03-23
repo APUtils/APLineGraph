@@ -35,6 +35,43 @@ extension Array {
         }
     }
 }
+
+// ******************************* MARK: - Min & Max
+
+extension Array where Element: Comparable {
+    var minMax: (min: Element, max: Element) {
+        var minimum = first!
+        var maximum = minimum
+        
+        // if 'array' has an odd number of items, let 'minimum' or 'maximum' deal with the leftover
+        var i = count % 2 // 1 if odd, skipping the first element
+        while i < count {
+            let left = self[i]
+            let right = self[i+1]
+            
+            if left > right {
+                if left > maximum {
+                    maximum = left
+                }
+                if right < minimum {
+                    minimum = right
+                }
+            } else {
+                if right > maximum {
+                    maximum = right
+                }
+                if left < minimum {
+                    minimum = left
+                }
+            }
+            
+            i += 2
+        }
+        
+        return (minimum, maximum)
+    }
+}
+
 // ******************************* MARK: - Equatable
 
 extension Array where Element: Equatable {

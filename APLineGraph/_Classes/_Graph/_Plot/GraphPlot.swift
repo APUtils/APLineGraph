@@ -123,10 +123,9 @@ final class Plot {
         let endIndexInt = endIndexCGFloat.rounded().asInt
         let subpoints = points[startIndexInt...endIndexInt]
         let subvalues = subpoints.map { $0.value }
-        let minValue = subvalues.min()!
-        let maxValue = subvalues.max()!
+        let minMax = subvalues.minMax
         
-        return MinMaxRange(min: minValue, max: maxValue)
+        return MinMaxRange(min: minMax.0, max: minMax.1)
     }
     
     func getPoint(plotTransform: CGAffineTransform, point: CGPoint) -> Point {

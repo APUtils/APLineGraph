@@ -57,7 +57,7 @@ public final class Graph: UIView {
     
     private var previousPlotsMinMax: MinMaxRange?
     private var plotsMinMax: MinMaxRange {
-        return  autoScale ? getMinMaxRange(range: range) : getMinMaxRange(range: .full)
+        return autoScale ? getMinMaxRange(range: range) : getMinMaxRange(range: .full)
     }
     
     private var availableHeight: CGFloat {
@@ -183,7 +183,9 @@ public final class Graph: UIView {
         self.range = range
         horizontalAxis?.range = range
         
-        let duration = animated ? getAnimationDuration(oldRange: self.range, newRange: range) : 0
+        let newMinMax = plotsMinMax
+        let oldMinMax = previousPlotsMinMax ?? newMinMax
+        let duration = animated ? getAnimationDuration(oldMinMax: oldMinMax, newMinMax: newMinMax) : 0
         
         let verticalAxisRange: RelativeRange = autoScale ? range : .full
         let verticalAxisDuration = autoScale ? duration : configuration.animationDuration
@@ -482,30 +484,20 @@ public final class Graph: UIView {
         g.animateIfNeeded(duration, animations: operations)
     }
     
-    private func getAnimationDuration(oldRange: RelativeRange, newRange: RelativeRange) -> TimeInterval {
-        // TODO: Last thing left!
+    private func getAnimationDuration(oldMinMax: MinMaxRange, newMinMax: MinMaxRange) -> TimeInterval {
         // Calculate animation duration
-        // duration is always less then Axis.animationDuration
-        // duration = height change / max height in range
-        
-        // TODO: Optimize
-        
-        if let previousPlotsMinMax = previousPlotsMinMax {
-            let previousSize = previousPlotsMinMax.size
-            let currentSize = plotsMinMax.size
-            let defaultDuration = configuration.animationDuration
-            // Full animation time on quarter size change
-            // Zero on same size
-            let fullAnimationDurationSizeDiff = 0.9
-            let coef = 1 / (1 - fullAnimationDurationSizeDiff)
-            if currentSize >= previousSize {
-                return (coef * ((currentSize - previousSize) / currentSize).asTimeInterval * defaultDuration).clamped(min: 0, max: defaultDuration)
-            } else {
-                return (coef * ((previousSize - currentSize) / previousSize).asTimeInterval * defaultDuration).clamped(min: 0, max: defaultDuration)
-            }
-            
+        // duration is always less then defaultDuration
+        let previousSize = oldMinMax.size
+        let currentSize = newMinMax.size
+        let defaultDuration = configuration.animationDuration
+        // Full animation time on quarter size change
+        // Zero on same size
+        let fullAnimationDurationSizeDiff = 0.9
+        let coef = 1 / (1 - fullAnimationDurationSizeDiff)
+        if currentSize >= previousSize {
+            return (coef * ((currentSize - previousSize) / currentSize).asTimeInterval * defaultDuration).clamped(min: 0, max: defaultDuration)
         } else {
-            return configuration.animationDuration
+            return (coef * ((previousSize - currentSize) / previousSize).asTimeInterval * defaultDuration).clamped(min: 0, max: defaultDuration)
         }
     }
 }

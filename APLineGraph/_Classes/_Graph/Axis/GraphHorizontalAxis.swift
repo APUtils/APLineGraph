@@ -58,18 +58,20 @@ final class HorizontalAxis: UIView {
     private lazy var labelsReuseController: ReuseController<UILabel> = ReuseController<UILabel>(create: { [weak self] in
         guard let self = self else { return UILabel() }
         
-        let label = UILabel(frame: .zero)
+        let label = UILabel(frame: CGRect(origin: .zero, size: self.maxLabelSize))
         label.font = self.configuration.axisLabelFont
         label.textColor = self.configuration.axisLabelColor
         label.autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
         label.alpha = 0
+        label.lineBreakMode = .byClipping
         
         return label
     })
     
     private(set) lazy var maxLabelSize: CGSize = {
         let height = configuration.axisLabelFont.lineHeight
-        let septemberDate = Date(timeIntervalSince1970: 1569082309)
+        // May 22
+        let septemberDate = Date(timeIntervalSince1970: 1558542309)
         let width = c.dateFormatter.string(from: septemberDate).oneLineWidth(font: configuration.axisLabelFont)
         return CGSize(width: width, height: height)
     }()
@@ -121,12 +123,12 @@ final class HorizontalAxis: UIView {
         guard let firstDate = dates.first, let lastDate = dates.last else { return }
         
         let leftLabelText = c.dateFormatter.string(from: firstDate)
-        let leftLabel = addLabel(text: leftLabelText, center: .zero)
+        let leftLabel = addLabel(text: leftLabelText, centerX: 0)
         leftLabel.frame.origin = .zero
         addPair(label: leftLabel, index: 0, animated: animated)
         
         let rightLabelText = c.dateFormatter.string(from: lastDate)
-        let rightLabel = addLabel(text: rightLabelText, center: .zero)
+        let rightLabel = addLabel(text: rightLabelText, centerX: 0)
         rightLabel.frame.origin = CGPoint(x: bounds.width - rightLabel.bounds.width, y: 0)
         addPair(label: rightLabel, index: lastIndex, animated: animated)
     }
@@ -186,11 +188,11 @@ final class HorizontalAxis: UIView {
                 guard let leftLabelIndex = getIndex(label: leftLabel) else { continue }
                 guard let rightLabelIndex = getIndex(label: rightLabel) else { continue }
                 guard rightLabelIndex - leftLabelIndex > 1 else { continue }
-                let newLabelCenter = leftLabel.center.middle(to: rightLabel.center)
-                let newLabelIndex = (newLabelCenter.x - graphFrame.origin.x) / dateStep
+                let newLabelCenterX = leftLabel.center.middleX(to: rightLabel.center)
+                let newLabelIndex = (newLabelCenterX - graphFrame.origin.x) / dateStep
                 let newLabelDate = dates[newLabelIndex.rounded().asInt]
                 let newLabelText = c.dateFormatter.string(from: newLabelDate)
-                let newLabel = addLabel(text: newLabelText, center: newLabelCenter)
+                let newLabel = addLabel(text: newLabelText, centerX: newLabelCenterX)
                 setCenterX(label: newLabel, dateStep: dateStep, index: newLabelIndex, graphFrame: graphFrame)
                 addPair(label: newLabel, index: newLabelIndex, animated: animated)
                 wasAdded = true
@@ -256,11 +258,11 @@ final class HorizontalAxis: UIView {
         return indexes[index]
     }
     
-    // TODO: Optimize
     private func setCenterX(label: UILabel, dateStep: CGFloat, index: CGFloat, graphFrame: CGRect) {
-        label.center.x = dateStep * index + graphFrame.origin.x
-        label.frame.origin.x = min(label.frame.origin.x, graphFrame.maxX - label.bounds.width)
-        label.frame.origin.x = max(label.frame.origin.x, graphFrame.origin.x)
+        var originX = dateStep * index + graphFrame.origin.x - label.bounds.width / 2
+        originX = originX.clamped(min: graphFrame.origin.x, max: graphFrame.maxX - label.bounds.width)
+        
+        label.frame.origin.x = originX
     }
     
     private func getElementRect(label: UILabel, halfElementWidth: CGFloat, elementWidth: CGFloat) -> CGRect {
@@ -269,12 +271,11 @@ final class HorizontalAxis: UIView {
     
     // ******************************* MARK: - Reuse
     
-    private func addLabel(text: String, center: CGPoint) -> UILabel {
-        let label = labelsReuseController.dequeueClosest(center: center)
+    private func addLabel(text: String, centerX: CGFloat) -> UILabel {
+        let label = labelsReuseController.dequeue()
         label.text = text
-        label.sizeToFit()
         label.alpha = 1
-        label.center = center
+        label.center.x = centerX
         addSubview(label)
         
         return label
