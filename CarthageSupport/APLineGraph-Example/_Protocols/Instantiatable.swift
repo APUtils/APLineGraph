@@ -89,3 +89,22 @@ extension InstantiatableContentView where Self: UIView {
         contentView.constraintSides(to: self)
     }
 }
+
+// ******************************* MARK: - InstantiatableFromXib
+
+/// Helps to instantiate object from xib file.
+protocol InstantiatableFromXib {
+    static func create() -> Self
+}
+
+extension InstantiatableFromXib where Self: NSObject {
+    private static func objectFromXib<T>() -> T {
+        return UINib(nibName: className, bundle: Bundle(for: self)).instantiate(withOwner: nil, options: nil).first as! T
+    }
+    
+    /// Instantiates object from xib file.
+    /// Xib filename should be equal to object class name.
+    static func create() -> Self {
+        return objectFromXib()
+    }
+}
