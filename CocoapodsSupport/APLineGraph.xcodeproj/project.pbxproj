@@ -29,11 +29,11 @@
 
 /* Begin PBXFileReference section */
 		00DBDD339AAFB4DF3585E3EE /* Pods_APLineGraph_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APLineGraph_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		10C383B1EB122724FEFEDC5D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		27DF6E89A1101AE4CFD54914 /* .gitignore */ = {isa = PBXFileReference; includeInIndex = 1; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
-		33B2A9DB50D0DF459FEC860E /* CHANGELOG.md */ = {isa = PBXFileReference; includeInIndex = 1; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
+		10C383B1EB122724FEFEDC5D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		27DF6E89A1101AE4CFD54914 /* .gitignore */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
+		33B2A9DB50D0DF459FEC860E /* CHANGELOG.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
 		4BA31C9DC04A44A46C2ECD1A /* Pods-APLineGraph_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APLineGraph_Example.debug.xcconfig"; path = "Target Support Files/Pods-APLineGraph_Example/Pods-APLineGraph_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		4C08FF3C0A0AC8C3A207EFF2 /* checkBuild.command */ = {isa = PBXFileReference; includeInIndex = 1; name = checkBuild.command; path = ../checkBuild.command; sourceTree = "<group>"; };
+		4C08FF3C0A0AC8C3A207EFF2 /* checkBuild.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = checkBuild.command; path = ../checkBuild.command; sourceTree = "<group>"; };
 		5277BCA0D4E575DAE7B54AE7 /* Pods-APLineGraph_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APLineGraph_Tests.debug.xcconfig"; path = "Target Support Files/Pods-APLineGraph_Tests/Pods-APLineGraph_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* APLineGraph_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APLineGraph_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -46,15 +46,15 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7A577456791384D53A009E89 /* Pods_APLineGraph_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APLineGraph_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FE2364A837255B12EFE5A3C /* APLineGraph.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = APLineGraph.podspec; path = ../APLineGraph.podspec; sourceTree = "<group>"; };
-		94F1F8459369B847BFFA8CC5 /* DEPLOY PROCESS.md */ = {isa = PBXFileReference; includeInIndex = 1; name = "DEPLOY PROCESS.md"; path = "../DEPLOY PROCESS.md"; sourceTree = "<group>"; };
-		956D9CA5DF6AEBC67F44BFC3 /* podCheck.command */ = {isa = PBXFileReference; includeInIndex = 1; name = podCheck.command; path = ../podCheck.command; sourceTree = "<group>"; };
-		978F50A72C9B2C512C6939FC /* .cocoadocs.yml */ = {isa = PBXFileReference; includeInIndex = 1; name = .cocoadocs.yml; path = ../.cocoadocs.yml; sourceTree = "<group>"; };
-		A8ABFC99CE4099E9C492AB2C /* .travis.yml */ = {isa = PBXFileReference; includeInIndex = 1; name = .travis.yml; path = ../.travis.yml; sourceTree = "<group>"; };
+		7FE2364A837255B12EFE5A3C /* APLineGraph.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = APLineGraph.podspec; path = ../APLineGraph.podspec; sourceTree = "<group>"; };
+		94F1F8459369B847BFFA8CC5 /* DEPLOY PROCESS.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = "DEPLOY PROCESS.md"; path = "../DEPLOY PROCESS.md"; sourceTree = "<group>"; };
+		956D9CA5DF6AEBC67F44BFC3 /* podCheck.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = podCheck.command; path = ../podCheck.command; sourceTree = "<group>"; };
+		978F50A72C9B2C512C6939FC /* .cocoadocs.yml */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.yaml; name = .cocoadocs.yml; path = ../.cocoadocs.yml; sourceTree = "<group>"; };
+		A8ABFC99CE4099E9C492AB2C /* .travis.yml */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.yaml; name = .travis.yml; path = ../.travis.yml; sourceTree = "<group>"; };
 		BD01F098E6AD0C4C2D7BFC74 /* Pods-APLineGraph_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APLineGraph_Example.release.xcconfig"; path = "Target Support Files/Pods-APLineGraph_Example/Pods-APLineGraph_Example.release.xcconfig"; sourceTree = "<group>"; };
-		C148CB21A085A5C14FECBB7B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		C148CB21A085A5C14FECBB7B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C5B8F886DEA61D99F294A31B /* Pods-APLineGraph_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APLineGraph_Tests.release.xcconfig"; path = "Target Support Files/Pods-APLineGraph_Tests/Pods-APLineGraph_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		C672BBFE007C40DB153E65F2 /* podPush.command */ = {isa = PBXFileReference; includeInIndex = 1; name = podPush.command; path = ../podPush.command; sourceTree = "<group>"; };
+		C672BBFE007C40DB153E65F2 /* podPush.command */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; name = podPush.command; path = ../podPush.command; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,7 +174,6 @@
 				5277BCA0D4E575DAE7B54AE7 /* Pods-APLineGraph_Tests.debug.xcconfig */,
 				C5B8F886DEA61D99F294A31B /* Pods-APLineGraph_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -260,6 +259,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -554,7 +554,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.$(PRODUCT_NAME:rfc1034identifier)${DEVELOPMENT_TEAM}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -568,7 +568,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.$(PRODUCT_NAME:rfc1034identifier)${DEVELOPMENT_TEAM}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -584,7 +584,7 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.$(PRODUCT_NAME:rfc1034identifier)${DEVELOPMENT_TEAM}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/APLineGraph_Example.app/APLineGraph_Example";
 			};
@@ -597,7 +597,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anton-plebanovich.$(PRODUCT_NAME:rfc1034identifier)${DEVELOPMENT_TEAM}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/APLineGraph_Example.app/APLineGraph_Example";
 			};
